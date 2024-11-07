@@ -207,10 +207,12 @@ function resetQuery() {
 
 /** 预览按钮 */
 function handlePreview(row) {
+  proxy.$modal.loading("正在生成预览，请稍候！");
   previewTable(row.tableId).then(response => {
     preview.value.data = response.data;
     preview.value.open = true;
     preview.value.activeName = "Entity.cs";
+    proxy.$modal.closeLoading();
   });
 }
 
@@ -229,8 +231,10 @@ function handleSelectionChange(selection) {
 
 /** 修改按钮操作 */
 function handleEditTable(row) {
+  proxy.$modal.loading("正在加载，请稍候！");
   const tableId = row.tableId || ids.value[0];
   router.push({ path: "/tool/gen-edit/index/" + tableId, query: { pageNum: queryParams.value.pageNum } });
+  proxy.$modal.closeLoading();
 }
 
 /** 删除按钮操作 */
