@@ -1,0 +1,7 @@
+<!--用于设置通用的项目属性和构建配置-->
+<Project>
+    <PropertyGroup>
+        <LangVersion>13</LangVersion>
+        <NoWarn>CS8625;CS8601;CS8602;CS8603;CS8604;CS8618;CS8073;CS8620;CS8600;CS0219;CS8629</NoWarn>
+    </PropertyGroup>
+</Project>

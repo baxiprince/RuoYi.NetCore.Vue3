@@ -1,0 +1,21 @@
+# 根目录配置，表示这是项目的根目录
+root = true
+
+# 所有文件的通用配置
+[*]
+indent_style = space
+indent_size = 4
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# 特定文件类型的配置
+[*.{cs,vb}]
+indent_size = 2
+
+# 代码分析规则配置
+[*.cs]
+# 禁用特定的代码分析规则
+dotnet_diagnostic.CS8602.severity = none
+

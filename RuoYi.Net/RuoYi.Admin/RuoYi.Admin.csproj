@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<NoWarn>1701;1702;1591</NoWarn>
+		<SatelliteResourceLanguages>en-US</SatelliteResourceLanguages>
+		<PublishReadyToRunComposite>true</PublishReadyToRunComposite>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>	
+
+	<ItemGroup>
+	  <ProjectReference Include="..\RuoYi.Common\RuoYi.Common.csproj" />
+	  <ProjectReference Include="..\RuoYi.Data\RuoYi.Data.csproj" />
+	  <ProjectReference Include="..\RuoYi.Framework\RuoYi.Framework.csproj" />
+	  <ProjectReference Include="..\RuoYi.Generator\RuoYi.Generator.csproj" />
+	  <ProjectReference Include="..\RuoYi.Quartz\RuoYi.Quartz.csproj" />
+	  <ProjectReference Include="..\RuoYi.System\RuoYi.System.csproj" />
+	</ItemGroup>
+
+</Project>

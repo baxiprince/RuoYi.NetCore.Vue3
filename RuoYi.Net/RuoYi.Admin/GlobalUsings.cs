@@ -1,0 +1,13 @@
+﻿global using Mapster;
+global using Microsoft.AspNetCore.Authorization;
+global using Microsoft.AspNetCore.Http;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.CodeAnalysis;
+global using RuoYi.Framework;
+global using RuoYi.Framework.DependencyInjection;
+global using RuoYi.Framework.Extensions;
+global using System;
+global using System.Collections.Generic;
+global using System.ComponentModel.DataAnnotations;
+global using System.Linq;
+global using System.Threading.Tasks;
