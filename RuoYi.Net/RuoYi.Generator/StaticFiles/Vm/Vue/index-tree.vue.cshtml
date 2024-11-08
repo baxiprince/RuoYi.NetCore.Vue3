@@ -89,7 +89,7 @@
       <right-toolbar v-model:showSearch="showSearch" @@queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-if="refreshTable" v-loading="loading" :data="@(businessName)List" row-key="@(Model.treeCode)}"
+    <el-table v-if="refreshTable" v-loading="loading" :data="@(businessName)List" row-key="@(Model.TreeCode)}"
       :default-expand-all="isExpandAll"
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
       <!-- <el-table-column type="selection" width="55" align="center" /> -->
@@ -165,8 +165,8 @@
             <el-tree-select
                 v-model="form.@(Model.treeParentCode)"
                 :data="@(businessName)Options"
-                :props="{ value: '@(Model.treeCode)', label: '@(Model.treeName)', children: 'children' }"
-                value-key="@(Model.treeCode)"
+                :props="{ value: '@(Model.TreeCode)', label: '@(Model.treeName)', children: 'children' }"
+                value-key="@(Model.TreeCode)"
                 placeholder="请选择@(comment)"
                 check-strictly
             />
@@ -394,7 +394,7 @@ function resetQuery() {
     @foreach (var column in Model.Columns) {
     if(column.HtmlType == "datetime" && column.QueryType == "BETWEEN") {
     attrName = column.NetFieldLower();
-    @:this.daterange@(attrName) = [];
+    @:daterange@(attrName).value = [];
     }
     }
     proxy.resetForm("queryRef");
@@ -434,7 +434,7 @@ async function handleUpdate(row) {
         form.value = response.data;
         @foreach (var column in Model.Columns) {
         if(column.HtmlType == "checkbox") {
-        @:this.form.@(column.NetFieldLower()) = this.form.@(attrName).split(",");
+        @:form.value.@(column.NetFieldLower()) = form.value.@(attrName).split(",");
         }
         }
         open.value = true;

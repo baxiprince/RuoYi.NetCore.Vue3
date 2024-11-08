@@ -213,7 +213,9 @@ function handlePreview(row) {
     preview.value.open = true;
     preview.value.activeName = "Entity.cs";
     proxy.$modal.closeLoading();
-  });
+  }).catch(() => {
+    proxy.$modal.closeLoading();
+   });
 }
 
 /** 复制代码成功 */
