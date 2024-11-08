@@ -65,8 +65,9 @@ public abstract class BaseRepository<TEntity, TDto> : ITransient
 
     public IInsertable<TEntity> Insertable(IEnumerable<TEntity> entities)
     {
-        this.SetCreateUserInfo(entities);
-        return Repo.Context.Insertable<TEntity>(entities.ToList());
+      var baseEntities = entities.ToList();
+      this.SetCreateUserInfo(baseEntities);
+        return Repo.Context.Insertable<TEntity>(baseEntities.ToList());
     }
 
     public ISugarQueryable<TEntity> SqlQueryable(string sql)
