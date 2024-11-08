@@ -1,64 +1,60 @@
-﻿namespace RuoYi.Data.Models
+﻿namespace RuoYi.Data.Models;
+
+/// <summary>
+///   路由显示信息
+/// </summary>
+public class MetaVo
 {
-    /// <summary>
-    /// 路由显示信息
-    /// </summary>
-    public class MetaVo
-    {
-        /**
-         * 设置该路由在侧边栏和面包屑中展示的名字
-         */
-        public string Title { get; set; }
+  public MetaVo()
+  {
+  }
 
-        /**
-         * 设置该路由的图标，对应路径src/assets/icons/svg
-         */
-        public string Icon { get; set; }
+  public MetaVo(string title, string icon)
+  {
+    Title = title;
+    Icon = icon;
+  }
 
-        /**
-         * 设置为true，则不会被 <keep-alive>缓存
-         */
-        public bool NoCache { get; set; }
+  public MetaVo(string title, string icon, bool noCache)
+  {
+    Title = title;
+    Icon = icon;
+    NoCache = noCache;
+  }
 
-        /**
-         * 内链地址（http(s)://开头）
-         */
-        public string Link { get; set; }
+  public MetaVo(string title, string icon, string link)
+  {
+    Title = title;
+    Icon = icon;
+    Link = link;
+  }
 
-        public MetaVo()
-        {
-        }
+  public MetaVo(string title, string icon, bool noCache, string link)
+  {
+    Title = title;
+    Icon = icon;
+    NoCache = noCache;
+    if (!string.IsNullOrEmpty(link) && link.StartsWith("http", StringComparison.OrdinalIgnoreCase)) Link = link;
+  }
 
-        public MetaVo(string title, string icon)
-        {
-            this.Title = title;
-            this.Icon = icon;
-        }
+  /**
+   * 设置该路由在侧边栏和面包屑中展示的名字
+   */
+  public string Title { get; set; }
 
-        public MetaVo(string title, string icon, bool noCache)
-        {
-            this.Title = title;
-            this.Icon = icon;
-            this.NoCache = noCache;
-        }
+  /**
+   * 设置该路由的图标，对应路径src/assets/icons/svg
+   */
+  public string Icon { get; set; }
 
-        public MetaVo(string title, string icon, string link)
-        {
-            this.Title = title;
-            this.Icon = icon;
-            this.Link = link;
-        }
+  /**
+   * 设置为true，则不会被
+   * <keep-alive>缓存
+   */
+  public bool NoCache { get; set; }
 
-        public MetaVo(string title, string icon, bool noCache, string link)
-        {
-            this.Title = title;
-            this.Icon = icon;
-            this.NoCache = noCache;
-            if (!string.IsNullOrEmpty(link) && link.StartsWith("http", StringComparison.OrdinalIgnoreCase))
-            {
-                this.Link = link;
-            }
-        }
-
-    }
+  /**
+   * 内链地址（http(s)://开头）
+   */
+  public string Link { get; set; }
 }

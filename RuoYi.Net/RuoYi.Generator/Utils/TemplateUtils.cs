@@ -25,7 +25,7 @@ internal static class TemplateUtils
 
   /**
    * 设置模板变量信息
-   *
+   * 
    * @return 模板列表
    */
   public static TemplateContext PrepareContext(GenTable genTable)
@@ -110,7 +110,7 @@ internal static class TemplateUtils
 
   /**
    * 获取模板信息
-   *
+   * 
    * @return 模板列表
    */
   public static List<string> GetTemplateList(DbType dbType, string? tplCategory)
@@ -201,7 +201,7 @@ internal static class TemplateUtils
 
   /**
    * 获取包前缀
-   *
+   * 
    * @param packageName 包名称
    * @return 包前缀名称
    */
@@ -214,7 +214,7 @@ internal static class TemplateUtils
 
   /**
    * 根据列类型获取导入包
-   *
+   * 
    * @param genTable 业务表对象
    * @return 返回需要导入的包列表
    */
@@ -240,7 +240,7 @@ internal static class TemplateUtils
 
   /**
    * 根据列类型获取字典组
-   *
+   * 
    * @param genTable 业务表对象
    * @return 返回字典组
    */
@@ -260,7 +260,7 @@ internal static class TemplateUtils
 
   /**
    * 添加字典列表
-   *
+   * 
    * @param dicts 字典列表
    * @param columns 列集合
    */
@@ -274,7 +274,7 @@ internal static class TemplateUtils
 
   /**
    * 获取权限前缀
-   *
+   * 
    * @param moduleName 模块名称
    * @param businessName 业务名称
    * @return 返回权限前缀
@@ -286,7 +286,7 @@ internal static class TemplateUtils
 
   /**
    * 获取上级菜单ID字段
-   *
+   * 
    * @param options 配置json, 如: {"parentMenuId":"2009"}
    * @return 上级菜单ID字段
    */
@@ -303,7 +303,7 @@ internal static class TemplateUtils
 
   /**
    * 获取树编码
-   *
+   * 
    * @param options 配置json, 如: {"treeCode":"2009"}
    * @return 树编码
    */
@@ -321,7 +321,7 @@ internal static class TemplateUtils
 
   /**
    * 获取树父编码
-   *
+   * 
    * @param options 配置json, 如: {"treeParentCode":"2009"}
    * @return 树父编码
    */
@@ -339,7 +339,7 @@ internal static class TemplateUtils
 
   /**
    * 获取树名称
-   *
+   * 
    * @param @param options 配置json, 如: {"treeName":"2009"}
    * @return 树名称
    */
@@ -357,7 +357,7 @@ internal static class TemplateUtils
 
   /**
    * 获取需要在哪一列上面显示展开按钮
-   *
+   * 
    * @param genTable 业务表对象
    * @return 展开按钮列序号
    */

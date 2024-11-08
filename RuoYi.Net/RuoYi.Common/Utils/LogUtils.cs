@@ -1,14 +1,10 @@
-﻿namespace RuoYi.Common.Utils
+﻿namespace RuoYi.Common.Utils;
+
+public static class LogUtils
 {
-    public static class LogUtils
-    {
-        public static string GetBlock(object msg)
-        {
-            if (msg == null)
-            {
-                msg = "";
-            }
-            return "[" + msg.ToString() + "]";
-        }
-    }
+  public static string GetBlock(object msg)
+  {
+    if (msg == null) msg = "";
+    return "[" + msg + "]";
+  }
 }

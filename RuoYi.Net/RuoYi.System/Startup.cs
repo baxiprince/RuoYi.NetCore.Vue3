@@ -7,25 +7,25 @@ namespace RuoYi.System;
 [AppStartup(210)]
 public sealed class Startup : AppStartup
 {
-    public void ConfigureServices(IServiceCollection services)
-    {
-        // User agent service
-        services.AddUserAgentParser();
+  public void ConfigureServices(IServiceCollection services)
+  {
+    // User agent service
+    services.AddUserAgentParser();
 
-        // 缓存初始化
-        LoadingConfigCache();
-    }
+    // 缓存初始化
+    LoadingConfigCache();
+  }
 
-    private void LoadingConfigCache()
+  private void LoadingConfigCache()
+  {
+    try
     {
-        try
-        {
-            var sysConfigService = App.GetService<SysConfigService>();
-            sysConfigService.LoadingConfigCache();
-        }
-        catch (Exception ex)
-        {
-            Log.Error("LoadingConfigCache error: {}", ex, ex.Message);
-        }
+      var sysConfigService = App.GetService<SysConfigService>();
+      sysConfigService.LoadingConfigCache();
     }
+    catch (Exception ex)
+    {
+      Log.Error("LoadingConfigCache error: {}", ex, ex.Message);
+    }
+  }
 }

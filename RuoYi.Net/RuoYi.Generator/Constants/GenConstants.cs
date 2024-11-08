@@ -1,115 +1,187 @@
-﻿namespace RuoYi.Generator.Constants
+﻿namespace RuoYi.Generator.Constants;
+
+/// <summary>
+///   代码生成通用常量
+/// </summary>
+public class GenConstants
 {
-    /// <summary>
-    /// 代码生成通用常量
-    /// </summary>
-    public class GenConstants
-    {
-        /** 单表（增删改查） */
-        public const string TPL_CRUD = "crud";
+  /**
+   * 单表（增删改查）
+   */
+  public const string TPL_CRUD = "crud";
 
-        /** 树表（增删改查） */
-        public const string TPL_TREE = "tree";
+  /**
+   * 树表（增删改查）
+   */
+  public const string TPL_TREE = "tree";
 
-        /** 主子表（增删改查） */
-        public const string TPL_SUB = "sub";
+  /**
+   * 主子表（增删改查）
+   */
+  public const string TPL_SUB = "sub";
 
-        /** 树编码字段 */
-        public const string TREE_CODE = "treeCode";
+  /**
+   * 树编码字段
+   */
+  public const string TREE_CODE = "treeCode";
 
-        /** 树父编码字段 */
-        public const string TREE_PARENT_CODE = "treeParentCode";
+  /**
+   * 树父编码字段
+   */
+  public const string TREE_PARENT_CODE = "treeParentCode";
 
-        /** 树名称字段 */
-        public const string TREE_NAME = "treeName";
+  /**
+   * 树名称字段
+   */
+  public const string TREE_NAME = "treeName";
 
-        /** 上级菜单ID字段 */
-        public const string PARENT_MENU_ID = "parentMenuId";
+  /**
+   * 上级菜单ID字段
+   */
+  public const string PARENT_MENU_ID = "parentMenuId";
 
-        /** 上级菜单名称字段 */
-        public const string PARENT_MENU_NAME = "parentMenuName";
+  /**
+   * 上级菜单名称字段
+   */
+  public const string PARENT_MENU_NAME = "parentMenuName";
 
-        /** 数据库字符串类型 */
-        public static string[] COLUMNTYPE_STR = new string[] { "char", "varchar", "nvarchar", "varchar2" };
+  ///** Entity基类字段 */
+  //public static string[] BASE_ENTITY = new string[] { "createBy", "createTime", "updateBy", "updateTime", "remark" };
 
-        /** 数据库文本类型 */
-        public static string[] COLUMNTYPE_TEXT = new string[] { "tinytext", "text", "mediumtext", "longtext" };
+  ///** Tree基类字段 */
+  //public static string[] TREE_ENTITY = new string[] { "parentName", "parentId", "orderNum", "ancestors", "children" };
 
-        /** 数据库时间类型 */
-        public static string[] COLUMNTYPE_TIME = new string[] { "datetime", "time", "date", "timestamp" };
+  /**
+   * 文本框
+   */
+  public const string HTML_INPUT = "input";
 
-        /** 数据库数字类型 */
-        public static string[] COLUMNTYPE_NUMBER = new string[] { "tinyint", "smallint", "mediumint", "int", "number", "integer",
-            "bit", "bigint", "float", "double", "decimal" };
+  /**
+   * 文本域
+   */
+  public const string HTML_TEXTAREA = "textarea";
 
-        /** 页面不需要编辑字段 */
-        public static string[] COLUMNNAME_NOT_EDIT = new string[] { "id", "create_by", "create_time", "del_flag" };
+  /**
+   * 下拉框
+   */
+  public const string HTML_SELECT = "select";
 
-        /** 页面不需要显示的列表字段 */
-        public static string[] COLUMNNAME_NOT_LIST = new string[] { "id", "create_by", "create_time", "del_flag", "update_by",
-            "update_time" };
+  /**
+   * 单选框
+   */
+  public const string HTML_RADIO = "radio";
 
-        /** 页面不需要查询字段 */
-        public static string[] COLUMNNAME_NOT_QUERY = new string[] { "id", "create_by", "create_time", "del_flag", "update_by", "update_time", "remark" };
+  /**
+   * 复选框
+   */
+  public const string HTML_CHECKBOX = "checkbox";
 
-        ///** Entity基类字段 */
-        //public static string[] BASE_ENTITY = new string[] { "createBy", "createTime", "updateBy", "updateTime", "remark" };
+  /**
+   * 日期控件
+   */
+  public const string HTML_DATETIME = "datetime";
 
-        ///** Tree基类字段 */
-        //public static string[] TREE_ENTITY = new string[] { "parentName", "parentId", "orderNum", "ancestors", "children" };
+  /**
+   * 图片上传控件
+   */
+  public const string HTML_IMAGE_UPLOAD = "imageUpload";
 
-        /** 文本框 */
-        public const string HTML_INPUT = "input";
+  /**
+   * 文件上传控件
+   */
+  public const string HTML_FILE_UPLOAD = "fileUpload";
 
-        /** 文本域 */
-        public const string HTML_TEXTAREA = "textarea";
+  /**
+   * 富文本控件
+   */
+  public const string HTML_EDITOR = "editor";
 
-        /** 下拉框 */
-        public const string HTML_SELECT = "select";
+  /**
+   * 字符串类型
+   */
+  public const string TYPE_STRING = "string";
 
-        /** 单选框 */
-        public const string HTML_RADIO = "radio";
+  /**
+   * 整型
+   */
+  public const string TYPE_INTEGER = "int";
 
-        /** 复选框 */
-        public const string HTML_CHECKBOX = "checkbox";
+  /**
+   * 长整型
+   */
+  public const string TYPE_LONG = "long";
 
-        /** 日期控件 */
-        public const string HTML_DATETIME = "datetime";
+  /**
+   * 浮点型
+   */
+  public const string TYPE_DOUBLE = "double";
 
-        /** 图片上传控件 */
-        public const string HTML_IMAGE_UPLOAD = "imageUpload";
+  /**
+   * 高精度计算类型
+   */
+  public const string TYPE_DECIMAL = "decimal";
 
-        /** 文件上传控件 */
-        public const string HTML_FILE_UPLOAD = "fileUpload";
+  /**
+   * 时间类型
+   */
+  public const string TYPE_DATE = "DateTime";
 
-        /** 富文本控件 */
-        public const string HTML_EDITOR = "editor";
+  /**
+   * 模糊查询
+   */
+  public const string QUERY_LIKE = "LIKE";
 
-        /** 字符串类型 */
-        public const string TYPE_STRING = "string";
+  /**
+   * 相等查询
+   */
+  public const string QUERY_EQ = "EQ";
 
-        /** 整型 */
-        public const string TYPE_INTEGER = "int";
+  /**
+   * 需要
+   */
+  public const string REQUIRE = "1";
 
-        /** 长整型 */
-        public const string TYPE_LONG = "long";
+  /**
+   * 数据库字符串类型
+   */
+  public static string[] COLUMNTYPE_STR = { "char", "varchar", "nvarchar", "varchar2" };
 
-        /** 浮点型 */
-        public const string TYPE_DOUBLE = "double";
+  /**
+   * 数据库文本类型
+   */
+  public static string[] COLUMNTYPE_TEXT = { "tinytext", "text", "mediumtext", "longtext" };
 
-        /** 高精度计算类型 */
-        public const string TYPE_DECIMAL = "decimal";
+  /**
+   * 数据库时间类型
+   */
+  public static string[] COLUMNTYPE_TIME = { "datetime", "time", "date", "timestamp" };
 
-        /** 时间类型 */
-        public const string TYPE_DATE = "DateTime";
+  /**
+   * 数据库数字类型
+   */
+  public static string[] COLUMNTYPE_NUMBER =
+  {
+    "tinyint", "smallint", "mediumint", "int", "number", "integer",
+    "bit", "bigint", "float", "double", "decimal"
+  };
 
-        /** 模糊查询 */
-        public const string QUERY_LIKE = "LIKE";
+  /**
+   * 页面不需要编辑字段
+   */
+  public static string[] COLUMNNAME_NOT_EDIT = { "id", "create_by", "create_time", "del_flag" };
 
-        /** 相等查询 */
-        public const string QUERY_EQ = "EQ";
+  /**
+   * 页面不需要显示的列表字段
+   */
+  public static string[] COLUMNNAME_NOT_LIST =
+  {
+    "id", "create_by", "create_time", "del_flag", "update_by",
+    "update_time"
+  };
 
-        /** 需要 */
-        public const string REQUIRE = "1";
-    }
+  /**
+   * 页面不需要查询字段
+   */
+  public static string[] COLUMNNAME_NOT_QUERY =
+    { "id", "create_by", "create_time", "del_flag", "update_by", "update_time", "remark" };
 }

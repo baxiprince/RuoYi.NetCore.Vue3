@@ -1,42 +1,46 @@
-﻿using Newtonsoft.Json;
-using RuoYi.Data.Dtos;
+﻿using RuoYi.Data.Dtos;
 using RuoYi.Data.Entities;
 
-namespace RuoYi.Data.Models
+namespace RuoYi.Data.Models;
+
+public class TreeSelect
 {
-    public class TreeSelect
-    {
-        /** 节点ID */
-        public long Id { get; set; }
+  public TreeSelect()
+  {
+  }
 
-        /** 节点名称 */
-        public string Label { get; set; }
+  public TreeSelect(SysDeptDto dept)
+  {
+    Id = dept.DeptId ?? 0;
+    Label = dept.DeptName!;
+    Children = dept.Children?.Select(c => new TreeSelect(c)).ToList();
+  }
 
-        /** 子节点 */
-        public List<TreeSelect>? Children { get; set; }
+  public TreeSelect(SysMenu menu)
+  {
+    Id = menu.MenuId;
+    Label = menu.MenuName!;
+    Children = menu.Children?.Select(m => new TreeSelect(m)).ToList();
+  }
 
-        public TreeSelect()
-        {
-        }
+  /**
+   * 节点ID
+   */
+  public long Id { get; set; }
 
-        public TreeSelect(SysDeptDto dept)
-        {
-            this.Id = dept.DeptId ?? 0;
-            this.Label = dept.DeptName!;
-            this.Children = dept.Children?.Select(c => new TreeSelect(c)).ToList();
-        }
+  /**
+   * 节点名称
+   */
+  public string Label { get; set; }
 
-        public TreeSelect(SysMenu menu)
-        {
-            this.Id = menu.MenuId;
-            this.Label = menu.MenuName!;
-            this.Children = menu.Children?.Select(m => new TreeSelect(m)).ToList();
-        }
+  /**
+   * 子节点
+   */
+  public List<TreeSelect>? Children { get; set; }
 
-        // 按条件忽略字段: https://www.newtonsoft.com/json/help/html/conditionalproperties.htm
-        public bool ShouldSerializeChildren()
-        {
-            return Children != null && Children.Any();
-        }
-    }
+  // 按条件忽略字段: https://www.newtonsoft.com/json/help/html/conditionalproperties.htm
+  public bool ShouldSerializeChildren()
+  {
+    return Children != null && Children.Any();
+  }
 }

@@ -1,7 +1,6 @@
-﻿namespace RuoYi.Admin
+﻿namespace RuoYi.Admin;
+
+public interface ISystemService
 {
-    public interface ISystemService
-    {
-        string GetDescription();
-    }
+  string GetDescription();
 }

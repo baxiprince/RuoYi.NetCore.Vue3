@@ -25,7 +25,7 @@
 //        {
 //            return !string.IsNullOrWhiteSpace(str);
 //        }
-               
+
 
 //        public static bool Equals(string? str1, string? str2)
 //        {
@@ -196,3 +196,5 @@
 //        }
 //    }
 //}
+
+

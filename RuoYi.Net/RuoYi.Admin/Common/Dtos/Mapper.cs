@@ -1,9 +1,8 @@
-﻿namespace RuoYi.Admin
+﻿namespace RuoYi.Admin;
+
+public class Mapper : IRegister
 {
-    public class Mapper : IRegister
-    {
-        public void Register(TypeAdapterConfig config)
-        {
-        }
-    }
+  public void Register(TypeAdapterConfig config)
+  {
+  }
 }

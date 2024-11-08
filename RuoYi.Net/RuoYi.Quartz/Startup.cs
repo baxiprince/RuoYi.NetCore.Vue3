@@ -6,21 +6,21 @@ namespace RuoYi.Quartz;
 [AppStartup(100)]
 public sealed class Startup : AppStartup
 {
-    private static Thread _scheduleThread = new Thread(InitThreadSchedule);
+  private static readonly Thread _scheduleThread = new(InitThreadSchedule);
 
-    public void ConfigureServices(IServiceCollection services)
+  public void ConfigureServices(IServiceCollection services)
+  {
+    _scheduleThread.Start();
+  }
+
+  private static void InitThreadSchedule()
+  {
+    Task.Run(async () =>
     {
-        _scheduleThread.Start();
-    }
+      await Task.Delay(10000);
 
-    private static void InitThreadSchedule()
-    {
-        Task.Run(async () =>
-        {
-            await Task.Delay(10000);
-
-            var jobService = App.GetService<SysJobService>();
-            await jobService.InitSchedule();
-        });
-    }
+      var jobService = App.GetService<SysJobService>();
+      await jobService.InitSchedule();
+    });
+  }
 }

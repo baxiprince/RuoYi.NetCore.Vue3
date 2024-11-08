@@ -1,7 +1,6 @@
-﻿namespace RuoYi.Common.Constants
+﻿namespace RuoYi.Common.Constants;
+
+public class AppConstants
 {
-    public class AppConstants
-    {
-        public const string StaticFileFolder = "Resources";
-    }
+  public const string StaticFileFolder = "Resources";
 }

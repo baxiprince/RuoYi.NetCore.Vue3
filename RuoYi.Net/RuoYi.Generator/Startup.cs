@@ -7,12 +7,12 @@ namespace RuoYi.Generator;
 [AppStartup(300)]
 public sealed class Startup : AppStartup
 {
-    public void ConfigureServices(IServiceCollection services)
-    {
-        // 配置热重载
-        services.AddConfigurableOptions<GenOptions>();
+  public void ConfigureServices(IServiceCollection services)
+  {
+    // 配置热重载
+    services.AddConfigurableOptions<GenOptions>();
 
-        // RazorEngine
-        services.AddScoped<IRazorEngine, RazorEngine>();
-    }
+    // RazorEngine
+    services.AddScoped<IRazorEngine, RazorEngine>();
+  }
 }

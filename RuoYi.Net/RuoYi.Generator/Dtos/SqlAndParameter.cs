@@ -1,9 +1,8 @@
-﻿namespace RuoYi.Generator.Dtos
-{
-    public class SqlAndParameter
-    {
-        public string Sql { get; set; }
+﻿namespace RuoYi.Generator.Dtos;
 
-        public List<SugarParameter> Parameters { get; set; }
-    }
+public class SqlAndParameter
+{
+  public string Sql { get; set; }
+
+  public List<SugarParameter> Parameters { get; set; }
 }

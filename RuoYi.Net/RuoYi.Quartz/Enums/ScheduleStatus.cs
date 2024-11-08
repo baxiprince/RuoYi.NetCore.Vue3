@@ -1,12 +1,9 @@
 ﻿using System.ComponentModel;
 
-namespace RuoYi.Quartz.Enums
+namespace RuoYi.Quartz.Enums;
+
+public enum ScheduleStatus
 {
-    public enum ScheduleStatus
-    {
-        [Description("正常")]
-        NORMAL,
-        [Description("暂停")]
-        PAUSE
-    }
+  [Description("正常")] NORMAL,
+  [Description("暂停")] PAUSE
 }

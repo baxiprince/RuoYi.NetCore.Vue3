@@ -1,13 +1,13 @@
 ﻿using RuoYi.Generator.Dtos;
 
-namespace RuoYi.Generator.RepoSql
+namespace RuoYi.Generator.RepoSql;
+
+public class SqlServer : IDbSql, ITransient
 {
-    public class SqlServer : IDbSql, ITransient
-    {
-        // Table
-        public SqlAndParameter GetDbTableListSqlAndParameter(GenTableDto dto)
-        {
-            var sql = $@"
+  // Table
+  public SqlAndParameter GetDbTableListSqlAndParameter(GenTableDto dto)
+  {
+    var sql = @"
                 SELECT t.[name] AS [table_name], p.[value] AS [table_comment], t.[crdate] AS [create_time], t.[refdate] AS [update_time]
                 FROM  sys.sysobjects t 
                 LEFT JOIN sys.extended_properties p ON t.id = p.major_id AND p.minor_id = 0
@@ -15,39 +15,42 @@ namespace RuoYi.Generator.RepoSql
 		        AND t.[name] NOT LIKE 'qrtz_%' AND t.[name] NOT LIKE 'gen_%'
 		        AND t.[name] NOT IN (SELECT table_name FROM gen_table)
             ";
-            var parameters = new List<SugarParameter>();
-            if (!string.IsNullOrEmpty(dto.TableName))
-            {
-                sql += "AND t.[name] LIKE CONCAT('%', @tableName, '%')";
-                parameters.Add(new SugarParameter("@tableName", dto.TableName));
-            }
-            if (!string.IsNullOrEmpty(dto.TableComment))
-            {
-                sql += "AND CAST(p.[value] AS VARCHAR(1000)) LIKE CONCAT('%', @tableComment, '%')";
-                parameters.Add(new SugarParameter("@tableComment", dto.TableComment));
-            }
-            if (dto.Params.BeginTime != null)
-            {
-                sql += "AND DATEDIFF(DAY, @BeginTime, t.[crdate]) >= 0";
-                parameters.Add(new SugarParameter("@BeginTime", dto.Params.BeginTime));
-            }
-            if (dto.Params.BeginTime != null)
-            {
-                sql += "AND DATEDIFF(DAY, @EndTime, t.[crdate]) <= 0";
-                parameters.Add(new SugarParameter("@EndTime", dto.Params.EndTime));
-            }
+    var parameters = new List<SugarParameter>();
+    if (!string.IsNullOrEmpty(dto.TableName))
+    {
+      sql += "AND t.[name] LIKE CONCAT('%', @tableName, '%')";
+      parameters.Add(new SugarParameter("@tableName", dto.TableName));
+    }
 
-            return new SqlAndParameter
-            {
-                Sql = sql,
-                Parameters = parameters
-            };
-        }
+    if (!string.IsNullOrEmpty(dto.TableComment))
+    {
+      sql += "AND CAST(p.[value] AS VARCHAR(1000)) LIKE CONCAT('%', @tableComment, '%')";
+      parameters.Add(new SugarParameter("@tableComment", dto.TableComment));
+    }
 
-        // Table: 按名字查询
-        public string GetDbTableListByNamesSql()
-        {
-            return $@"
+    if (dto.Params.BeginTime != null)
+    {
+      sql += "AND DATEDIFF(DAY, @BeginTime, t.[crdate]) >= 0";
+      parameters.Add(new SugarParameter("@BeginTime", dto.Params.BeginTime));
+    }
+
+    if (dto.Params.BeginTime != null)
+    {
+      sql += "AND DATEDIFF(DAY, @EndTime, t.[crdate]) <= 0";
+      parameters.Add(new SugarParameter("@EndTime", dto.Params.EndTime));
+    }
+
+    return new SqlAndParameter
+    {
+      Sql = sql,
+      Parameters = parameters
+    };
+  }
+
+  // Table: 按名字查询
+  public string GetDbTableListByNamesSql()
+  {
+    return @"
                 SELECT t.[name] AS [table_name], p.[value] AS [table_comment], t.[crdate] AS [create_time], t.[refdate] AS [update_time]                
                 FROM  sys.sysobjects t 
                 LEFT JOIN sys.extended_properties p ON t.id = p.major_id AND p.minor_id = 0
@@ -55,12 +58,12 @@ namespace RuoYi.Generator.RepoSql
 		        AND t.[name] NOT LIKE 'qrtz_%' AND t.[name] NOT LIKE 'gen_%'
 		        AND t.[name] IN (@tableNames)
             ";
-        }
+  }
 
-        // 列 按table名称查询
-        public string GetDbTableColumnsByName()
-        {
-            return $@"
+  // 列 按table名称查询
+  public string GetDbTableColumnsByName()
+  {
+    return @"
             SELECT TableName,
                 LTRIM(RTRIM(ColumnName)) AS [column_name],
                 [ColumnCNName] AS [column_comment],
@@ -109,6 +112,5 @@ namespace RuoYi.Generator.RepoSql
             ) AS t
             ORDER BY t.[Sort]
             ";
-        }
-    }
+  }
 }

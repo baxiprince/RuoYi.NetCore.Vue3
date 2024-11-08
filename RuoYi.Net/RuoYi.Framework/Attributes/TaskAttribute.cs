@@ -1,16 +1,15 @@
-﻿namespace RuoYi.Framework.Attributes
-{
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
-    public class TaskAttribute : Attribute
-    {
-        /// <summary>
-        /// 任务名称
-        /// </summary>
-        public string Name { get; set; }
+﻿namespace RuoYi.Framework.Attributes;
 
-        public TaskAttribute(string name)
-        {
-            this.Name = name;
-        }
-    }
+[AttributeUsage(AttributeTargets.Class)]
+public class TaskAttribute : Attribute
+{
+  public TaskAttribute(string name)
+  {
+    Name = name;
+  }
+
+  /// <summary>
+  ///   任务名称
+  /// </summary>
+  public string Name { get; set; }
 }
