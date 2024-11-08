@@ -10,6 +10,8 @@ namespace @(Model.PackageName).Controllers
 {
     /// <summary>
     /// @Model.FunctionName
+    ///  author @Model.Author
+    ///  date   @Model.DateTime
     /// </summary>
     [ApiDescriptionSettings("@(Model.ModuleName)")]
     [Route("@(Model.moduleName)/@(Model.businessName)")]
@@ -17,7 +19,7 @@ namespace @(Model.PackageName).Controllers
     {
         private readonly ILogger<@(Model.ClassName)Controller> _logger;
         private readonly @(Model.ClassName)Service _@(Model.className)Service;
-                
+
         public @(Model.ClassName)Controller(ILogger<@(Model.ClassName)Controller> logger,
             @(Model.ClassName)Service @(Model.className)Service)
         {
@@ -37,7 +39,7 @@ namespace @(Model.PackageName).Controllers
         @:{
         @:   return await _@(Model.className)Service.GetDtoPagedListAsync(dto);
         @:}
-                
+
     } else {
         @:public async Task<AjaxResult> Get@(Model.ClassName)List([FromQuery] @(Model.ClassName)Dto dto)
         @:{
