@@ -11,7 +11,7 @@
  Target Server Version : 90100 (9.1.0)
  File Encoding         : 65001
 
- Date: 08/11/2024 09:05:57
+ Date: 08/11/2024 11:01:08
 */
 
 SET NAMES utf8mb4;
@@ -43,14 +43,11 @@ CREATE TABLE `gen_table`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`table_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '代码生成业务表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '代码生成业务表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of gen_table
 -- ----------------------------
-INSERT INTO `gen_table` VALUES (6, 'sys_dept', '部门表', '', '', 'SysDept', 'tree', 'RuoYi.System', 'System', 'dept', '部门表', 'ruoyi.net', '0', NULL, '{\"treeCode\":\"dept_id\",\"treeName\":\"dept_name\",\"treeParentCode\":\"parent_id\",\"parentMenuId\":null}', 'admin', '2024-11-06 07:07:09', NULL, '2024-11-06 07:07:09', NULL);
-INSERT INTO `gen_table` VALUES (7, 'sys_job_log', '定时任务调度日志表', NULL, NULL, 'SysJobLog', 'crud', 'RuoYi.System', 'System', 'log', '定时任务调度日志表', 'ruoyi.net', '0', NULL, '{\"treeCode\":null,\"treeName\":null,\"treeParentCode\":null,\"parentMenuId\":null}', 'admin', '2024-11-06 07:07:10', NULL, NULL, NULL);
-INSERT INTO `gen_table` VALUES (8, 'sys_menu', '菜单权限表', NULL, NULL, 'SysMenu', 'crud', 'RuoYi.System', 'System', 'menu', '菜单权限表', 'ruoyi.net', '0', NULL, NULL, 'admin', '2024-11-06 07:07:10', NULL, '2024-11-07 03:17:42', NULL);
 
 -- ----------------------------
 -- Table structure for gen_table_column
@@ -80,52 +77,11 @@ CREATE TABLE `gen_table_column`  (
   `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '更新者',
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`column_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 42 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '代码生成业务表字段' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 76 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '代码生成业务表字段' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of gen_table_column
 -- ----------------------------
-INSERT INTO `gen_table_column` VALUES (1, 6, 'dept_id', '部门id', 'bigint', 'long', 'DeptId', '1', '1', '0', '1', NULL, NULL, NULL, 'EQ', 'input', NULL, 1, 'admin', '2024-11-07 09:23:28', NULL, NULL);
-INSERT INTO `gen_table_column` VALUES (2, 6, 'parent_id', '父部门id', 'bigint', 'long?', 'ParentId', '0', '0', '0', '1', '1', '1', '1', 'EQ', 'input', NULL, 2, 'admin', '2024-11-07 09:23:28', NULL, NULL);
-INSERT INTO `gen_table_column` VALUES (3, 6, 'ancestors', '祖级列表', 'varchar(50)', 'string?', 'Ancestors', '0', '0', '0', '1', '1', '1', '1', 'input', NULL, NULL, 3, 'admin', '2024-11-07 09:23:28', NULL, NULL);
-INSERT INTO `gen_table_column` VALUES (4, 6, 'dept_name', '部门名称', 'varchar(30)', 'string?', 'DeptName', '0', '0', '0', '1', '1', '1', '1', 'LIKE', NULL, NULL, 4, 'admin', '2024-11-07 09:23:28', NULL, NULL);
-INSERT INTO `gen_table_column` VALUES (5, 6, 'order_num', '显示顺序', 'int', 'long?', 'OrderNum', '0', '0', '0', '1', '1', '1', '1', 'EQ', 'input', NULL, 5, 'admin', '2024-11-07 09:23:28', NULL, NULL);
-INSERT INTO `gen_table_column` VALUES (6, 6, 'leader', '负责人', 'varchar(20)', 'string?', 'Leader', '0', '0', '0', '1', '1', '1', '1', 'input', NULL, NULL, 6, 'admin', '2024-11-07 09:23:28', NULL, NULL);
-INSERT INTO `gen_table_column` VALUES (7, 6, 'phone', '联系电话', 'varchar(11)', 'string?', 'Phone', '0', '0', '0', '1', '1', '1', '1', 'input', NULL, NULL, 7, 'admin', '2024-11-07 09:23:28', NULL, NULL);
-INSERT INTO `gen_table_column` VALUES (8, 6, 'email', '邮箱', 'varchar(50)', 'string?', 'Email', '0', '0', '0', '1', '1', '1', '1', 'input', NULL, NULL, 8, 'admin', '2024-11-07 09:23:28', NULL, NULL);
-INSERT INTO `gen_table_column` VALUES (9, 6, 'status', '部门状态（0正常 1停用）', 'char(1)', 'string?', 'Status', '0', '0', '0', '1', '1', '1', '1', 'input', 'radio', NULL, 9, 'admin', '2024-11-07 09:23:28', NULL, NULL);
-INSERT INTO `gen_table_column` VALUES (10, 6, 'del_flag', '删除标志（0代表存在 2代表删除）', 'char(1)', 'string?', 'DelFlag', '0', '0', '0', '1', NULL, NULL, NULL, 'input', NULL, NULL, 10, 'admin', '2024-11-07 09:23:28', NULL, NULL);
-INSERT INTO `gen_table_column` VALUES (11, 6, 'create_by', '创建者', 'varchar(64)', 'string?', 'CreateBy', '0', '0', '0', '1', NULL, NULL, NULL, 'input', NULL, NULL, 11, 'admin', '2024-11-07 09:23:28', NULL, NULL);
-INSERT INTO `gen_table_column` VALUES (12, 6, 'create_time', '创建时间', 'datetime', 'DateTime?', 'CreateTime', '0', '0', '0', '1', NULL, NULL, NULL, 'EQ', 'datetime', NULL, 12, 'admin', '2024-11-07 09:23:28', NULL, NULL);
-INSERT INTO `gen_table_column` VALUES (13, 6, 'update_by', '更新者', 'varchar(64)', 'string?', 'UpdateBy', '0', '0', '0', '1', '1', NULL, NULL, 'input', NULL, NULL, 13, 'admin', '2024-11-07 09:23:28', NULL, NULL);
-INSERT INTO `gen_table_column` VALUES (14, 6, 'update_time', '更新时间', 'datetime', 'DateTime?', 'UpdateTime', '0', '0', '0', '1', '1', NULL, NULL, 'EQ', 'datetime', NULL, 14, 'admin', '2024-11-07 09:23:28', NULL, NULL);
-INSERT INTO `gen_table_column` VALUES (15, 7, 'job_log_id', '任务日志ID', 'bigint', 'long', 'JobLogId', '1', '1', '0', '1', NULL, NULL, NULL, 'EQ', 'input', NULL, 1, 'admin', '2024-11-07 10:11:58', NULL, NULL);
-INSERT INTO `gen_table_column` VALUES (16, 7, 'job_name', '任务名称', 'varchar(64)', 'string', 'JobName', '0', '0', '1', '1', '1', '1', '1', 'LIKE', NULL, NULL, 2, 'admin', '2024-11-07 10:11:58', NULL, NULL);
-INSERT INTO `gen_table_column` VALUES (17, 7, 'job_group', '任务组名', 'varchar(64)', 'string', 'JobGroup', '0', '0', '1', '1', '1', '1', '1', 'input', 'select', 'sys_user_sex', 3, 'admin', '2024-11-07 10:11:58', NULL, NULL);
-INSERT INTO `gen_table_column` VALUES (18, 7, 'invoke_target', '调用目标字符串', 'varchar(500)', 'string', 'InvokeTarget', '0', '0', '1', '1', '1', '1', '1', 'textarea', 'select', 'sys_notice_type', 4, 'admin', '2024-11-07 10:11:58', NULL, NULL);
-INSERT INTO `gen_table_column` VALUES (19, 7, 'job_message', '日志信息', 'varchar(500)', 'string?', 'JobMessage', '0', '0', '0', '1', '1', '1', '1', 'textarea', NULL, NULL, 5, 'admin', '2024-11-07 10:11:58', NULL, NULL);
-INSERT INTO `gen_table_column` VALUES (20, 7, 'status', '执行状态（0正常 1失败）', 'char(1)', 'string?', 'Status', '0', '0', '0', '1', '1', '1', '1', 'input', 'radio', NULL, 6, 'admin', '2024-11-07 10:11:58', NULL, NULL);
-INSERT INTO `gen_table_column` VALUES (21, 7, 'exception_info', '异常信息', 'varchar(2000)', 'string?', 'ExceptionInfo', '0', '0', '0', '1', '1', '1', '1', 'textarea', NULL, NULL, 7, 'admin', '2024-11-07 10:11:58', NULL, NULL);
-INSERT INTO `gen_table_column` VALUES (22, 7, 'create_time', '创建时间', 'datetime', 'DateTime?', 'CreateTime', '0', '0', '0', '1', NULL, NULL, '1', 'BETWEEN', 'datetime', NULL, 8, 'admin', '2024-11-07 10:11:58', NULL, NULL);
-INSERT INTO `gen_table_column` VALUES (23, 8, 'menu_id', '菜单ID', 'bigint', 'long', 'MenuId', '1', '1', '0', '1', NULL, NULL, NULL, 'EQ', 'input', NULL, 1, 'admin', '2024-11-08 08:39:16', NULL, NULL);
-INSERT INTO `gen_table_column` VALUES (24, 8, 'menu_name', '菜单名称', 'varchar(50)', 'string', 'MenuName', '0', '0', '1', '1', '1', '1', '1', 'LIKE', NULL, NULL, 2, 'admin', '2024-11-08 08:39:16', NULL, NULL);
-INSERT INTO `gen_table_column` VALUES (25, 8, 'parent_id', '父菜单ID', 'bigint', 'long?', 'ParentId', '0', '0', '0', '1', '1', '1', '1', 'EQ', 'input', NULL, 3, 'admin', '2024-11-08 08:39:16', NULL, NULL);
-INSERT INTO `gen_table_column` VALUES (26, 8, 'order_num', '显示顺序', 'int', 'long?', 'OrderNum', '0', '0', '0', '1', '1', '1', '1', 'EQ', 'input', NULL, 4, 'admin', '2024-11-08 08:39:16', NULL, NULL);
-INSERT INTO `gen_table_column` VALUES (27, 8, 'path', '路由地址', 'varchar(200)', 'string?', 'Path', '0', '0', '0', '1', '1', '1', '1', 'input', NULL, NULL, 5, 'admin', '2024-11-08 08:39:16', NULL, NULL);
-INSERT INTO `gen_table_column` VALUES (28, 8, 'component', '组件路径', 'varchar(255)', 'string?', 'Component', '0', '0', '0', '1', '1', '1', '1', 'input', NULL, NULL, 6, 'admin', '2024-11-08 08:39:16', NULL, NULL);
-INSERT INTO `gen_table_column` VALUES (29, 8, 'query', '路由参数', 'varchar(255)', 'string?', 'Query', '0', '0', '0', '1', '1', '1', '1', 'input', NULL, NULL, 7, 'admin', '2024-11-08 08:39:16', NULL, NULL);
-INSERT INTO `gen_table_column` VALUES (30, 8, 'is_frame', '是否为外链（0是 1否）', 'int', 'long?', 'IsFrame', '0', '0', '0', '1', '1', '1', '1', 'EQ', 'input', NULL, 8, 'admin', '2024-11-08 08:39:16', NULL, NULL);
-INSERT INTO `gen_table_column` VALUES (31, 8, 'is_cache', '是否缓存（0缓存 1不缓存）', 'int', 'long?', 'IsCache', '0', '0', '0', '1', '1', '1', '1', 'EQ', 'input', NULL, 9, 'admin', '2024-11-08 08:39:16', NULL, NULL);
-INSERT INTO `gen_table_column` VALUES (32, 8, 'menu_type', '菜单类型（M目录 C菜单 F按钮）', 'char(1)', 'string?', 'MenuType', '0', '0', '0', '1', '1', '1', '1', 'input', 'select', NULL, 10, 'admin', '2024-11-08 08:39:16', NULL, NULL);
-INSERT INTO `gen_table_column` VALUES (33, 8, 'visible', '菜单状态（0显示 1隐藏）', 'char(1)', 'string?', 'Visible', '0', '0', '0', '1', '1', '1', '1', 'input', NULL, NULL, 11, 'admin', '2024-11-08 08:39:16', NULL, NULL);
-INSERT INTO `gen_table_column` VALUES (34, 8, 'status', '菜单状态（0正常 1停用）', 'char(1)', 'string?', 'Status', '0', '0', '0', '1', '1', '1', '1', 'input', 'radio', NULL, 12, 'admin', '2024-11-08 08:39:16', NULL, NULL);
-INSERT INTO `gen_table_column` VALUES (35, 8, 'perms', '权限标识', 'varchar(100)', 'string?', 'Perms', '0', '0', '0', '1', '1', '1', '1', 'input', NULL, NULL, 13, 'admin', '2024-11-08 08:39:16', NULL, NULL);
-INSERT INTO `gen_table_column` VALUES (36, 8, 'icon', '菜单图标', 'varchar(100)', 'string?', 'Icon', '0', '0', '0', '1', '1', '1', '1', 'input', NULL, NULL, 14, 'admin', '2024-11-08 08:39:16', NULL, NULL);
-INSERT INTO `gen_table_column` VALUES (37, 8, 'create_by', '创建者', 'varchar(64)', 'string?', 'CreateBy', '0', '0', '0', '1', NULL, NULL, NULL, 'input', NULL, NULL, 15, 'admin', '2024-11-08 08:39:16', NULL, NULL);
-INSERT INTO `gen_table_column` VALUES (38, 8, 'create_time', '创建时间', 'datetime', 'DateTime?', 'CreateTime', '0', '0', '0', '1', NULL, NULL, NULL, 'EQ', 'datetime', NULL, 16, 'admin', '2024-11-08 08:39:16', NULL, NULL);
-INSERT INTO `gen_table_column` VALUES (39, 8, 'update_by', '更新者', 'varchar(64)', 'string?', 'UpdateBy', '0', '0', '0', '1', '1', NULL, NULL, 'input', NULL, NULL, 17, 'admin', '2024-11-08 08:39:16', NULL, NULL);
-INSERT INTO `gen_table_column` VALUES (40, 8, 'update_time', '更新时间', 'datetime', 'DateTime?', 'UpdateTime', '0', '0', '0', '1', '1', NULL, NULL, 'EQ', 'datetime', NULL, 18, 'admin', '2024-11-08 08:39:16', NULL, NULL);
-INSERT INTO `gen_table_column` VALUES (41, 8, 'remark', '备注', 'varchar(500)', 'string?', 'Remark', '0', '0', '0', '1', '1', '1', NULL, 'textarea', NULL, NULL, 19, 'admin', '2024-11-08 08:39:16', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for sys_config
@@ -345,38 +301,11 @@ CREATE TABLE `sys_logininfor`  (
   PRIMARY KEY (`info_id`) USING BTREE,
   INDEX `idx_sys_logininfor_s`(`status` ASC) USING BTREE,
   INDEX `idx_sys_logininfor_lt`(`login_time` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 127 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统访问记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 128 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统访问记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_logininfor
 -- ----------------------------
-INSERT INTO `sys_logininfor` VALUES (100, 'admin', '0.0.0.1', 'X.X.X.X', 'Edge 130.0.0', 'Windows', '0', '登录成功', '2024-11-06 15:11:44');
-INSERT INTO `sys_logininfor` VALUES (101, 'admin', NULL, 'X.X.X.X', NULL, NULL, '1', '验证码错误或已失效', '2024-11-06 15:17:08');
-INSERT INTO `sys_logininfor` VALUES (102, 'admin', NULL, 'X.X.X.X', 'Edge 130.0.0', 'Windows', '1', '验证码错误或已失效', '2024-11-06 15:17:12');
-INSERT INTO `sys_logininfor` VALUES (103, 'admin', '0.0.0.1', 'X.X.X.X', 'Edge 130.0.0', 'Windows', '0', '登录成功', '2024-11-06 15:17:16');
-INSERT INTO `sys_logininfor` VALUES (104, 'admin', NULL, 'X.X.X.X', NULL, NULL, '0', '退出成功', '2024-11-06 15:43:57');
-INSERT INTO `sys_logininfor` VALUES (105, 'admin', '0.0.0.1', 'X.X.X.X', 'Edge 130.0.0', 'Windows', '0', '登录成功', '2024-11-06 15:44:02');
-INSERT INTO `sys_logininfor` VALUES (106, 'admin', NULL, 'X.X.X.X', NULL, NULL, '0', '退出成功', '2024-11-06 15:44:18');
-INSERT INTO `sys_logininfor` VALUES (107, 'ry', '0.0.0.1', 'X.X.X.X', 'Edge 130.0.0', 'Windows', '0', '登录成功', '2024-11-06 15:44:23');
-INSERT INTO `sys_logininfor` VALUES (108, 'ry', '0.0.0.1', 'X.X.X.X', 'Edge 130.0.0', 'Windows', '0', '退出成功', '2024-11-06 15:44:32');
-INSERT INTO `sys_logininfor` VALUES (109, 'admin', '0.0.0.1', 'X.X.X.X', 'Edge 130.0.0', 'Windows', '0', '登录成功', '2024-11-06 15:44:38');
-INSERT INTO `sys_logininfor` VALUES (110, 'admin', '0.0.0.1', 'X.X.X.X', 'Edge 130.0.0', 'Windows', '0', '退出成功', '2024-11-06 15:45:06');
-INSERT INTO `sys_logininfor` VALUES (111, 'ry', '0.0.0.1', 'X.X.X.X', 'Edge 130.0.0', 'Windows', '0', '登录成功', '2024-11-06 15:45:11');
-INSERT INTO `sys_logininfor` VALUES (112, 'ry', NULL, 'X.X.X.X', 'Edge 130.0.0', 'Windows', '0', '退出成功', '2024-11-06 15:47:16');
-INSERT INTO `sys_logininfor` VALUES (113, 'admin', '0.0.0.1', 'X.X.X.X', 'Edge 130.0.0', 'Windows', '1', '验证码错误或已失效', '2024-11-06 15:47:19');
-INSERT INTO `sys_logininfor` VALUES (114, 'admin', '0.0.0.1', 'X.X.X.X', 'Edge 130.0.0', 'Windows', '0', '登录成功', '2024-11-06 15:47:22');
-INSERT INTO `sys_logininfor` VALUES (115, 'admin', NULL, 'X.X.X.X', 'Edge 130.0.0', 'Windows', '0', '退出成功', '2024-11-06 15:48:32');
-INSERT INTO `sys_logininfor` VALUES (116, 'admin', '0.0.0.1', 'X.X.X.X', 'Edge 130.0.0', 'Windows', '1', '验证码错误或已失效', '2024-11-06 15:48:35');
-INSERT INTO `sys_logininfor` VALUES (117, 'admin', '0.0.0.1', 'X.X.X.X', 'Edge 130.0.0', 'Windows', '0', '登录成功', '2024-11-06 15:48:38');
-INSERT INTO `sys_logininfor` VALUES (118, 'admin', '0.0.0.1', 'X.X.X.X', 'Edge 130.0.0', 'Windows', '0', '登录成功', '2024-11-06 16:25:10');
-INSERT INTO `sys_logininfor` VALUES (119, 'admin', '0.0.0.1', 'X.X.X.X', 'Edge 130.0.0', 'Windows', '0', '登录成功', '2024-11-06 17:12:02');
-INSERT INTO `sys_logininfor` VALUES (120, 'admin', NULL, 'X.X.X.X', NULL, NULL, '1', '验证码错误或已失效', '2024-11-07 09:15:27');
-INSERT INTO `sys_logininfor` VALUES (121, 'admin', '0.0.0.1', 'X.X.X.X', 'Edge 130.0.0', 'Windows', '0', '登录成功', '2024-11-07 09:15:32');
-INSERT INTO `sys_logininfor` VALUES (122, 'admin', '0.0.0.1', 'X.X.X.X', 'Edge 130.0.0', 'Windows', '0', '登录成功', '2024-11-07 10:01:48');
-INSERT INTO `sys_logininfor` VALUES (123, 'admin', NULL, 'X.X.X.X', 'Edge 130.0.0', 'Windows', '0', '退出成功', '2024-11-07 10:04:15');
-INSERT INTO `sys_logininfor` VALUES (124, 'admin', '0.0.0.1', 'X.X.X.X', 'Edge 130.0.0', 'Windows', '0', '登录成功', '2024-11-07 10:04:18');
-INSERT INTO `sys_logininfor` VALUES (125, 'admin', '0.0.0.1', 'X.X.X.X', 'Edge 130.0.0', 'Windows', '0', '登录成功', '2024-11-07 14:12:50');
-INSERT INTO `sys_logininfor` VALUES (126, 'admin', '0.0.0.1', 'X.X.X.X', 'Edge 130.0.0', 'Windows', '0', '登录成功', '2024-11-08 08:27:02');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -540,30 +469,12 @@ CREATE TABLE `sys_oper_log`  (
   INDEX `idx_sys_oper_log_bt`(`business_type` ASC) USING BTREE,
   INDEX `idx_sys_oper_log_s`(`status` ASC) USING BTREE,
   INDEX `idx_sys_oper_log_ot`(`oper_time` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 119 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '操作日志记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 139 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '操作日志记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_oper_log
 -- ----------------------------
-INSERT INTO `sys_oper_log` VALUES (100, '角色管理', 2, 'RuoYi.System.Controllers.SysRoleController.Edit', 'PUT', 1, 'admin', NULL, 'http://localhost:5000/system/role', '0.0.0.1', 'X.X.X.X', '{\"role\":{\"roleId\":2,\"roleName\":\"\\u666E\\u901A\\u89D2\\u8272\",\"roleKey\":\"common\",\"roleSort\":2,\"dataScope\":\"2\",\"dataScopeDesc\":null,\"menuCheckStrictly\":true,\"deptCheckStrictly\":true,\"status\":\"0\",\"statusDesc\":null,\"delFlag\":\"0\",\"flag\":false,\"menuIds\":[4],\"deptIds\":null,\"permissions\":null,\"userId\":null,\"userName\":null,\"createBy\":\"admin\",\"createTime\":\"2024-11-06T07:07:10\",\"updateBy\":\"\",\"updateTime\":null,\"remark\":\"\\u666E\\u901A\\u89D2\\u8272\",\"params\":{\"beginTime\":null,\"endTime\":null,\"dataScopeSql\":null}}}', '{\"msg\":\"\\u64CD\\u4F5C\\u6210\\u529F.\",\"code\":200}', 0, NULL, '2024-11-06 15:45:04', 216);
-INSERT INTO `sys_oper_log` VALUES (101, '菜单管理', 3, 'RuoYi.System.Controllers.SysMenuController.Remove', 'DELETE', 1, 'admin', NULL, 'http://localhost:5000/system/menu/111', '0.0.0.1', 'X.X.X.X', '{\"menuId\":111}', '{\"msg\":\"\\u64CD\\u4F5C\\u6210\\u529F.\",\"data\":1,\"code\":200}', 0, NULL, '2024-11-06 16:25:28', 129);
-INSERT INTO `sys_oper_log` VALUES (102, '菜单管理', 3, 'RuoYi.System.Controllers.SysMenuController.Remove', 'DELETE', 1, 'admin', NULL, 'http://localhost:5000/system/menu/115', '0.0.0.1', 'X.X.X.X', '{\"menuId\":115}', '{\"msg\":\"\\u64CD\\u4F5C\\u6210\\u529F.\",\"data\":1,\"code\":200}', 0, NULL, '2024-11-07 09:16:49', 103);
-INSERT INTO `sys_oper_log` VALUES (103, '定时任务', 2, 'RuoYi.Quartz.Controllers.SysJobController.Run', 'PUT', 1, 'admin', NULL, 'http://localhost:5000/monitor/job/run', '0.0.0.1', 'X.X.X.X', '{\"dto\":{\"jobId\":3,\"jobName\":null,\"jobGroup\":\"DEFAULT\",\"invokeTarget\":null,\"cronExpression\":null,\"misfirePolicy\":null,\"misfirePolicyDesc\":null,\"concurrent\":null,\"concurrentDesc\":null,\"status\":null,\"statusDesc\":null,\"createBy\":null,\"createTime\":null,\"updateBy\":null,\"updateTime\":null,\"remark\":null,\"params\":{\"beginTime\":null,\"endTime\":null,\"dataScopeSql\":null}}}', '{\"msg\":\"\\u64CD\\u4F5C\\u6210\\u529F.\",\"code\":200}', 0, NULL, '2024-11-07 10:04:48', 97);
-INSERT INTO `sys_oper_log` VALUES (104, '代码生成', 8, 'RuoYi.Generator.Controllers.GenController.DownloadBatch', 'GET', 1, 'admin', NULL, 'http://localhost:5000/tool/gen/batchGenCode?tables=sys_job_log', '0.0.0.1', 'X.X.X.X', '{\"tables\":\"sys_job_log\"}', NULL, 0, NULL, '2024-11-07 10:12:18', 979);
-INSERT INTO `sys_oper_log` VALUES (105, '定时任务调度日志表', 3, 'RuoYi.Quartz.Controllers.SysJobLogController.Remove', 'DELETE', 1, 'admin', NULL, 'http://localhost:5000/monitor/jobLog/1', '0.0.0.1', 'X.X.X.X', '{\"ids\":\"1\"}', '{\"msg\":\"\\u64CD\\u4F5C\\u6210\\u529F.\",\"data\":1,\"code\":200}', 0, NULL, '2024-11-07 10:18:01', 112);
-INSERT INTO `sys_oper_log` VALUES (106, '定时任务调度日志表', 3, 'RuoYi.Quartz.Controllers.SysJobLogController.Remove', 'DELETE', 1, 'admin', NULL, 'http://localhost:5000/monitor/jobLog/clean', '0.0.0.1', 'X.X.X.X', '{\"ids\":\"clean\"}', NULL, 1, 'clean is not a valid value for Int64. (Parameter \'value\')', '2024-11-07 10:18:04', 300);
-INSERT INTO `sys_oper_log` VALUES (107, '定时任务', 2, 'RuoYi.Quartz.Controllers.SysJobController.Run', 'PUT', 1, 'admin', NULL, 'http://localhost:5000/monitor/job/run', '0.0.0.1', 'X.X.X.X', '{\"dto\":{\"jobId\":3,\"jobName\":null,\"jobGroup\":\"DEFAULT\",\"invokeTarget\":null,\"cronExpression\":null,\"misfirePolicy\":null,\"misfirePolicyDesc\":null,\"concurrent\":null,\"concurrentDesc\":null,\"status\":null,\"statusDesc\":null,\"createBy\":null,\"createTime\":null,\"updateBy\":null,\"updateTime\":null,\"remark\":null,\"params\":{\"beginTime\":null,\"endTime\":null,\"dataScopeSql\":null}}}', '{\"msg\":\"\\u4EFB\\u52A1\\u4E0D\\u5B58\\u5728\\u6216\\u5DF2\\u8FC7\\u671F\\uFF01\",\"code\":500}', 0, NULL, '2024-11-07 10:22:30', 518);
-INSERT INTO `sys_oper_log` VALUES (108, '定时任务', 2, 'RuoYi.Quartz.Controllers.SysJobController.Run', 'PUT', 1, 'admin', NULL, 'http://localhost:5000/monitor/job/run', '0.0.0.1', 'X.X.X.X', '{\"dto\":{\"jobId\":3,\"jobName\":null,\"jobGroup\":\"DEFAULT\",\"invokeTarget\":null,\"cronExpression\":null,\"misfirePolicy\":null,\"misfirePolicyDesc\":null,\"concurrent\":null,\"concurrentDesc\":null,\"status\":null,\"statusDesc\":null,\"createBy\":null,\"createTime\":null,\"updateBy\":null,\"updateTime\":null,\"remark\":null,\"params\":{\"beginTime\":null,\"endTime\":null,\"dataScopeSql\":null}}}', '{\"msg\":\"\\u64CD\\u4F5C\\u6210\\u529F.\",\"code\":200}', 0, NULL, '2024-11-07 10:22:38', 25);
-INSERT INTO `sys_oper_log` VALUES (109, '操作日志', 9, 'RuoYi.Quartz.Controllers.SysJobLogController.Clean', 'DELETE', 1, 'admin', NULL, 'http://localhost:5000/monitor/jobLog/clean', '0.0.0.1', 'X.X.X.X', '{}', '{\"msg\":\"\\u64CD\\u4F5C\\u6210\\u529F.\",\"code\":200}', 0, NULL, '2024-11-07 10:22:44', 150);
-INSERT INTO `sys_oper_log` VALUES (110, '定时任务', 2, 'RuoYi.Quartz.Controllers.SysJobController.Run', 'PUT', 1, 'admin', NULL, 'http://localhost:5000/monitor/job/run', '0.0.0.1', 'X.X.X.X', '{\"dto\":{\"jobId\":1,\"jobName\":null,\"jobGroup\":\"DEFAULT\",\"invokeTarget\":null,\"cronExpression\":null,\"misfirePolicy\":null,\"misfirePolicyDesc\":null,\"concurrent\":null,\"concurrentDesc\":null,\"status\":null,\"statusDesc\":null,\"createBy\":null,\"createTime\":null,\"updateBy\":null,\"updateTime\":null,\"remark\":null,\"params\":{\"beginTime\":null,\"endTime\":null,\"dataScopeSql\":null}}}', '{\"msg\":\"\\u64CD\\u4F5C\\u6210\\u529F.\",\"code\":200}', 0, NULL, '2024-11-07 10:23:06', 9);
-INSERT INTO `sys_oper_log` VALUES (111, '定时任务', 2, 'RuoYi.Quartz.Controllers.SysJobController.Run', 'PUT', 1, 'admin', NULL, 'http://localhost:5000/monitor/job/run', '0.0.0.1', 'X.X.X.X', '{\"dto\":{\"jobId\":3,\"jobName\":null,\"jobGroup\":\"DEFAULT\",\"invokeTarget\":null,\"cronExpression\":null,\"misfirePolicy\":null,\"misfirePolicyDesc\":null,\"concurrent\":null,\"concurrentDesc\":null,\"status\":null,\"statusDesc\":null,\"createBy\":null,\"createTime\":null,\"updateBy\":null,\"updateTime\":null,\"remark\":null,\"params\":{\"beginTime\":null,\"endTime\":null,\"dataScopeSql\":null}}}', '{\"msg\":\"\\u64CD\\u4F5C\\u6210\\u529F.\",\"code\":200}', 0, NULL, '2024-11-07 10:23:17', 7);
-INSERT INTO `sys_oper_log` VALUES (112, '菜单管理', 3, 'RuoYi.System.Controllers.SysMenuController.Remove', 'DELETE', 1, 'admin', NULL, 'http://localhost:5000/system/menu/117', '0.0.0.1', 'X.X.X.X', '{\"menuId\":117}', '{\"msg\":\"\\u64CD\\u4F5C\\u6210\\u529F.\",\"data\":1,\"code\":200}', 0, NULL, '2024-11-07 11:10:37', 126);
-INSERT INTO `sys_oper_log` VALUES (113, '菜单管理', 3, 'RuoYi.System.Controllers.SysMenuController.Remove', 'DELETE', 1, 'admin', NULL, 'http://localhost:5000/system/menu/4', '0.0.0.1', 'X.X.X.X', '{\"menuId\":4}', '{\"msg\":\"\\u83DC\\u5355\\u5DF2\\u5206\\u914D,\\u4E0D\\u5141\\u8BB8\\u5220\\u9664\",\"code\":500}', 0, NULL, '2024-11-07 11:15:57', 20);
-INSERT INTO `sys_oper_log` VALUES (114, '菜单管理', 2, 'RuoYi.System.Controllers.SysMenuController.Edit', 'PUT', 1, 'admin', NULL, 'http://localhost:5000/system/menu', '0.0.0.1', 'X.X.X.X', '{\"menu\":{\"menuId\":4,\"menuName\":\"\\u82E5\\u4F9D\\u5B98\\u7F51\",\"parentName\":null,\"parentId\":4,\"orderNum\":4,\"path\":\"http://ruoyi.vip\",\"component\":null,\"query\":\"\",\"isFrame\":\"0\",\"isCache\":\"0\",\"menuType\":\"M\",\"visible\":\"0\",\"status\":\"0\",\"perms\":\"\",\"icon\":\"guide\",\"roleStatus\":null,\"userId\":0,\"roleId\":0,\"menuTypes\":[],\"createBy\":\"admin\",\"createTime\":\"2024-11-06T07:07:10\",\"updateBy\":\"\",\"updateTime\":null,\"remark\":null,\"params\":{\"beginTime\":null,\"endTime\":null,\"dataScopeSql\":null}}}', '{\"msg\":\"\\u4FEE\\u6539\\u83DC\\u5355\\u0027\\u82E5\\u4F9D\\u5B98\\u7F51\\u0027\\u5931\\u8D25\\uFF0C\\u4E0A\\u7EA7\\u83DC\\u5355\\u4E0D\\u80FD\\u9009\\u62E9\\u81EA\\u5DF1\",\"code\":500}', 0, NULL, '2024-11-07 11:16:45', 7);
-INSERT INTO `sys_oper_log` VALUES (115, '菜单管理', 2, 'RuoYi.System.Controllers.SysMenuController.Edit', 'PUT', 1, 'admin', NULL, 'http://localhost:5000/system/menu', '0.0.0.1', 'X.X.X.X', '{\"menu\":{\"menuId\":4,\"menuName\":\"\\u82E5\\u4F9D\\u5B98\\u7F51\",\"parentName\":null,\"parentId\":4,\"orderNum\":4,\"path\":\"http://ruoyi.vip\",\"component\":null,\"query\":\"\",\"isFrame\":\"0\",\"isCache\":\"0\",\"menuType\":\"M\",\"visible\":\"0\",\"status\":\"0\",\"perms\":\"\",\"icon\":\"guide\",\"roleStatus\":null,\"userId\":0,\"roleId\":0,\"menuTypes\":[],\"createBy\":\"admin\",\"createTime\":\"2024-11-06T07:07:10\",\"updateBy\":\"\",\"updateTime\":null,\"remark\":null,\"params\":{\"beginTime\":null,\"endTime\":null,\"dataScopeSql\":null}}}', '{\"msg\":\"\\u4FEE\\u6539\\u83DC\\u5355\\u0027\\u82E5\\u4F9D\\u5B98\\u7F51\\u0027\\u5931\\u8D25\\uFF0C\\u4E0A\\u7EA7\\u83DC\\u5355\\u4E0D\\u80FD\\u9009\\u62E9\\u81EA\\u5DF1\",\"code\":500}', 0, NULL, '2024-11-07 11:16:56', 4);
-INSERT INTO `sys_oper_log` VALUES (116, '菜单管理', 2, 'RuoYi.System.Controllers.SysMenuController.Edit', 'PUT', 1, 'admin', NULL, 'http://localhost:5000/system/menu', '0.0.0.1', 'X.X.X.X', '{\"menu\":{\"menuId\":4,\"menuName\":\"\\u82E5\\u4F9D\\u5B98\\u7F51\",\"parentName\":null,\"parentId\":0,\"orderNum\":4,\"path\":\"http://ruoyi.vip\",\"component\":null,\"query\":\"\",\"isFrame\":\"1\",\"isCache\":\"0\",\"menuType\":\"M\",\"visible\":\"0\",\"status\":\"0\",\"perms\":\"\",\"icon\":\"guide\",\"roleStatus\":null,\"userId\":0,\"roleId\":0,\"menuTypes\":[],\"createBy\":\"admin\",\"createTime\":\"2024-11-06T07:07:10\",\"updateBy\":\"\",\"updateTime\":null,\"remark\":null,\"params\":{\"beginTime\":null,\"endTime\":null,\"dataScopeSql\":null}}}', '{\"msg\":\"\\u64CD\\u4F5C\\u6210\\u529F.\",\"data\":1,\"code\":200}', 0, NULL, '2024-11-07 11:17:22', 312);
-INSERT INTO `sys_oper_log` VALUES (117, '角色管理', 2, 'RuoYi.System.Controllers.SysRoleController.Edit', 'PUT', 1, 'admin', NULL, 'http://localhost:5000/system/role', '0.0.0.1', 'X.X.X.X', '{\"role\":{\"roleId\":2,\"roleName\":\"\\u666E\\u901A\\u89D2\\u8272\",\"roleKey\":\"common\",\"roleSort\":2,\"dataScope\":\"2\",\"dataScopeDesc\":null,\"menuCheckStrictly\":true,\"deptCheckStrictly\":true,\"status\":\"0\",\"statusDesc\":null,\"delFlag\":\"0\",\"flag\":false,\"menuIds\":[],\"deptIds\":null,\"permissions\":null,\"userId\":null,\"userName\":null,\"createBy\":\"admin\",\"createTime\":\"2024-11-06T07:07:10\",\"updateBy\":\"admin\",\"updateTime\":\"2024-11-06T15:45:03\",\"remark\":\"\\u666E\\u901A\\u89D2\\u8272\",\"params\":{\"beginTime\":null,\"endTime\":null,\"dataScopeSql\":null}}}', '{\"msg\":\"\\u64CD\\u4F5C\\u6210\\u529F.\",\"code\":200}', 0, NULL, '2024-11-07 11:17:38', 145);
-INSERT INTO `sys_oper_log` VALUES (118, '菜单管理', 3, 'RuoYi.System.Controllers.SysMenuController.Remove', 'DELETE', 1, 'admin', NULL, 'http://localhost:5000/system/menu/4', '0.0.0.1', 'X.X.X.X', '{\"menuId\":4}', '{\"msg\":\"\\u64CD\\u4F5C\\u6210\\u529F.\",\"data\":1,\"code\":200}', 0, NULL, '2024-11-07 11:17:43', 29);
+INSERT INTO `sys_oper_log` VALUES (138, '操作日志', 3, 'RuoYi.System.Controllers.SysOperLogController.Remove', 'DELETE', 1, 'admin', NULL, 'http://localhost:5000/monitor/operlog/132,133,134,135,136,137', '0.0.0.1', 'X.X.X.X', '{\"ids\":\"132,133,134,135,136,137\"}', '{\"msg\":\"\\u64CD\\u4F5C\\u6210\\u529F.\",\"data\":6,\"code\":200}', 0, NULL, '2024-11-08 11:00:42', 532);
 
 -- ----------------------------
 -- Table structure for sys_post
@@ -680,7 +591,7 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '', '0192023a7bbd73250516f069df18b500', '0', '0', '0.0.0.1', '2024-11-08 08:27:02', 'admin', '2024-11-06 07:07:09', '', NULL, '管理员');
+INSERT INTO `sys_user` VALUES (1, 103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '', '0192023a7bbd73250516f069df18b500', '0', '0', '0.0.0.1', '2024-11-08 10:16:52', 'admin', '2024-11-06 07:07:09', '', NULL, '管理员');
 INSERT INTO `sys_user` VALUES (2, 105, 'ry', '若依', '00', 'ry@qq.com', '15666666666', '1', '', '0192023a7bbd73250516f069df18b500', '0', '0', '0.0.0.1', '2024-11-06 15:45:12', 'admin', '2024-11-06 07:07:09', '', NULL, '测试员');
 
 -- ----------------------------
