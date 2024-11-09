@@ -13,7 +13,7 @@ internal class Program
       serverOptions.Limits.RequestHeadersTimeout = TimeSpan.FromMinutes(1);
     });
 
-    // ÓÃAspectCoreÌæ»»Ä¬ÈÏµÄIOCÈİÆ÷, ÓÃÓÚAOPÀ¹½Ø, Èç ÊÂÎñÀ¹½ØÆ÷: TransactionalAttribute 
+    // ç”¨AspectCoreæ›¿æ¢é»˜è®¤çš„IOCå®¹å™¨, ç”¨äºAOPæ‹¦æˆª, å¦‚ äº‹åŠ¡æ‹¦æˆªå™¨: TransactionalAttribute
     builder.Host.UseServiceProviderFactory(new DynamicProxyServiceProviderFactory());
 
     builder.Build().Run();

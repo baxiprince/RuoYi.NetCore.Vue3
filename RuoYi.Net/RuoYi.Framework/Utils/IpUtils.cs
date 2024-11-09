@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Net.Sockets;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Http;
 
@@ -134,5 +135,16 @@ public static class IpUtils
   public static string GetHostIpAddr()
   {
     return App.HttpContext.GetLocalIpAddressToIPv4();
+  }
+
+  public static string GetServerIpAddr()
+  {
+    var adds = Dns.GetHostAddresses(Dns.GetHostName());
+    var ipv4Addresses = adds.Where(x =>
+      x.AddressFamily == AddressFamily.InterNetwork && //排除ip6
+      !IPAddress.IsLoopback(x) //排除回环地址
+    ).ToList();
+    var result = string.Join(", ", ipv4Addresses.Select(ip => ip.ToString()));
+    return result;
   }
 }

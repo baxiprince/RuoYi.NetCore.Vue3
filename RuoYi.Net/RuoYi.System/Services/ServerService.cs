@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Globalization;
 using System.Runtime.InteropServices;
 using Hardware.Info;
 using RuoYi.Data.Models;
@@ -7,8 +8,6 @@ namespace RuoYi.System.Services;
 
 public class ServerService : ITransient
 {
-  private const string NO_DATA = "暂无";
-
   // https://github.com/Jinjinov/Hardware.Info
   private readonly IHardwareInfo _hardwareInfo;
 
@@ -17,6 +16,10 @@ public class ServerService : ITransient
     _hardwareInfo = new HardwareInfo();
   }
 
+  /// <summary>
+  ///   获取服务器信息
+  /// </summary>
+  /// <returns></returns>
   public Server GetServerInfo()
   {
     _hardwareInfo.RefreshCPUList();
@@ -24,18 +27,10 @@ public class ServerService : ITransient
     _hardwareInfo.RefreshMemoryStatus();
     _hardwareInfo.RefreshDriveList();
 
-    // cpu
-    var cpuUsed = Convert.ToDouble(_hardwareInfo.CpuList.FirstOrDefault()?.PercentProcessorTime ?? 0);
-    var cpuFree = MathUtils.Round((1 - cpuUsed / 100) * 100, 0);
-    var cpu = new Cpu
-    {
-      CpuNum = Convert.ToInt32(_hardwareInfo.CpuList.FirstOrDefault()?.NumberOfCores ?? 0),
-      Total = cpuUsed,
-      Free = cpuFree,
-      // 其他值暂无法得到
-      Used = NO_DATA,
-      Sys = NO_DATA
-    };
+    // Clr
+    var process = Process.GetCurrentProcess();
+    // 获取初始的 CPU 时间
+    var initialTotalProcessorTime = process.TotalProcessorTime;
 
     // 内存
     var memTotal = _hardwareInfo.MemoryStatus.TotalPhysical;
@@ -52,36 +47,38 @@ public class ServerService : ITransient
     var sys = new Sys
     {
       ComputerName = Environment.MachineName,
-      ComputerIp = IpUtils.GetHostIpAddr(),
+      ComputerIp = IpUtils.GetServerIpAddr(),
       UserDir = Environment.CurrentDirectory,
       OsName = RuntimeInformation.OSDescription + Environment.OSVersion,
       OsArch = RuntimeInformation.OSArchitecture.ToString()
     };
 
-    // Clr
+
     // 当前系统已运行的毫秒数
     //var tickCount = Environment.TickCount64 > 0 ? Environment.TickCount64 : Environment.TickCount;
-    var process = Process.GetCurrentProcess();
-
-    var clrUsed = CalculateClrMem(process.WorkingSet64);
-    //var clrFree = CalculateMem(process.MaxWorkingSet - process.WorkingSet64);
     var clrVersion = Environment.Version.ToString();
     var clrHome = GetClrHome();
+    // 获取clr内存信息
+    var totalMemory = process.WorkingSet64;
+    var usedMemory = process.PrivateMemorySize64;
+    var freeMemory = totalMemory - usedMemory;
+    var memoryUsagePercentage = Math.Round((decimal)usedMemory / totalMemory * 100, 2);
+
     var clr = new Clr
     {
       Name = RuntimeInformation.FrameworkDescription.Replace(clrVersion, ""),
       Version = clrVersion,
       Home = clrHome,
-      Total = NO_DATA, // 暂无
+      Total = CalculateClrMem(totalMemory).ToString(CultureInfo.CurrentCulture),
       Max = process.MaxWorkingSet,
-      Used = clrUsed,
-      Free = NO_DATA, // 暂无
+      Used = CalculateClrMem(usedMemory),
+      Free = CalculateClrMem(freeMemory).ToString(CultureInfo.CurrentCulture),
       //StartTime = GetStartTime(tickCount),
       //RunTime = GetRunTime(tickCount),
       StartTime = process.StartTime.To_YmdHms(),
       RunTime = GetRunTime(DateTime.Now, process.StartTime),
       InputArgs = string.Join(", ", Environment.GetCommandLineArgs()),
-      Usage = NO_DATA
+      Usage = memoryUsagePercentage.ToString(CultureInfo.CurrentCulture)
     };
 
     // 磁盘相关信息
@@ -102,6 +99,23 @@ public class ServerService : ITransient
       };
     }).ToList();
 
+    // cpu
+    // 获取新的 CPU 时间
+    var newTotalProcessorTime = process.TotalProcessorTime;
+    var cpuUsage = (newTotalProcessorTime - initialTotalProcessorTime).TotalMilliseconds / 1000.0;
+    //--------
+    var cpuUsed = Convert.ToDouble(_hardwareInfo.CpuList.FirstOrDefault()?.PercentProcessorTime ?? 0);
+    var cpuFree = MathUtils.Round((1 - cpuUsed / 100) * 100, 2);
+    var cpu = new Cpu
+    {
+      CpuNum = Environment.ProcessorCount,
+      Total = cpuUsed,
+      Free = cpuFree,
+      Used = Math.Round(cpuUsage, 2).ToString(CultureInfo.CurrentCulture),
+      Sys = Math.Round(cpuUsed - cpuUsage, 2).ToString(CultureInfo.CurrentCulture)
+    };
+
+
     return new Server
     {
       Cpu = cpu,
@@ -116,12 +130,12 @@ public class ServerService : ITransient
   ///   计算内存 , 转换成 G
   /// </summary>
   /// <returns></returns>
-  private double CalculateMem(ulong mem)
+  private static double CalculateMem(ulong mem)
   {
     return MathUtils.Round(mem / (1024 * 1024 * 1024.0), 2);
   }
 
-  private double CalculateClrMem(long mem)
+  private static double CalculateClrMem(long mem)
   {
     return MathUtils.Round(mem / (1024 * 1024.0), 2);
   }

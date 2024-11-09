@@ -54,7 +54,6 @@ export function getCodeImg() {
     headers: {
       isToken: false
     },
-    method: 'get',
-    timeout: 20000
+    method: 'get'
   })
 }
