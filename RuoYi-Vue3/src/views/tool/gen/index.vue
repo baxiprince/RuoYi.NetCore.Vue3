@@ -79,8 +79,8 @@
         </template>
       </el-table-column>
     </el-table>
-    <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum" v-model:limit="queryParams.pageSize"
-      @pagination="getList" />
+    <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum"
+      v-model:limit="queryParams.pageSize" @pagination="getList" />
     <!-- 预览界面 -->
     <el-dialog :title="preview.title" v-model="preview.open" width="80%" top="5vh" append-to-body class="scrollbar">
       <el-tabs v-model="preview.activeName">
@@ -89,7 +89,7 @@
           :name="key.substring(key.lastIndexOf('/') + 1, key.indexOf('.cshtml'))" :key="key">
           <el-link :underline="false" icon="DocumentCopy" v-copyText="value" v-copyText:callback="copyTextSuccess"
             style="float:right">&nbsp;复制</el-link>
-          <pre>{{ value }}</pre>
+          <pre><code class="hljs" v-html="highlightedCode(value, key)"></code></pre>
         </el-tab-pane>
       </el-tabs>
     </el-dialog>
@@ -99,10 +99,27 @@
 </template>
 
 <script setup name="Gen">
+
 import { listTable, previewTable, delTable, genCode, synchDb } from "@/api/tool/gen";
 import router from "@/router";
 import importTable from "./importTable";
 import createTable from "./createTable";
+
+// 代码高亮插件
+import hljs from "highlight.js/lib/core";
+import "highlight.js/styles/atom-one-dark.css";
+import cs from "highlight.js/lib/languages/csharp";
+import xml from "highlight.js/lib/languages/xml";
+import javascript from "highlight.js/lib/languages/javascript";
+import sql from "highlight.js/lib/languages/sql";
+
+// 注册所需的编程语言
+hljs.registerLanguage("cs", cs);
+hljs.registerLanguage("xml", xml);
+hljs.registerLanguage("html", xml);
+hljs.registerLanguage("vue", xml);
+hljs.registerLanguage("javascript", javascript);
+hljs.registerLanguage("sql", sql);
 
 const route = useRoute();
 const { proxy } = getCurrentInstance();
@@ -145,6 +162,14 @@ onActivated(() => {
     getList();
   }
 })
+
+/** 高亮显示 */
+function highlightedCode(code, key) {
+  const vmName = key.substring(key.lastIndexOf("/") + 1, key.indexOf(".cshtml"));
+  var language = vmName.substring(vmName.indexOf(".") + 1, vmName.length);
+  const result = hljs.highlight(code || "", { language: language });
+  return result.value || '&nbsp;';
+}
 
 /** 查询表集合 */
 function getList() {
@@ -215,7 +240,7 @@ function handlePreview(row) {
     proxy.$modal.closeLoading();
   }).catch(() => {
     proxy.$modal.closeLoading();
-   });
+  });
 }
 
 /** 复制代码成功 */
