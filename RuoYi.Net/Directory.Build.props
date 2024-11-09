@@ -1,7 +1,9 @@
 <!--用于设置通用的项目属性和构建配置-->
 <Project>
     <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
         <LangVersion>12</LangVersion>
-        <NoWarn>CS8625;CS8601;CS8602;CS8603;CS8604;CS8618;CS8073;CS8620;CS8600;CS0219;CS8629</NoWarn>
+        <NoWarn>1701;1702;1591;8625;8601;8602;8603;8604;8618;8073;8620;8600;0219;8629</NoWarn>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 </Project>
