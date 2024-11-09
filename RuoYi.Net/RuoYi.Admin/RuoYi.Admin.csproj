@@ -5,6 +5,7 @@
         <SatelliteResourceLanguages>en-US</SatelliteResourceLanguages>
         <PublishReadyToRunComposite>true</PublishReadyToRunComposite>
         <ImplicitUsings>enable</ImplicitUsings>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
     <ItemGroup>
@@ -14,6 +15,12 @@
         <ProjectReference Include="..\RuoYi.Generator\RuoYi.Generator.csproj"/>
         <ProjectReference Include="..\RuoYi.Quartz\RuoYi.Quartz.csproj"/>
         <ProjectReference Include="..\RuoYi.System\RuoYi.System.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
     </ItemGroup>
 
 </Project>
