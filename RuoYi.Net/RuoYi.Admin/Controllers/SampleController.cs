@@ -32,6 +32,18 @@ public class SampleController : ControllerBase
   }
 
   /// <summary>
+  ///   从库(slave) 用户查询
+  ///   表 SysUser 的实体类上 添加特性 [Tenant(DataConstants.Slave)]
+  /// </summary>
+  [HttpGet("getWithPerminAndRole/{id}")]
+  [AppAuthorize("system:dept:query")]
+  [AppRoleAuthorize("admin")]
+  public string GetWithPerminAndRole(long? id)
+  {
+    return id.ToString();
+  }
+
+  /// <summary>
   ///   IP限流
   ///   添加特性 [EnableRateLimiting(LimitType.IP)]
   /// </summary>
