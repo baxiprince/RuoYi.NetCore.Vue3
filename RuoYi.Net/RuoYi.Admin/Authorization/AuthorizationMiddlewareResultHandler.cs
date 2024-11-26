@@ -64,12 +64,12 @@ public class AuthorizationMiddlewareResultHandler : IAuthorizationMiddlewareResu
     var appRoleAuthorizeAttribute = httpContext.GetMetadata<AppRoleAuthorizeAttribute>();
     if (Equals(null, appAuthorizeAttribute) == null && appRoleAuthorizeAttribute == null) return true;
 
-    if (appRoleAuthorizeAttribute.AppRoles is { Length: > 0 })
+    if (appRoleAuthorizeAttribute?.AppRoles is { Length: > 0 })
       if (!HasAnyRoles(appRoleAuthorizeAttribute.AppRoles))
         return false;
 
     // 权限验证
-    if (!HasAnyPermi(appAuthorizeAttribute.Policies)) return false;
+    if (!HasAnyPermi(appAuthorizeAttribute?.Policies)) return false;
 
     return true;
   }
@@ -105,7 +105,7 @@ public class AuthorizationMiddlewareResultHandler : IAuthorizationMiddlewareResu
     if (roles == null && roles.Length == 0) return false;
 
     var loginUser = SecurityUtils.GetLoginUser();
-    if (loginUser == null || loginUser.User.Roles == null || loginUser.User.Roles.Count == 0) return false;
+    if (loginUser == null || loginUser.User?.Roles == null || loginUser?.User?.Roles?.Count == 0) return false;
     foreach (var role in roles)
       if (HasRole(role))
         return true;

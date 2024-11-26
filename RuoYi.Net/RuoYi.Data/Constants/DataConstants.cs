@@ -4,6 +4,8 @@ public class DataConstants
 {
   // 主库
   public const string Master = "master";
+  // 从库
+  public const string Slave = "slave";
 
   // 登录用户信息
   public const string USER_NAME = "UserName";
