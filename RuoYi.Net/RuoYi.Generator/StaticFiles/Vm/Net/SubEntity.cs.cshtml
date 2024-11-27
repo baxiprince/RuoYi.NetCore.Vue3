@@ -16,9 +16,10 @@ namespace @(Model.PackageName).Data.Entities
     [SugarTable("@Model.SubTable.TableName", "@Model.SubTable.TableComment")]
     public class @(Model.SubClassName) : @entity
     {
-@{ 
+@{
 foreach (RuoYi.Data.Entities.GenTableColumn col in Model.SubTable.Columns)
 {
+@if (Model.Table.IsTree()){
     @if(!Model.Table.IsSuperColumn(col.NetField))
     {
         @:/// <summary>
@@ -26,8 +27,17 @@ foreach (RuoYi.Data.Entities.GenTableColumn col in Model.SubTable.Columns)
         @:/// </summary>
         @:[SugarColumn(ColumnName = "@col.ColumnName", ColumnDescription = "@col.ColumnComment")]
         @:public @col.NetType @col.NetField { get; set; }
-        @:        
+        @:
     }
+}else{ // 非树状结构未继承相关字段,所以全部字段生成
+        @:/// <summary>
+        @:/// @col.ColumnComment (@col.ColumnName)
+        @:/// </summary>
+        @:[SugarColumn(ColumnName = "@col.ColumnName", ColumnDescription = "@col.ColumnComment")]
+        @:public @col.NetType @col.NetField { get; set; }
+        @:
+}
+
 }
 }
     }

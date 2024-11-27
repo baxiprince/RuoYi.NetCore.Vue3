@@ -13,16 +13,18 @@ namespace @(Model.PackageName).Data.Dtos
     /// </summary>
     public class @(Model.ClassName)Dto : @dto
     {
-@{ 
+@{
 foreach (RuoYi.Data.Entities.GenTableColumn col in Model.Columns)
 {
+    // 自增字段,前端回传允许为null
+    var pk = col.Is_Pk() ? "?" : "";
     @if(!Model.Table.IsSuperColumn(col.NetField))
     {
         @:/// <summary>
         @:/// @col.ColumnComment
         @:/// </summary>
-        @:public @col.NetType @col.NetField { get; set; }
-        @:        
+        @:public @col.NetType@pk @col.NetField { get; set; }
+        @:
     }
 }
 }
