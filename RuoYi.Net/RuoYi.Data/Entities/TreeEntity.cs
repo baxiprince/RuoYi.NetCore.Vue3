@@ -28,6 +28,12 @@ public class TreeEntity : UserBaseEntity
   [SugarColumn(ColumnName = "ancestors", ColumnDescription = "祖级列表")]
   private string Ancestors { get; set; }
 
+  /// <summary>
+  ///   备注
+  /// </summary>
+  [SugarColumn(ColumnName = "remark", ColumnDescription = "备注")]
+  public string? Remark { get; set; }
+
   ///** 子部门 */
   //private List<?> Children = new List<>();
 }
