@@ -1,7 +1,7 @@
-﻿using RuoYi.Data;
+﻿using RuoYi.Common.Data;
+using SqlSugar;
 using @(Model.PackageName).Data.Dtos;
 using @(Model.PackageName).Data.Entities;
-using SqlSugar;
 
 namespace @(Model.PackageName).Repositories
 {
@@ -30,7 +30,7 @@ namespace @(Model.PackageName).Repositories
                 .WhereIF(dto.@(Model.PkColumn.NetField) > 0, (t) => t.@(Model.PkColumn.NetField) == dto.@(Model.PkColumn.NetField))
                 .Select((t) => new @(Model.ClassName)Dto
                 {
-                     @(Model.PkColumn.NetField) = t.@(Model.PkColumn.NetField) 
+                     @(Model.PkColumn.NetField) = t.@(Model.PkColumn.NetField)
                 }, true);
         }
     }
