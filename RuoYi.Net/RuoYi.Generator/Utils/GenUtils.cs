@@ -50,7 +50,8 @@ internal static class GenUtils
       var htmlType = columnLength >= 500 || ArraysContains(GenConstants.COLUMNTYPE_TEXT, dataType)
         ? GenConstants.HTML_TEXTAREA
         : GenConstants.HTML_INPUT;
-      column.QueryType = htmlType;
+      column.HtmlType = htmlType;
+      column.QueryType = GenConstants.QUERY_LIKE;
     }
     else if (ArraysContains(GenConstants.COLUMNTYPE_TIME, dataType))
     {
@@ -110,7 +111,7 @@ internal static class GenUtils
 
   /**
    * 校验数组是否包含指定值
-   * 
+   *
    * @param arr 数组
    * @param targetValue 值
    * @return 是否包含
@@ -122,7 +123,7 @@ internal static class GenUtils
 
   /**
    * 获取模块名
-   * 
+   *
    * @param packageName 包名
    * @return 模块名
    */
@@ -135,7 +136,7 @@ internal static class GenUtils
 
   /**
    * 获取业务名
-   * 
+   *
    * @param tableName 表名
    * @return 业务名
    */
@@ -148,7 +149,7 @@ internal static class GenUtils
 
   /**
    * 表名转换成 类名
-   * 
+   *
    * @param tableName 表名称
    * @return 类名
    */
@@ -188,18 +189,18 @@ internal static class GenUtils
 
   /**
    * 关键字替换
-   * 
+   *
    * @param text 需要被替换的名字
    * @return 替换后的名字
    */
   public static string ReplaceText(string text)
   {
-    return text.Replace("(?:表|若依)", "");
+    return text?.Replace("(?:表|若依)", "");
   }
 
   /**
    * 获取数据库类型字段
-   * 
+   *
    * @param columnType 列类型
    * @return 截取后的列类型
    */
@@ -212,7 +213,7 @@ internal static class GenUtils
 
   /**
    * 获取字段长度
-   * 
+   *
    * @param columnType 列类型
    * @return 截取后的列类型
    */
