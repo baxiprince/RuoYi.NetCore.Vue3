@@ -5,13 +5,13 @@
  Source Server Type    : MySQL
  Source Server Version : 90100 (9.1.0)
  Source Host           : 172.22.90.98:3306
- Source Schema         : ry_net
+ Source Schema         : ry_net_dev
 
  Target Server Type    : MySQL
  Target Server Version : 90100 (9.1.0)
  File Encoding         : 65001
 
- Date: 08/11/2024 11:01:08
+ Date: 28/11/2024 09:14:43
 */
 
 SET NAMES utf8mb4;
@@ -29,6 +29,7 @@ CREATE TABLE `gen_table`  (
   `sub_table_fk_name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '子表关联的外键名',
   `class_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '实体类名称',
   `tpl_category` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT 'crud' COMMENT '使用的模板（crud单表操作 tree树表操作）',
+  `tpl_webtype` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '前端模板类型 vue2 或 vue3',
   `package_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '生成包路径',
   `module_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '生成模块名',
   `business_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '生成业务名',
@@ -43,7 +44,7 @@ CREATE TABLE `gen_table`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`table_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '代码生成业务表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 28 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '代码生成业务表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of gen_table
@@ -77,7 +78,7 @@ CREATE TABLE `gen_table_column`  (
   `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '更新者',
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`column_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 76 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '代码生成业务表字段' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 138 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '代码生成业务表字段' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of gen_table_column
@@ -301,11 +302,19 @@ CREATE TABLE `sys_logininfor`  (
   PRIMARY KEY (`info_id`) USING BTREE,
   INDEX `idx_sys_logininfor_s`(`status` ASC) USING BTREE,
   INDEX `idx_sys_logininfor_lt`(`login_time` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 128 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统访问记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 136 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统访问记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_logininfor
 -- ----------------------------
+INSERT INTO `sys_logininfor` VALUES (128, 'admin', '0.0.0.1', 'X.X.X.X', 'Edge 130.0.0', 'Windows', '0', '登录成功', '2024-11-08 17:11:51');
+INSERT INTO `sys_logininfor` VALUES (129, 'admin', '0.0.0.1', 'X.X.X.X', 'Edge 130.0.0', 'Windows', '0', '登录成功', '2024-11-08 17:15:53');
+INSERT INTO `sys_logininfor` VALUES (130, 'admin', NULL, 'X.X.X.X', NULL, NULL, '1', '验证码错误或已失效', '2024-11-09 08:30:18');
+INSERT INTO `sys_logininfor` VALUES (131, 'admin', NULL, 'X.X.X.X', 'Edge 130.0.0', 'Windows', '1', '验证码错误或已失效', '2024-11-09 08:30:23');
+INSERT INTO `sys_logininfor` VALUES (132, 'admin', '0.0.0.1', 'X.X.X.X', 'Edge 130.0.0', 'Windows', '0', '登录成功', '2024-11-09 08:30:25');
+INSERT INTO `sys_logininfor` VALUES (133, 'admin', '0.0.0.1', 'X.X.X.X', 'Edge 131.0.0', 'Windows', '0', '登录成功', '2024-11-27 11:46:03');
+INSERT INTO `sys_logininfor` VALUES (134, 'admin', NULL, 'X.X.X.X', NULL, NULL, '1', '验证码错误或已失效', '2024-11-27 13:57:44');
+INSERT INTO `sys_logininfor` VALUES (135, 'admin', '0.0.0.1', 'X.X.X.X', 'Edge 131.0.0', 'Windows', '0', '登录成功', '2024-11-27 13:57:49');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -469,12 +478,27 @@ CREATE TABLE `sys_oper_log`  (
   INDEX `idx_sys_oper_log_bt`(`business_type` ASC) USING BTREE,
   INDEX `idx_sys_oper_log_s`(`status` ASC) USING BTREE,
   INDEX `idx_sys_oper_log_ot`(`oper_time` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 139 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '操作日志记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 154 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '操作日志记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_oper_log
 -- ----------------------------
 INSERT INTO `sys_oper_log` VALUES (138, '操作日志', 3, 'RuoYi.System.Controllers.SysOperLogController.Remove', 'DELETE', 1, 'admin', NULL, 'http://localhost:5000/monitor/operlog/132,133,134,135,136,137', '0.0.0.1', 'X.X.X.X', '{\"ids\":\"132,133,134,135,136,137\"}', '{\"msg\":\"\\u64CD\\u4F5C\\u6210\\u529F.\",\"data\":6,\"code\":200}', 0, NULL, '2024-11-08 11:00:42', 532);
+INSERT INTO `sys_oper_log` VALUES (139, '代码生成', 3, 'RuoYi.Generator.Controllers.GenController.Remove', 'DELETE', 1, 'admin', NULL, 'http://localhost:5000/tool/gen/12', '0.0.0.1', 'X.X.X.X', '{\"tableIds\":\"12\"}', '{\"msg\":\"\\u64CD\\u4F5C\\u6210\\u529F.\",\"code\":200}', 0, NULL, '2024-11-27 14:01:39', 120);
+INSERT INTO `sys_oper_log` VALUES (140, '代码生成', 3, 'RuoYi.Generator.Controllers.GenController.Remove', 'DELETE', 1, 'admin', NULL, 'http://localhost:5000/tool/gen/13', '0.0.0.1', 'X.X.X.X', '{\"tableIds\":\"13\"}', '{\"msg\":\"\\u64CD\\u4F5C\\u6210\\u529F.\",\"code\":200}', 0, NULL, '2024-11-27 14:10:39', 239);
+INSERT INTO `sys_oper_log` VALUES (141, '代码生成', 3, 'RuoYi.Generator.Controllers.GenController.Remove', 'DELETE', 1, 'admin', NULL, 'http://localhost:5000/tool/gen/14', '0.0.0.1', 'X.X.X.X', '{\"tableIds\":\"14\"}', '{\"msg\":\"\\u64CD\\u4F5C\\u6210\\u529F.\",\"code\":200}', 0, NULL, '2024-11-27 14:20:40', 193);
+INSERT INTO `sys_oper_log` VALUES (142, '代码生成', 3, 'RuoYi.Generator.Controllers.GenController.Remove', 'DELETE', 1, 'admin', NULL, 'http://localhost:5000/tool/gen/15', '0.0.0.1', 'X.X.X.X', '{\"tableIds\":\"15\"}', '{\"msg\":\"\\u64CD\\u4F5C\\u6210\\u529F.\",\"code\":200}', 0, NULL, '2024-11-27 14:22:09', 83);
+INSERT INTO `sys_oper_log` VALUES (143, '代码生成', 3, 'RuoYi.Generator.Controllers.GenController.Remove', 'DELETE', 1, 'admin', NULL, 'http://localhost:5000/tool/gen/16', '0.0.0.1', 'X.X.X.X', '{\"tableIds\":\"16\"}', '{\"msg\":\"\\u64CD\\u4F5C\\u6210\\u529F.\",\"code\":200}', 0, NULL, '2024-11-27 14:23:48', 81);
+INSERT INTO `sys_oper_log` VALUES (144, '代码生成', 3, 'RuoYi.Generator.Controllers.GenController.Remove', 'DELETE', 1, 'admin', NULL, 'http://localhost:5000/tool/gen/17', '0.0.0.1', 'X.X.X.X', '{\"tableIds\":\"17\"}', '{\"msg\":\"\\u64CD\\u4F5C\\u6210\\u529F.\",\"code\":200}', 0, NULL, '2024-11-27 14:24:47', 115);
+INSERT INTO `sys_oper_log` VALUES (145, '代码生成', 3, 'RuoYi.Generator.Controllers.GenController.Remove', 'DELETE', 1, 'admin', NULL, 'http://localhost:5000/tool/gen/18', '0.0.0.1', 'X.X.X.X', '{\"tableIds\":\"18\"}', '{\"msg\":\"\\u64CD\\u4F5C\\u6210\\u529F.\",\"code\":200}', 0, NULL, '2024-11-27 14:26:49', 107);
+INSERT INTO `sys_oper_log` VALUES (146, '代码生成', 3, 'RuoYi.Generator.Controllers.GenController.Remove', 'DELETE', 1, 'admin', NULL, 'http://localhost:5000/tool/gen/19', '0.0.0.1', 'X.X.X.X', '{\"tableIds\":\"19\"}', '{\"msg\":\"\\u64CD\\u4F5C\\u6210\\u529F.\",\"code\":200}', 0, NULL, '2024-11-27 14:30:04', 160);
+INSERT INTO `sys_oper_log` VALUES (147, '代码生成', 3, 'RuoYi.Generator.Controllers.GenController.Remove', 'DELETE', 1, 'admin', NULL, 'http://localhost:5000/tool/gen/20', '0.0.0.1', 'X.X.X.X', '{\"tableIds\":\"20\"}', '{\"msg\":\"\\u64CD\\u4F5C\\u6210\\u529F.\",\"code\":200}', 0, NULL, '2024-11-27 14:31:23', 769);
+INSERT INTO `sys_oper_log` VALUES (148, '代码生成', 3, 'RuoYi.Generator.Controllers.GenController.Remove', 'DELETE', 1, 'admin', NULL, 'http://localhost:5000/tool/gen/21', '0.0.0.1', 'X.X.X.X', '{\"tableIds\":\"21\"}', '{\"msg\":\"\\u64CD\\u4F5C\\u6210\\u529F.\",\"code\":200}', 0, NULL, '2024-11-27 14:32:43', 531);
+INSERT INTO `sys_oper_log` VALUES (149, '代码生成', 3, 'RuoYi.Generator.Controllers.GenController.Remove', 'DELETE', 1, 'admin', NULL, 'http://localhost:5000/tool/gen/22', '0.0.0.1', 'X.X.X.X', '{\"tableIds\":\"22\"}', '{\"msg\":\"\\u64CD\\u4F5C\\u6210\\u529F.\",\"code\":200}', 0, NULL, '2024-11-27 14:34:19', 116);
+INSERT INTO `sys_oper_log` VALUES (150, '代码生成', 3, 'RuoYi.Generator.Controllers.GenController.Remove', 'DELETE', 1, 'admin', NULL, 'http://localhost:5000/tool/gen/23', '0.0.0.1', 'X.X.X.X', '{\"tableIds\":\"23\"}', '{\"msg\":\"\\u64CD\\u4F5C\\u6210\\u529F.\",\"code\":200}', 0, NULL, '2024-11-27 14:36:58', 229);
+INSERT INTO `sys_oper_log` VALUES (151, '代码生成', 3, 'RuoYi.Generator.Controllers.GenController.Remove', 'DELETE', 1, 'admin', NULL, 'http://localhost:5000/tool/gen/24', '0.0.0.1', 'X.X.X.X', '{\"tableIds\":\"24\"}', '{\"msg\":\"\\u64CD\\u4F5C\\u6210\\u529F.\",\"code\":200}', 0, NULL, '2024-11-27 14:36:59', 20);
+INSERT INTO `sys_oper_log` VALUES (152, '代码生成', 3, 'RuoYi.Generator.Controllers.GenController.Remove', 'DELETE', 1, 'admin', NULL, 'http://localhost:5000/tool/gen/25', '0.0.0.1', 'X.X.X.X', '{\"tableIds\":\"25\"}', '{\"msg\":\"\\u64CD\\u4F5C\\u6210\\u529F.\",\"code\":200}', 0, NULL, '2024-11-27 14:40:02', 128);
+INSERT INTO `sys_oper_log` VALUES (153, '代码生成', 3, 'RuoYi.Generator.Controllers.GenController.Remove', 'DELETE', 1, 'admin', NULL, 'http://localhost:5000/tool/gen/26', '0.0.0.1', 'X.X.X.X', '{\"tableIds\":\"26\"}', '{\"msg\":\"\\u64CD\\u4F5C\\u6210\\u529F.\",\"code\":200}', 0, NULL, '2024-11-27 14:42:20', 76);
 
 -- ----------------------------
 -- Table structure for sys_post
@@ -591,7 +615,7 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '', '0192023a7bbd73250516f069df18b500', '0', '0', '0.0.0.1', '2024-11-08 10:16:52', 'admin', '2024-11-06 07:07:09', '', NULL, '管理员');
+INSERT INTO `sys_user` VALUES (1, 103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '', '0192023a7bbd73250516f069df18b500', '0', '0', '0.0.0.1', '2024-11-27 13:57:49', 'admin', '2024-11-06 07:07:09', '', NULL, '管理员');
 INSERT INTO `sys_user` VALUES (2, 105, 'ry', '若依', '00', 'ry@qq.com', '15666666666', '1', '', '0192023a7bbd73250516f069df18b500', '0', '0', '0.0.0.1', '2024-11-06 15:45:12', 'admin', '2024-11-06 07:07:09', '', NULL, '测试员');
 
 -- ----------------------------
