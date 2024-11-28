@@ -1354,6 +1354,7 @@ CREATE TABLE [dbo].[gen_table](
 	[sub_table_fk_name] [varchar](64) NULL,
 	[class_name] [varchar](100) NULL,
 	[tpl_category] [varchar](200) NULL,
+	[tpl_webtype] [varchar](200) NULL,
 	[package_name] [varchar](100) NULL,
 	[module_name] [varchar](30) NULL,
 	[business_name] [varchar](30) NULL,
@@ -1389,6 +1390,8 @@ GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'实体类名称' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'gen_table', @level2type=N'COLUMN',@level2name=N'class_name'
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'使用的模板（crud单表操作 tree树表操作）' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'gen_table', @level2type=N'COLUMN',@level2name=N'tpl_category'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'前端模板类型' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'gen_table', @level2type=N'COLUMN',@level2name=N'tpl_webtype'
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'生成包路径' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'gen_table', @level2type=N'COLUMN',@level2name=N'package_name'
 GO
