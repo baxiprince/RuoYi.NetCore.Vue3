@@ -34,6 +34,13 @@
                 <el-option label="decimal" value="decimal" />
                 <el-option label="DateTime" value="DateTime" />
                 <el-option label="bool" value="bool" />
+                <el-option label="long?" value="long?" />
+                <el-option label="string?" value="string?" />
+                <el-option label="int?" value="int?" />
+                <el-option label="double?" value="double?" />
+                <el-option label="decimal?" value="decimal?" />
+                <el-option label="DateTime?" value="DateTime?" />
+                <el-option label="bool?" value="bool?" />
               </el-select>
             </template>
           </el-table-column>
