@@ -27,6 +27,8 @@ public class @(Model.ClassName)Repository : BaseRepository<@(Model.ClassName), @
             return Repo.AsQueryable()
             @{
                     foreach (RuoYi.Data.Entities.GenTableColumn col in Model.Columns){
+                        // 不是查询字段直接忽略
+                        if(col.IsQuery != "1")continue;
                         // 条件判断
                         var tj = "!string.IsNullOrWhiteSpace(dto."+ col.NetField +")";
                         if (col.NetType.Contains("DateTime"))
@@ -93,6 +95,8 @@ public class @(Model.ClassName)Repository : BaseRepository<@(Model.ClassName), @
                 return Repo.AsQueryable()
                 @{
                     foreach (RuoYi.Data.Entities.GenTableColumn col in Model.Columns){
+                        // 不是查询字段直接忽略
+                        if(col.IsQuery != "1")continue;
                         // 条件判断
                         var tj = "!string.IsNullOrWhiteSpace(dto."+ col.NetField +")";
                         if (col.NetType.Contains("DateTime"))
