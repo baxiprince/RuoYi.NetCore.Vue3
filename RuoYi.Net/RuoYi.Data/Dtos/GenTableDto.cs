@@ -39,6 +39,11 @@ public class GenTableDto : BaseDto
   public string? ClassName { get; set; }
 
   /**
+ * 前端模板类型 vue2 或 vue3
+ */
+  public string? TplWebType { get; set; }
+
+  /**
    * 使用的模板（crud单表操作 tree树表操作 sub主子表操作）
    */
   public string? TplCategory { get; set; }

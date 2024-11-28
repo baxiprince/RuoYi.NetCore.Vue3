@@ -1,7 +1,7 @@
-﻿using RuoYi.Common.Data;
-using SqlSugar;
+﻿using RuoYi.Data;
 using @(Model.PackageName).Data.Dtos;
 using @(Model.PackageName).Data.Entities;
+using SqlSugar;
 
 namespace @(Model.PackageName).Repositories
 {
@@ -10,24 +10,144 @@ namespace @(Model.PackageName).Repositories
     ///  author @Model.Author
     ///  date   @Model.DateTime
     /// </summary>
-    public class @(Model.ClassName)Repository : BaseRepository<@(Model.ClassName), @(Model.ClassName)Dto>
+public class @(Model.ClassName)Repository : BaseRepository<@(Model.ClassName), @(Model.ClassName)Dto>
     {
-        public @(Model.ClassName)Repository(ISqlSugarRepository<@(Model.ClassName)> sqlSugarRepository)
+    public @(Model.ClassName)Repository(ISqlSugarRepository<@(Model.ClassName)> sqlSugarRepository)
         {
-            Repo = sqlSugarRepository;
+        Repo = sqlSugarRepository;
         }
 
+        /// <summary>
+        /// 构造条件查询器
+        /// </summary>
+        /// <param name="dto">domain</param>
+        /// <returns></returns>
         public override ISugarQueryable<@(Model.ClassName)> Queryable(@(Model.ClassName)Dto dto)
-        {
+            {
             return Repo.AsQueryable()
-                .WhereIF(dto.@(Model.PkColumn.NetField) > 0, (t) => t.@(Model.PkColumn.NetField) == dto.@(Model.PkColumn.NetField))
-            ;
-        }
+            @{
+                    foreach (RuoYi.Data.Entities.GenTableColumn col in Model.Columns){
+                        // 条件判断
+                        var tj = "!string.IsNullOrWhiteSpace(dto."+ col.NetField +")";
+                        if (col.NetType.Contains("DateTime"))
+                        {
+                            tj="dto."+ col.NetField +" != null";
+                        }
+                        else if (col.NetType.Contains("int") ||
+                        col.NetType.Contains("long") ||
+                        col.NetType.Contains("double") ||
+                        col.NetType.Contains("decimal"))
+                        {
+                            tj = "dto." + col.NetField + " > 0";
+                        }else if (col.NetType.Contains("bool")){
+                            tj = "dto." + col.NetField + " != null";
+                        }
+                        // 开始添加判断添加
+                        @if (col.Is_Pk())
+                        {
+                            @:.WhereIF(dto.@(col.NetField) > 0, (t) => t.@(col.NetField) == dto.@col.NetField)
+                        }
+                        else if ( @col.QueryType == "LIKE")
+                        {
+                            @:.WhereIF(@(tj), (t) => t.@(col.NetField).Contains(dto.@col.NetField))
+                        }else if (@col.QueryType == "EQ" )
+                        {
+                            @:.WhereIF(@(tj), (t) => t.@(col.NetField) == dto.@col.NetField)
+                        }else if (@col.QueryType == "NE" )
+                        {
+                            @:.WhereIF(@(tj), (t) => t.@(col.NetField) != dto.@col.NetField)
+                        }else if (@col.QueryType == "GT" && !col.NetType.Contains("string"))
+                        {
+                            @:.WhereIF(@(tj), (t) => t.@(col.NetField) > dto.@col.NetField)
+                        }
+                        else if (@col.QueryType == "GTE" && !col.NetType.Contains("string"))
+                        {
+                            @:.WhereIF(@(tj), (t) => t.@(col.NetField) >= dto.@col.NetField)
+                        }
+                        else if (@col.QueryType == "LT" && !col.NetType.Contains("string"))
+                        {
+                            @:.WhereIF(@(tj), (t) => t.@(col.NetField) < dto.@col.NetField)
+                        }
+                        else if (@col.QueryType == "LTE" && !col.NetType.Contains("string"))
+                        {
+                            @:.WhereIF(@(tj), (t) => t.@(col.NetField) <= dto.@col.NetField)
+                        }else if (@col.QueryType == "BETWEEN" && @col.NetType.Contains("DateTime"))
+                        {
+                            @:.WhereIF(dto.Params.BeginTime != null, (t) =>  t.@(col.NetField) >= dto.Params.BeginTime && t.@(col.NetField) <= dto.Params.EndTime )
+                        }
+                        else
+                        {
+                            @:.WhereIF(@(tj), (t) => t.@(col.NetField) == dto.@col.NetField)
+                        }
+                    }
+                 };
+            }
 
-        public override ISugarQueryable<@(Model.ClassName)Dto> DtoQueryable(@(Model.ClassName)Dto dto)
-        {
-            return Repo.AsQueryable()
-                .WhereIF(dto.@(Model.PkColumn.NetField) > 0, (t) => t.@(Model.PkColumn.NetField) == dto.@(Model.PkColumn.NetField))
+            /// <summary>
+            /// 构造条件查询器
+            /// </summary>
+            /// <param name="dto">domain</param>
+            /// <returns></returns>
+            public override ISugarQueryable<@(Model.ClassName)Dto> DtoQueryable(@(Model.ClassName)Dto dto)
+                {
+                return Repo.AsQueryable()
+                @{
+                    foreach (RuoYi.Data.Entities.GenTableColumn col in Model.Columns){
+                        // 条件判断
+                        var tj = "!string.IsNullOrWhiteSpace(dto."+ col.NetField +")";
+                        if (col.NetType.Contains("DateTime"))
+                        {
+                            tj="dto."+ col.NetField +" != null";
+                        }
+                        else if (col.NetType.Contains("int") ||
+                        col.NetType.Contains("long") ||
+                        col.NetType.Contains("Integer") ||
+                        col.NetType.Contains("Double") ||
+                        col.NetType.Contains("BigDecimal"))
+                        {
+                            tj = "dto." + col.NetField + " > 0";
+                        }else if (col.NetType.Contains("Boolean") || col.NetType.Contains("bool")){
+                            tj = "dto." + col.NetField + " != null";
+                        }
+                        // 开始添加判断添加
+                        @if (col.Is_Pk())
+                        {
+                            @:.WhereIF(dto.@(col.NetField) > 0, (t) => t.@(col.NetField) == dto.@col.NetField)
+                        }
+                        else if ( @col.QueryType == "LIKE")
+                        {
+                            @:.WhereIF(@(tj), (t) => t.@(col.NetField).Contains(dto.@col.NetField))
+                        }else if (@col.QueryType == "EQ" )
+                        {
+                            @:.WhereIF(@(tj), (t) => t.@(col.NetField) == dto.@col.NetField)
+                        }else if (@col.QueryType == "NE" )
+                        {
+                            @:.WhereIF(@(tj), (t) => t.@(col.NetField) != dto.@col.NetField)
+                        }else if (@col.QueryType == "GT" && !col.NetType.Contains("string"))
+                        {
+                            @:.WhereIF(@(tj), (t) => t.@(col.NetField) > dto.@col.NetField)
+                        }
+                        else if (@col.QueryType == "GTE" && !col.NetType.Contains("string"))
+                        {
+                            @:.WhereIF(@(tj), (t) => t.@(col.NetField) >= dto.@col.NetField)
+                        }
+                        else if (@col.QueryType == "LT" && !col.NetType.Contains("string"))
+                        {
+                            @:.WhereIF(@(tj), (t) => t.@(col.NetField) < dto.@col.NetField)
+                        }
+                        else if (@col.QueryType == "LTE" && !col.NetType.Contains("string"))
+                        {
+                            @:.WhereIF(@(tj), (t) => t.@(col.NetField) <= dto.@col.NetField)
+                        }else if (@col.QueryType == "BETWEEN" && @col.NetType.Contains("DateTime"))
+                        {
+                            @:.WhereIF(dto.Params.BeginTime != null, (t) =>  t.@(col.NetField) >= dto.Params.BeginTime && t.@(col.NetField) <= dto.Params.EndTime )
+                        }
+                        else
+                        {
+                            @:.WhereIF(@(tj), (t) => t.@(col.NetField) == dto.@col.NetField)
+                        }
+                    }
+                 }
                 .Select((t) => new @(Model.ClassName)Dto
                 {
                      @(Model.PkColumn.NetField) = t.@(Model.PkColumn.NetField)

@@ -45,6 +45,12 @@ public class GenTable : UserBaseEntity
   public string? ClassName { get; set; }
 
   /**
+  * 前端模板类型 vue2 或 vue3
+  */
+  [SugarColumn(ColumnName = "tpl_webtype", ColumnDescription = "前端模板类型")]
+  public string? TplWebType { get; set; }
+
+  /**
    * 使用的模板（crud单表操作 tree树表操作 sub主子表操作）
    */
   [SugarColumn(ColumnName = "tpl_category", ColumnDescription = "使用的模板")]

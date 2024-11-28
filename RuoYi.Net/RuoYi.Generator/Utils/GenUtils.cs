@@ -26,6 +26,7 @@ internal static class GenUtils
 
     genTable.GenType = genTable.GenType ?? "0";
     genTable.TplCategory = genTable.TplCategory ?? "crud";
+    genTable.TplWebType = genTable.TplWebType ?? "element-plus";
   }
 
   /**

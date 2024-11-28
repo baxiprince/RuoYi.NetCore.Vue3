@@ -27,13 +27,20 @@
           <el-table-column label=".NET类型" min-width="11%">
             <template #default="scope">
               <el-select v-model="scope.row.netType">
-                <el-option label="Long" value="Long" />
-                <el-option label="String" value="String" />
-                <el-option label="Integer" value="Integer" />
-                <el-option label="Double" value="Double" />
-                <el-option label="BigDecimal" value="BigDecimal" />
-                <el-option label="Date" value="Date" />
-                <el-option label="Boolean" value="Boolean" />
+                <el-option label="long" value="long" />
+                <el-option label="string" value="string" />
+                <el-option label="int" value="int" />
+                <el-option label="double" value="double" />
+                <el-option label="decimal" value="decimal" />
+                <el-option label="DateTime" value="DateTime" />
+                <el-option label="bool" value="bool" />
+                <el-option label="long?" value="long?" />
+                <el-option label="string?" value="string?" />
+                <el-option label="int?" value="int?" />
+                <el-option label="double?" value="double?" />
+                <el-option label="decimal?" value="decimal?" />
+                <el-option label="DateTime?" value="DateTime?" />
+                <el-option label="bool?" value="bool?" />
               </el-select>
             </template>
           </el-table-column>
