@@ -2,6 +2,7 @@
 
 public class TemplateContext
 {
+  public string? TplWebType { get; set; }
   public string? TplCategory { get; set; }
   public string? TableName { get; set; }
   public string? TableComment { get; set; }

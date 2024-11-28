@@ -12,6 +12,18 @@
 
     <ItemGroup>
         <None Remove="gensettings.json"/>
+        <None Update="StaticFiles\Vm\Vue\Vue3\index-tree.vue.cshtml">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="StaticFiles\Vm\Vue\Vue3\index.vue.cshtml">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="StaticFiles\Vm\Vue\Vue2\index-tree.vue.cshtml">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="StaticFiles\Vm\Vue\Vue2\index.vue.cshtml">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
 
     <ItemGroup>
@@ -21,15 +33,15 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="RazorEngineCore" Version="2024.4.1"/>
-        <PackageReference Include="SharpZipLib" Version="1.4.2"/>
+        <PackageReference Include="RazorEngineCore" Version="2024.4.1" />
+        <PackageReference Include="SharpZipLib" Version="1.4.2" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\RuoYi.Common\RuoYi.Common.csproj"/>
-        <ProjectReference Include="..\RuoYi.Data\RuoYi.Data.csproj"/>
-        <ProjectReference Include="..\RuoYi.Framework\RuoYi.Framework.csproj"/>
-        <ProjectReference Include="..\RuoYi.System\RuoYi.System.csproj"/>
+        <ProjectReference Include="..\RuoYi.Common\RuoYi.Common.csproj" />
+        <ProjectReference Include="..\RuoYi.Data\RuoYi.Data.csproj" />
+        <ProjectReference Include="..\RuoYi.Framework\RuoYi.Framework.csproj" />
+        <ProjectReference Include="..\RuoYi.System\RuoYi.System.csproj" />
     </ItemGroup>
 
     <ItemGroup>
@@ -61,12 +73,6 @@
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
         <None Update="StaticFiles\Vm\Sql\sqlserver.sql.cshtml">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
-        <None Update="StaticFiles\Vm\Vue\index-tree.vue.cshtml">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
-        <None Update="StaticFiles\Vm\Vue\index.vue.cshtml">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
     </ItemGroup>

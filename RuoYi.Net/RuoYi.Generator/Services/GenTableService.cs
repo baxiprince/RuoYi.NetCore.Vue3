@@ -161,7 +161,7 @@ public class GenTableService : BaseService<GenTable, GenTableDto>, ITransient
     var context = TemplateUtils.PrepareContext(table);
 
     // 获取模板列表
-    var templatePaths = TemplateUtils.GetTemplateList(_genTableRepository.GetDbType(), table.TplCategory);
+    var templatePaths = TemplateUtils.GetTemplateList(_genTableRepository.GetDbType(), table.TplCategory,table.TplWebType);
     foreach (var templatePath in templatePaths)
     {
       //// 渲染模板
@@ -296,7 +296,7 @@ public class GenTableService : BaseService<GenTable, GenTableDto>, ITransient
 
   /**
    * 设置主键列信息
-   * 
+   *
    * @param table 业务表信息
    */
   public void SetPkColumn(GenTable table)
@@ -326,7 +326,7 @@ public class GenTableService : BaseService<GenTable, GenTableDto>, ITransient
 
   /**
    * 设置主子表信息
-   * 
+   *
    * @param table 业务表信息
    */
   public void SetSubTable(GenTable table)
@@ -354,7 +354,7 @@ public class GenTableService : BaseService<GenTable, GenTableDto>, ITransient
     var context = TemplateUtils.PrepareContext(table);
 
     // 获取模板列表
-    var templates = TemplateUtils.GetTemplateList(_genTableRepository.GetDbType(), table.TplCategory);
+    var templates = TemplateUtils.GetTemplateList(_genTableRepository.GetDbType(), table.TplCategory, table.TplWebType);
     foreach (var template in templates)
     {
       // 渲染模板

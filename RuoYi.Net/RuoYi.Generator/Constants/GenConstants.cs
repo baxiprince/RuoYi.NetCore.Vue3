@@ -6,6 +6,16 @@
 public class GenConstants
 {
   /**
+   * Vue2前端
+   */
+  public const string VUE2 = "element-ui";
+
+  /**
+   * Vue3前端
+   */
+  public const string VUE3 = "element-plus";
+
+  /**
    * 单表（增删改查）
    */
   public const string TPL_CRUD = "crud";

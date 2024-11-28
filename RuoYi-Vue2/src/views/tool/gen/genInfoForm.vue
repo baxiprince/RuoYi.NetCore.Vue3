@@ -11,11 +11,22 @@
           </el-select>
         </el-form-item>
       </el-col>
+
+      <el-col :span="12">
+        <el-form-item prop="tplWebType">
+          <span slot="label">前端类型</span>
+          <el-select v-model="info.tplWebType">
+            <el-option label="Vue2 Element UI 模版" value="element-ui" />
+            <el-option label="Vue3 Element Plus 模版" value="element-plus" />
+          </el-select>
+        </el-form-item>
+      </el-col>
+
       <el-col :span="12">
         <el-form-item prop="packageName">
           <span slot="label">
             生成包路径
-            <el-tooltip content="生成在哪个java包下，例如 com.ruoyi.system" placement="top">
+            <el-tooltip content="生成在哪个.Net包下，例如 RuoYi.system" placement="top">
               <i class="el-icon-question"></i>
             </el-tooltip>
           </span>
@@ -259,6 +270,13 @@ export default {
   watch: {
     'info.subTableName': function(val) {
       this.setSubTableColumns(val);
+    }
+  },
+  watch: {
+    'info.tplWebType': function(val) {
+      if (val === '') {
+        this.info.tplWebType = "element-ui";
+      }
     }
   },
   methods: {
