@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RuoYi.Data.Attributes;
 
 namespace RuoYi.Data.Dtos;
 
@@ -7,26 +8,31 @@ public class BaseDto
   /// <summary>
   ///   创建人
   /// </summary>
+  [Excel(Name = "创建人")]
   public string? CreateBy { get; set; }
 
   /// <summary>
   ///   创建时间
   /// </summary>
+  [Excel(Name = "创建时间")]
   public DateTime? CreateTime { get; set; }
 
   /// <summary>
   ///   更新人
   /// </summary>
+  [Excel(Name = "更新人")]
   public string? UpdateBy { get; set; }
 
   /// <summary>
   ///   更新时间
   /// </summary>
+  [Excel(Name = "更新时间")]
   public DateTime? UpdateTime { get; set; }
 
   /// <summary>
   ///   备注
   /// </summary>
+  [Excel(Name = "备注")]
   public string? Remark { get; set; }
 
   /// <summary>

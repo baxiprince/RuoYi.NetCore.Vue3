@@ -20,9 +20,16 @@ foreach (RuoYi.Data.Entities.GenTableColumn col in Model.SubTable.Columns)
     var pk = col.Is_Pk() ? "?" : "";
     @if(!Model.Table.IsSuperColumn(col.NetField))
     {
+        // 添加Excel特性描述
+        var colName=col.ColumnComment;
+        if (string.IsNullOrWhiteSpace(colName)){
+            colName=col.NetField;
+        }
+        // 字段属性
         @:/// <summary>
-        @:/// @col.ColumnComment
+        @:/// @colName
         @:/// </summary>
+        @:[Excel(Name = "@colName")]
         @:public @col.NetType@pk @col.NetField { get; set; }
         @:
     }
