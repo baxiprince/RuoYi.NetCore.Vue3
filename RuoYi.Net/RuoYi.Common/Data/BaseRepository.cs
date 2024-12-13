@@ -81,15 +81,15 @@ public abstract class BaseRepository<TEntity, TDto> : ITransient
   private void SetDtoPrimaryKeyValue(TDto dto, TEntity entity)
   {
     object? id = null;
-    string keyName = "";
+    var keyName = "";
     Type type;
     var props = typeof(TEntity).GetProperties();
     foreach (var prop in props)
     {
-      var attrSugarColumn = prop.CustomAttributes.Where(a => a.AttributeType == typeof(SugarColumn)).FirstOrDefault();
+      var attrSugarColumn = prop.CustomAttributes.FirstOrDefault(a => a.AttributeType == typeof(SugarColumn));
       if (attrSugarColumn != null)
       {
-        var primaryKey = attrSugarColumn.NamedArguments.Where(arg => arg.MemberInfo.Name.EqualsIgnoreCase("IsPrimaryKey")).FirstOrDefault();
+        var primaryKey = attrSugarColumn.NamedArguments.FirstOrDefault(arg => arg.MemberInfo.Name.EqualsIgnoreCase("IsPrimaryKey"));
         if (primaryKey.MemberInfo != null)
         {
           keyName = prop.Name;
