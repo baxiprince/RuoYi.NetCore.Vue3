@@ -60,16 +60,26 @@ public class AuthorizationMiddlewareResultHandler : IAuthorizationMiddlewareResu
   {
     // 获Contoller取权限特性
     var appAuthorizeAttribute = httpContext.GetMetadata<AppAuthorizeAttribute>();
-    // if (appAuthorizeAttribute == null) return true;
     var appRoleAuthorizeAttribute = httpContext.GetMetadata<AppRoleAuthorizeAttribute>();
-    if (Equals(null, appAuthorizeAttribute) == null && appRoleAuthorizeAttribute == null) return true;
+    if (appAuthorizeAttribute == null && appRoleAuthorizeAttribute == null) return true;
 
-    if (appRoleAuthorizeAttribute?.AppRoles is { Length: > 0 })
+    // 角色验证
+    if (appRoleAuthorizeAttribute != null)
+    {
       if (!HasAnyRoles(appRoleAuthorizeAttribute.AppRoles))
+      {
         return false;
+      }
+    }
 
     // 权限验证
-    if (!HasAnyPermi(appAuthorizeAttribute?.Policies)) return false;
+    if(appAuthorizeAttribute != null)
+    {
+      if (!HasAnyPermi(appAuthorizeAttribute.Policies))
+      {
+        return false;
+      }
+    }
 
     return true;
   }

@@ -81,24 +81,25 @@ public abstract class BaseRepository<TEntity, TDto> : ITransient
   private void SetDtoPrimaryKeyValue(TDto dto, TEntity entity)
   {
     object? id = null;
-    var keyName = "";
+    string keyName = "";
     Type type;
     var props = typeof(TEntity).GetProperties();
     foreach (var prop in props)
     {
-      var attrSugarColumn = prop.CustomAttributes.FirstOrDefault(a => a.AttributeType == typeof(SugarColumn));
+      var attrSugarColumn = prop.CustomAttributes.Where(a => a.AttributeType == typeof(SugarColumn)).FirstOrDefault();
       if (attrSugarColumn != null)
       {
-        var primaryKey =
-          attrSugarColumn.NamedArguments.FirstOrDefault(arg => arg.MemberInfo.Name.EqualsIgnoreCase("IsPrimaryKey"));
-        keyName = prop.Name;
-        type = prop.PropertyType;
-        id = prop.GetValue(entity);
-        break;
+        var primaryKey = attrSugarColumn.NamedArguments.Where(arg => arg.MemberInfo.Name.EqualsIgnoreCase("IsPrimaryKey")).FirstOrDefault();
+        if (primaryKey.MemberInfo != null)
+        {
+          keyName = prop.Name;
+          type = prop.PropertyType;
+          id = prop.GetValue(entity);
+
+          ReflectUtils.SetPropertyValue(dto, keyName, id);
+        }
       }
     }
-
-    if (keyName.IsNotEmpty()) ReflectUtils.SetPropertyValue(dto, keyName, id);
   }
 
   // 新增时: 设置 用户信息
