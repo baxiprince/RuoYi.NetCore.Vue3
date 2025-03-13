@@ -15,7 +15,7 @@ public class SysUser : UserBaseEntity
    * 部门ID
    */
   [SugarColumn(ColumnName = "dept_id", ColumnDescription = "部门编号")]
-  public long DeptId { get; set; }
+  public long? DeptId { get; set; }
 
   /**
    * 用户账号

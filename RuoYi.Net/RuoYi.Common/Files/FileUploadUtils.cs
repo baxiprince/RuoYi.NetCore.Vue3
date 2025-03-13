@@ -80,14 +80,17 @@ public static class FileUploadUtils
 
     AssertAllowed(file, allowedExtension);
 
-    // 文件物理路径
+    // 当前文件物理路径
     var physicalPath = GetResourcePhysicalPath(subDirectory);
-
-    if (!Directory.Exists(physicalPath))
-      Directory.CreateDirectory(physicalPath);
 
     var fileName = ExtractFilename(file);
     var filePath = Path.Combine(physicalPath, fileName);
+
+    // 当前文件目录
+    var folderPath = Directory.GetParent(filePath)?.FullName;
+    if (!Directory.Exists(folderPath))
+      Directory.CreateDirectory(folderPath);
+
     using var stream = new FileStream(filePath, FileMode.Create);
     await file.CopyToAsync(stream);
 
@@ -100,8 +103,8 @@ public static class FileUploadUtils
   /// </summary>
   public static string ExtractFilename(IFormFile file)
   {
-    var baseName = Path.GetFileNameWithoutExtension(file.FileName);
-    return $"{DateTime.Now.To_Ymd("/")}/{baseName}_{Guid.NewGuid():N}.{Path.GetExtension(file.FileName)}";
+    var baseName = Path.GetFileNameWithoutExtension(file.Name);
+    return $"{baseName}_{Guid.NewGuid():N}.{GetExtension(file)}";
   }
 
   /// <summary>
@@ -127,6 +130,7 @@ public static class FileUploadUtils
     foreach (var str in allowedExtension)
       if (str.EqualsIgnoreCase(extension))
         return true;
+
     return false;
   }
 
@@ -192,10 +196,10 @@ public static class FileUploadUtils
 
     return fileSize switch
     {
-      var _ when fileSize < kilobyte => "Less then 1KB",
-      var _ when fileSize < megabyte => $"{Math.Round(fileSize / kilobyte, 0, MidpointRounding.AwayFromZero):##,###.##}KB",
-      var _ when fileSize < gigabyte => $"{Math.Round(fileSize / megabyte, 2, MidpointRounding.AwayFromZero):##,###.##}MB",
-      var _ when fileSize >= gigabyte => $"{Math.Round(fileSize / gigabyte, 2, MidpointRounding.AwayFromZero):##,###.##}GB",
+      _ when fileSize < kilobyte => "Less then 1KB",
+      _ when fileSize < megabyte => $"{Math.Round(fileSize / kilobyte, 0, MidpointRounding.AwayFromZero):##,###.##}KB",
+      _ when fileSize < gigabyte => $"{Math.Round(fileSize / megabyte, 2, MidpointRounding.AwayFromZero):##,###.##}MB",
+      _ when fileSize >= gigabyte => $"{Math.Round(fileSize / gigabyte, 2, MidpointRounding.AwayFromZero):##,###.##}GB",
       _ => "n/a"
     };
   }

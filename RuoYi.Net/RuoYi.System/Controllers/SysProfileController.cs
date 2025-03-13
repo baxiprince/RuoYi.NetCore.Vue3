@@ -92,7 +92,7 @@ public class SysProfileController : ControllerBase
   /// </summary>
   [HttpPost("avatar")]
   [Log(Title = "用户头像", BusinessType = BusinessType.UPDATE)]
-  public async Task<object> UploadAvatar([Required] IFormFile file)
+  public async Task<object> UploadAvatar([FromForm(Name = "avatarfile")] IFormFile file)
   {
     if (file != null)
     {

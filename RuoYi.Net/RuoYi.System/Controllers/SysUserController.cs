@@ -19,7 +19,8 @@ public class SysUserController : ControllerBase
   private readonly SysUserService _sysUserService;
 
   public SysUserController(ILogger<SysUserController> logger,
-    SysUserService sysUserService, SysRoleService sysRoleService, SysPostService sysPostService, SysDeptService sysDeptService)
+    SysUserService sysUserService, SysRoleService sysRoleService, SysPostService sysPostService,
+    SysDeptService sysDeptService)
   {
     _logger = logger;
     _sysUserService = sysUserService;
@@ -42,7 +43,7 @@ public class SysUserController : ControllerBase
   ///   获取 用户信息表 详细信息
   /// </summary>
   [HttpGet("")]
-  [HttpGet("{userId:long}")]
+  [HttpGet("{userId}")]
   [AppAuthorize("system:user:query")]
   public async Task<AjaxResult> GetInfo(long? userId)
   {
@@ -76,8 +77,10 @@ public class SysUserController : ControllerBase
   {
     if (!await _sysUserService.CheckUserNameUniqueAsync(user))
       return AjaxResult.Error("新增用户'" + user.UserName + "'失败，登录账号已存在");
+
     if (!string.IsNullOrEmpty(user.Phonenumber) && !await _sysUserService.CheckPhoneUniqueAsync(user))
       return AjaxResult.Error("新增用户'" + user.UserName + "'失败，手机号码已存在");
+
     if (!string.IsNullOrEmpty(user.Email) && !await _sysUserService.CheckEmailUniqueAsync(user))
       return AjaxResult.Error("新增用户'" + user.UserName + "'失败，邮箱账号已存在");
     var data = _sysUserService.InsertUser(user);
@@ -97,8 +100,10 @@ public class SysUserController : ControllerBase
     await _sysUserService.CheckUserDataScope(user.UserId ?? 0);
     if (!await _sysUserService.CheckUserNameUniqueAsync(user))
       return AjaxResult.Error("修改用户'" + user.UserName + "'失败，登录账号已存在");
+
     if (!string.IsNullOrEmpty(user.Phonenumber) && !await _sysUserService.CheckPhoneUniqueAsync(user))
       return AjaxResult.Error("修改用户'" + user.UserName + "'失败，手机号码已存在");
+
     if (!string.IsNullOrEmpty(user.Email) && !await _sysUserService.CheckEmailUniqueAsync(user))
       return AjaxResult.Error("修改用户'" + user.UserName + "'失败，邮箱账号已存在");
     var data = _sysUserService.UpdateUser(user);
@@ -196,7 +201,7 @@ public class SysUserController : ControllerBase
   [HttpPost("importData")]
   [AppAuthorize("system:user:import")]
   [Log(Title = "用户管理", BusinessType = BusinessType.IMPORT)]
-  public async Task<AjaxResult> Import([Required] IFormFile file, bool updateSupport)
+  public async Task<AjaxResult> Import([FromForm] IFormFile file, bool updateSupport)
   {
     var stream = new MemoryStream();
     file.CopyTo(stream);
