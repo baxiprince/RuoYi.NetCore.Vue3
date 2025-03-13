@@ -26,7 +26,6 @@ internal static class GenUtils
 
     genTable.GenType = genTable.GenType ?? "0";
     genTable.TplCategory = genTable.TplCategory ?? "crud";
-    genTable.TplWebType = genTable.TplWebType ?? "element-plus";
   }
 
   /**
@@ -51,8 +50,7 @@ internal static class GenUtils
       var htmlType = columnLength >= 500 || ArraysContains(GenConstants.COLUMNTYPE_TEXT, dataType)
         ? GenConstants.HTML_TEXTAREA
         : GenConstants.HTML_INPUT;
-      column.HtmlType = htmlType;
-      column.QueryType = GenConstants.QUERY_LIKE;
+      column.QueryType = htmlType;
     }
     else if (ArraysContains(GenConstants.COLUMNTYPE_TIME, dataType))
     {
@@ -63,16 +61,20 @@ internal static class GenUtils
     {
       column.HtmlType = GenConstants.HTML_INPUT;
 
-      // 如果是浮点型 统一用Decimal, 如: decimal(18,2)
-      var str = column.ColumnType.SubstringBetween("(", ")")?.Split(",");
-      if (str is { Length: 2 } && int.Parse(str[1]) > 0)
-        column.NetType = GenConstants.TYPE_DECIMAL;
-      // 如果是整形
-      else if (str != null && str.Length == 1 && int.Parse(str[0]) <= 11)
-        column.NetType = GenConstants.TYPE_INTEGER;
-      // 长整形
-      else
-        column.NetType = GenConstants.TYPE_LONG;
+      var columnType = (column.ColumnType ?? "").ToLower();
+      if (!string.IsNullOrEmpty(columnType))
+      {
+        if (dataType.StartsWith("float") || dataType.StartsWith("double") || dataType.StartsWith("decimal"))
+          // 如果是浮点型 统一用Decimal, 如: decimal(18,2)
+          // float/double/decimal
+          column.NetType = GenConstants.TYPE_DECIMAL;
+        else if (dataType.StartsWith("bigint"))
+          // 长整形
+          column.NetType = GenConstants.TYPE_LONG;
+        else
+          // 整形
+          column.NetType = GenConstants.TYPE_INTEGER;
+      }
     }
     else
     {
@@ -86,11 +88,14 @@ internal static class GenUtils
     column.IsInsert = YesNo.Yes;
 
     // 编辑字段
-    if (!ArraysContains(GenConstants.COLUMNNAME_NOT_EDIT, columnName) && column.IsPk != YesNo.Yes) column.IsEdit = YesNo.Yes;
+    if (!ArraysContains(GenConstants.COLUMNNAME_NOT_EDIT, columnName) && column.IsPk != YesNo.Yes)
+      column.IsEdit = YesNo.Yes;
     // 列表字段
-    if (!ArraysContains(GenConstants.COLUMNNAME_NOT_LIST, columnName) && column.IsPk != YesNo.Yes) column.IsList = YesNo.Yes;
+    if (!ArraysContains(GenConstants.COLUMNNAME_NOT_LIST, columnName) && column.IsPk != YesNo.Yes)
+      column.IsList = YesNo.Yes;
     // 查询字段
-    if (!ArraysContains(GenConstants.COLUMNNAME_NOT_QUERY, columnName) && column.IsPk != YesNo.Yes) column.IsQuery = YesNo.Yes;
+    if (!ArraysContains(GenConstants.COLUMNNAME_NOT_QUERY, columnName) && column.IsPk != YesNo.Yes)
+      column.IsQuery = YesNo.Yes;
 
     // 查询字段类型
     if (columnName.EndsWith("name", true, null)) column.QueryType = GenConstants.QUERY_LIKE;
@@ -161,7 +166,7 @@ internal static class GenUtils
     var tablePrefix = genConfig.TablePrefix;
     if (autoRemovePre && !string.IsNullOrEmpty(tablePrefix))
     {
-      var searchList = tablePrefix.Split(",");
+      string[] searchList = tablePrefix.Split(",");
       tableName = ReplaceFirst(tableName, searchList);
     }
 
@@ -196,7 +201,7 @@ internal static class GenUtils
    */
   public static string ReplaceText(string text)
   {
-    return text?.Replace("(?:表|若依)", "");
+    return text.Replace("(?:表|若依)", "");
   }
 
   /**
@@ -207,8 +212,8 @@ internal static class GenUtils
    */
   public static string GetDbType(string columnType)
   {
-    if (columnType.IndexOf("(") > 0)
-      return columnType.SubstringBefore("(");
+    if (columnType.IndexOf("(") > 0) return columnType.SubstringBefore("(");
+
     return columnType;
   }
 

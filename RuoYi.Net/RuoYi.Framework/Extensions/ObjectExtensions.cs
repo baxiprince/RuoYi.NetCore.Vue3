@@ -1,5 +1,6 @@
 ﻿using System.Collections.Concurrent;
 using System.ComponentModel;
+using System.Dynamic;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
@@ -138,7 +139,7 @@ public static class ObjectExtensions
 
   public static string? SubstringBetween(this string? str, string open, string close)
   {
-    if (string.IsNullOrEmpty(str) || string.IsNullOrEmpty(open) || string.IsNullOrEmpty(close)) return null;
+    if (string.IsNullOrEmpty(str) || string.IsNullOrEmpty(open) || string.IsNullOrEmpty(close)) return str;
 
     var start = str.IndexOf(open);
     if (start != -1)
@@ -256,7 +257,7 @@ public static class ObjectExtensions
     // 处理本就是字典类型
     if (input.GetType().HasImplementedRawGeneric(typeof(IDictionary<,>)))
     {
-      if (input is IDictionary<string, object> expandObject) return expandObject;
+      if (input is ExpandoObject expandObject) return expandObject;
 
       var dic = new Dictionary<string, object>();
       var dicInput = (IDictionary)input;
@@ -566,7 +567,6 @@ public static class ObjectExtensions
 
     var underlyingType = Nullable.GetUnderlyingType(type);
     if (type.IsAssignableFrom(obj.GetType())) return obj;
-
     if ((underlyingType ?? type).IsEnum)
     {
       if (underlyingType != null && string.IsNullOrWhiteSpace(obj.ToString())) return null;
