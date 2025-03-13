@@ -29,7 +29,7 @@ public class SysDictDataController : ControllerBase
   ///   查询字典数据表列表
   /// </summary>
   [HttpGet("list")]
-  [AppAuthorize("system:data:list")]
+  [AppAuthorize("system:dict:list")]
   public async Task<SqlSugarPagedList<SysDictDataDto>> GetSysDictDataList([FromQuery] SysDictDataDto dto)
   {
     return await _sysDictDataService.GetDtoPagedListAsync(dto);
@@ -38,8 +38,8 @@ public class SysDictDataController : ControllerBase
   /// <summary>
   ///   获取 字典数据表 详细信息
   /// </summary>
-  [HttpGet("{dictCode:long}")]
-  [AppAuthorize("system:data:query")]
+  [HttpGet("{dictCode}")]
+  [AppAuthorize("system:dict:query")]
   public async Task<AjaxResult> Get(long dictCode)
   {
     var data = await _sysDictDataService.GetAsync(dictCode);
@@ -52,7 +52,7 @@ public class SysDictDataController : ControllerBase
   [HttpGet("type/{dictType}")]
   public async Task<AjaxResult> GetListByDictType(string dictType)
   {
-    var data = await _sysDictTypeService.SelectDictDataByTypeAsync(dictType);
+    List<SysDictData> data = await _sysDictTypeService.SelectDictDataByTypeAsync(dictType);
     if (data == null) data = new List<SysDictData>();
     return AjaxResult.Success(data);
   }
@@ -61,7 +61,7 @@ public class SysDictDataController : ControllerBase
   ///   新增 字典数据表
   /// </summary>
   [HttpPost("")]
-  [AppAuthorize("system:data:add")]
+  [AppAuthorize("system:dict:add")]
   [TypeFilter(typeof(DataValidationFilter))]
   [Log(Title = "字典数据", BusinessType = BusinessType.INSERT)]
   public async Task<AjaxResult> Add([FromBody] SysDictDataDto dto)
@@ -74,7 +74,7 @@ public class SysDictDataController : ControllerBase
   ///   修改 字典数据表
   /// </summary>
   [HttpPut("")]
-  [AppAuthorize("system:data:edit")]
+  [AppAuthorize("system:dict:edit")]
   [TypeFilter(typeof(DataValidationFilter))]
   [Log(Title = "字典数据", BusinessType = BusinessType.UPDATE)]
   public async Task<AjaxResult> Edit([FromBody] SysDictDataDto dto)
@@ -87,12 +87,11 @@ public class SysDictDataController : ControllerBase
   ///   删除 字典数据表
   /// </summary>
   [HttpDelete("{dictCodes}")]
-  [AppAuthorize("system:data:remove")]
+  [AppAuthorize("system:dict:remove")]
   [Log(Title = "字典数据", BusinessType = BusinessType.DELETE)]
-  public async Task<AjaxResult> Remove([FromRoute] string dictCodes)
+  public async Task<AjaxResult> Remove(long[] dictCodes)
   {
-    var ids = dictCodes.Split(",").Select(long.Parse).ToArray();
-    await _sysDictDataService.DeleteDictDataByIdsAsync(ids);
+    await _sysDictDataService.DeleteDictDataByIdsAsync(dictCodes);
     return AjaxResult.Success();
   }
 
@@ -100,7 +99,7 @@ public class SysDictDataController : ControllerBase
   ///   导出 字典数据表
   /// </summary>
   [HttpPost("export")]
-  [AppAuthorize("system:data:export")]
+  [AppAuthorize("system:dict:export")]
   [Log(Title = "字典数据", BusinessType = BusinessType.EXPORT)]
   public async Task Export(SysDictDataDto dto)
   {

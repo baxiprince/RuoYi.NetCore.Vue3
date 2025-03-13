@@ -52,7 +52,7 @@ public static class SqlSugarServiceCollectionExtensions
   public static IServiceCollection AddSqlSugarScope(this IServiceCollection services, ConnectionConfig[] configs,
     Action<SqlSugarScope> buildAction = default)
   {
-    // 注册 SqlSugar 
+    // 注册 SqlSugar
     services.AddSingleton<ISqlSugarClient>(u =>
     {
       // SqlSugarScope 必须使用单例

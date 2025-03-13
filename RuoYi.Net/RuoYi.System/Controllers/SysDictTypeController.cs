@@ -26,7 +26,7 @@ public class SysDictTypeController : ControllerBase
   ///   查询字典类型表列表
   /// </summary>
   [HttpGet("list")]
-  [AppAuthorize("system:type:list")]
+  [AppAuthorize("system:dict:list")]
   public async Task<SqlSugarPagedList<SysDictTypeDto>> GetSysDictTypeList([FromQuery] SysDictTypeDto dto)
   {
     return await _sysDictTypeService.GetDtoPagedListAsync(dto);
@@ -35,8 +35,8 @@ public class SysDictTypeController : ControllerBase
   /// <summary>
   ///   获取 字典类型表 详细信息
   /// </summary>
-  [HttpGet("{id:long}")]
-  [AppAuthorize("system:type:query")]
+  [HttpGet("{id}")]
+  [AppAuthorize("system:dict:query")]
   public async Task<AjaxResult> Get(long? id)
   {
     var data = await _sysDictTypeService.GetAsync(id);
@@ -47,12 +47,13 @@ public class SysDictTypeController : ControllerBase
   ///   新增 字典类型表
   /// </summary>
   [HttpPost("")]
-  [AppAuthorize("system:type:add")]
+  [AppAuthorize("system:dict:add")]
   [TypeFilter(typeof(DataValidationFilter))]
   [Log(Title = "字典类型", BusinessType = BusinessType.INSERT)]
   public async Task<AjaxResult> Add([FromBody] SysDictTypeDto dto)
   {
-    if (!await _sysDictTypeService.CheckDictTypeUniqueAsync(dto)) return AjaxResult.Error("新增字典'" + dto.DictName + "'失败，字典类型已存在");
+    if (!await _sysDictTypeService.CheckDictTypeUniqueAsync(dto))
+      return AjaxResult.Error("新增字典'" + dto.DictName + "'失败，字典类型已存在");
     var data = await _sysDictTypeService.InsertDictTypeAsync(dto);
     return AjaxResult.Success(data);
   }
@@ -61,12 +62,13 @@ public class SysDictTypeController : ControllerBase
   ///   修改 字典类型表
   /// </summary>
   [HttpPut("")]
-  [AppAuthorize("system:type:edit")]
+  [AppAuthorize("system:dict:edit")]
   [TypeFilter(typeof(DataValidationFilter))]
   [Log(Title = "字典类型", BusinessType = BusinessType.UPDATE)]
   public async Task<AjaxResult> Edit([FromBody] SysDictTypeDto dto)
   {
-    if (!await _sysDictTypeService.CheckDictTypeUniqueAsync(dto)) return AjaxResult.Error("修改字典'" + dto.DictName + "'失败，字典类型已存在");
+    if (!await _sysDictTypeService.CheckDictTypeUniqueAsync(dto))
+      return AjaxResult.Error("修改字典'" + dto.DictName + "'失败，字典类型已存在");
     var data = await _sysDictTypeService.UpdateDictTypeAsync(dto);
     return AjaxResult.Success(data);
   }
@@ -75,12 +77,11 @@ public class SysDictTypeController : ControllerBase
   ///   删除 字典类型表
   /// </summary>
   [HttpDelete("{ids}")]
-  [AppAuthorize("system:type:remove")]
+  [AppAuthorize("system:dict:remove")]
   [Log(Title = "字典类型", BusinessType = BusinessType.DELETE)]
-  public async Task<AjaxResult> Remove([FromRoute] string ids)
+  public async Task<AjaxResult> Remove(long[] ids)
   {
-    var idss = ids.Split(",").Select(long.Parse).ToArray();
-    await _sysDictTypeService.DeleteDictTypeByIdsAsync(idss);
+    await _sysDictTypeService.DeleteDictTypeByIdsAsync(ids);
     return AjaxResult.Success();
   }
 
@@ -88,7 +89,7 @@ public class SysDictTypeController : ControllerBase
   ///   刷新字典缓存
   /// </summary>
   [HttpDelete("refreshCache")]
-  [AppAuthorize("system:type:remove")]
+  [AppAuthorize("system:dict:remove")]
   [Log(Title = "字典类型", BusinessType = BusinessType.CLEAN)]
   public AjaxResult RefreshCache()
   {
@@ -110,7 +111,7 @@ public class SysDictTypeController : ControllerBase
   ///   导出 字典类型表
   /// </summary>
   [HttpPost("export")]
-  [AppAuthorize("system:type:export")]
+  [AppAuthorize("system:dict:export")]
   [Log(Title = "字典类型", BusinessType = BusinessType.EXPORT)]
   public async Task Export(SysDictTypeDto dto)
   {
