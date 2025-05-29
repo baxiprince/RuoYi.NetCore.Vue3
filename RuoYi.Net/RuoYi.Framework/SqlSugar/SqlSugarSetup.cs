@@ -11,7 +11,7 @@ public static class SqlSugarSetup
     var connectionConfigs = App.GetConfig<ConnectionConfig[]>("ConnectionConfigs");
 
     // 注册 SqlSugar 客户端
-    services.AddScoped<ISqlSugarClient>(u =>
+    services.AddSingleton<ISqlSugarClient>(u =>
     {
       var sqlSugarClient = new SqlSugarClient(connectionConfigs.ToList(), db =>
       {
