@@ -2,6 +2,7 @@ using RuoYi.Common.Enums;
 using RuoYi.Common.Utils;
 using RuoYi.Framework.DataValidation;
 using RuoYi.System.Services;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace RuoYi.System.Controllers;
 
@@ -198,6 +199,7 @@ public class SysUserController : ControllerBase
   /// <summary>
   ///   导入 用户信息表
   /// </summary>
+  [SwaggerIgnore] //  Swagger 不支持 [FromForm] IFormFile
   [HttpPost("importData")]
   [AppAuthorize("system:user:import")]
   [Log(Title = "用户管理", BusinessType = BusinessType.IMPORT)]

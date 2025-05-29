@@ -2,6 +2,7 @@ using RuoYi.Common.Enums;
 using RuoYi.Common.Files;
 using RuoYi.Common.Utils;
 using RuoYi.System.Services;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace RuoYi.System.Controllers;
 
@@ -90,6 +91,7 @@ public class SysProfileController : ControllerBase
   /// <summary>
   ///   头像上传
   /// </summary>
+  [SwaggerIgnore] // Swagger 不支持 [FromForm] IFormFile
   [HttpPost("avatar")]
   [Log(Title = "用户头像", BusinessType = BusinessType.UPDATE)]
   public async Task<object> UploadAvatar([FromForm(Name = "avatarfile")] IFormFile file)
