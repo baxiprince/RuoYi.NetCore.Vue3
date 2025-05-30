@@ -1,4 +1,4 @@
-﻿using System.Security.Claims;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using RuoYi.Data;
 using RuoYi.Data.Dtos;
@@ -86,7 +86,9 @@ public static class SecurityUtils
   /// <returns>加密字符串</returns>
   public static string EncryptPassword(string password)
   {
-    return MD5Encryption.Encrypt(password);
+    //return MD5Encryption.Encrypt(password);
+    var salt = BCrypt.Net.BCrypt.GenerateSalt(10);
+    return BCrypt.Net.BCrypt.HashPassword(password, salt);
   }
 
   /// <summary>
@@ -97,7 +99,8 @@ public static class SecurityUtils
   /// <returns>结果</returns>
   public static bool MatchesPassword(string rawPassword, string encodedPassword)
   {
-    return MD5Encryption.Compare(rawPassword, encodedPassword);
+    //return MD5Encryption.Compare(rawPassword, encodedPassword);
+    return BCrypt.Net.BCrypt.Verify(rawPassword, encodedPassword);
   }
 
   /// <summary>

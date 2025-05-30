@@ -615,8 +615,8 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '', '0192023a7bbd73250516f069df18b500', '0', '0', '0.0.0.1', '2024-11-27 13:57:49', 'admin', '2024-11-06 07:07:09', '', NULL, '管理员');
-INSERT INTO `sys_user` VALUES (2, 105, 'ry', '若依', '00', 'ry@qq.com', '15666666666', '1', '', '0192023a7bbd73250516f069df18b500', '0', '0', '0.0.0.1', '2024-11-06 15:45:12', 'admin', '2024-11-06 07:07:09', '', NULL, '测试员');
+INSERT INTO `sys_user` VALUES (1, 103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '', '$2a$10$2Po7CSgoFV8xyuXJ9D.VsOPFT5FD0.GI7ZtsASQv1CrZQDr.QGdhi', '0', '0', '0.0.0.1', '2024-11-27 13:57:49', 'admin', '2024-11-06 07:07:09', '', NULL, '管理员');
+INSERT INTO `sys_user` VALUES (2, 105, 'ry', '若依', '00', 'ry@qq.com', '15666666666', '1', '', '$2a$10$2Po7CSgoFV8xyuXJ9D.VsOPFT5FD0.GI7ZtsASQv1CrZQDr.QGdhi', '0', '0', '0.0.0.1', '2024-11-06 15:45:12', 'admin', '2024-11-06 07:07:09', '', NULL, '测试员');
 
 -- ----------------------------
 -- Table structure for sys_user_post

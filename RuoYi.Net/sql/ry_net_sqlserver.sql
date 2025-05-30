@@ -185,8 +185,8 @@ GO
 SET IDENTITY_INSERT [dbo].[sys_user] ON 
 GO
 INSERT INTO [dbo].[sys_user] (user_id,dept_id,user_name,nick_name,user_type,email,phonenumber,sex,avatar,password,status,del_flag,login_ip,login_date,create_by,create_time,update_by,update_time,remark) VALUES
-(1,  103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '', '0192023a7bbd73250516f069df18b500', '0', '0', '127.0.0.1', GETDATE(), 'admin', GETDATE(), '', null, '管理员'),
-(2,  105, 'ry',    '若依', '00', 'ry@qq.com',  '15666666666', '1', '', '0192023a7bbd73250516f069df18b500', '0', '0', '127.0.0.1', GETDATE(), 'admin', GETDATE(), '', null, '测试员')
+(1,  103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '', '$2a$10$2Po7CSgoFV8xyuXJ9D.VsOPFT5FD0.GI7ZtsASQv1CrZQDr.QGdhi', '0', '0', '127.0.0.1', GETDATE(), 'admin', GETDATE(), '', null, '管理员'),
+(2,  105, 'ry',    '若依', '00', 'ry@qq.com',  '15666666666', '1', '', '$2a$10$2Po7CSgoFV8xyuXJ9D.VsOPFT5FD0.GI7ZtsASQv1CrZQDr.QGdhi', '0', '0', '127.0.0.1', GETDATE(), 'admin', GETDATE(), '', null, '测试员')
 GO
 SET IDENTITY_INSERT [dbo].[sys_user] OFF
 GO

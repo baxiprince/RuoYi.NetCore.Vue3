@@ -15,18 +15,22 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Remove="Configs\**"/>
-        <EmbeddedResource Remove="Configs\**"/>
-        <None Remove="Configs\**"/>
+        <Compile Remove="Configs\**" />
+        <EmbeddedResource Remove="Configs\**" />
+        <None Remove="Configs\**" />
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Remove="Constants\Constants.cs"/>
+        <Compile Remove="Constants\Constants.cs" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\RuoYi.Data\RuoYi.Data.csproj"/>
-        <ProjectReference Include="..\RuoYi.Framework\RuoYi.Framework.csproj"/>
+      <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\RuoYi.Data\RuoYi.Data.csproj" />
+        <ProjectReference Include="..\RuoYi.Framework\RuoYi.Framework.csproj" />
     </ItemGroup>
 
 </Project>
