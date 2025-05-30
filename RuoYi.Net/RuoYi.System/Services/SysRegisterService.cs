@@ -1,4 +1,4 @@
-﻿using Lazy.Captcha.Core;
+using Lazy.Captcha.Core;
 using RuoYi.Common.Constants;
 using RuoYi.Common.Utils;
 using RuoYi.Data.Models;
@@ -62,6 +62,8 @@ public class SysRegisterService : ITransient
     else
     {
       sysUser.NickName = username;
+      sysUser.DelFlag = "0";
+      sysUser.Status = "0";
       sysUser.Password = SecurityUtils.EncryptPassword(password);
       var regFlag = await _sysUserService.RegisterUserAsync(sysUser);
       if (!regFlag)
