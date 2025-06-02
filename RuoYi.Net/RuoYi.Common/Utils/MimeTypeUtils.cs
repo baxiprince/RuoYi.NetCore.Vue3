@@ -1,4 +1,4 @@
-﻿namespace RuoYi.Common.Utils;
+namespace RuoYi.Common.Utils;
 
 public static class MimeTypeUtils
 {
@@ -13,6 +13,8 @@ public static class MimeTypeUtils
   public const string IMAGE_GIF = "image/gif";
 
   public static string[] IMAGE_EXTENSION = { "bmp", "gif", "jpg", "jpeg", "png" };
+
+  public static string[] ZIP_EXE_EXTENSION = { "zip", "exe", "rar", "tar", "tar.gz" };
 
   public static string[] FLASH_EXTENSION = { "swf", "flv" };
 
