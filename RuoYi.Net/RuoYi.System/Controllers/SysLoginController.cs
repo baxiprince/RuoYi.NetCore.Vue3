@@ -1,4 +1,4 @@
-﻿using RuoYi.Common.Utils;
+using RuoYi.Common.Utils;
 using RuoYi.Data.Models;
 using RuoYi.System.Services;
 
@@ -70,6 +70,7 @@ public class SysLoginController : ControllerBase
   ///   获取用户信息
   /// </summary>
   [HttpGet("/getInfo")]
+  [AppAuthorize("*:*:*:*")]
   public async Task<AjaxResult> GetInfo()
   {
     var user = SecurityUtils.GetLoginUser().User;
@@ -89,6 +90,7 @@ public class SysLoginController : ControllerBase
   ///   获取路由信息
   /// </summary>
   [HttpGet("/getRouters")]
+  [AppAuthorize("*:*:*:*")]
   public AjaxResult GetRouters()
   {
     var userId = SecurityUtils.GetUserId();
