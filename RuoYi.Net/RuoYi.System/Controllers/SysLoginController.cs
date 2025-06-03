@@ -70,9 +70,10 @@ public class SysLoginController : ControllerBase
   ///   获取用户信息
   /// </summary>
   [HttpGet("/getInfo")]
-  [AppAuthorize("*:*:*:*")]
   public async Task<AjaxResult> GetInfo()
   {
+    var userId = SecurityUtils.GetUserId();
+    if (userId <= 0) return AjaxResult.Error();
     var user = SecurityUtils.GetLoginUser().User;
     // 角色集合
     var roles = await _sysPermissionService.GetRolePermissionAsync(user);
@@ -90,10 +91,10 @@ public class SysLoginController : ControllerBase
   ///   获取路由信息
   /// </summary>
   [HttpGet("/getRouters")]
-  [AppAuthorize("*:*:*:*")]
   public AjaxResult GetRouters()
   {
     var userId = SecurityUtils.GetUserId();
+    if (userId <= 0) return AjaxResult.Error();
     var menus = _sysMenuService.SelectMenuTreeByUserId(userId);
     var treeMenus = _sysMenuService.BuildMenus(menus);
     return AjaxResult.Success(treeMenus);
