@@ -73,7 +73,7 @@ public class SysLoginController : ControllerBase
   public async Task<AjaxResult> GetInfo()
   {
     var userId = SecurityUtils.GetUserId();
-    if (userId <= 0) return AjaxResult.Error();
+    if (userId <= 0) return AjaxResult.Error(401, "授权失败");
     var user = SecurityUtils.GetLoginUser().User;
     // 角色集合
     var roles = await _sysPermissionService.GetRolePermissionAsync(user);
@@ -94,7 +94,7 @@ public class SysLoginController : ControllerBase
   public AjaxResult GetRouters()
   {
     var userId = SecurityUtils.GetUserId();
-    if (userId <= 0) return AjaxResult.Error();
+    if (userId <= 0) return AjaxResult.Error(401, "授权失败");
     var menus = _sysMenuService.SelectMenuTreeByUserId(userId);
     var treeMenus = _sysMenuService.BuildMenus(menus);
     return AjaxResult.Success(treeMenus);
