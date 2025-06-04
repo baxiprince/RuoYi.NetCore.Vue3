@@ -165,11 +165,26 @@ public static class SecurityUtils
   #endregion
 
   /// <summary>
-  /// 检测用户是否已经登录
+  ///   检测用户是否已经登录
   /// </summary>
   /// <returns></returns>
   public static bool IsLogin()
   {
-    return App.HttpContext.User.Identity.IsAuthenticated;
+    if (!App.HttpContext.User.Identity.IsAuthenticated) return false;
+    var token = GetToken(App.HttpContext.Request);
+    if (string.IsNullOrEmpty(token)) return false;
+    try
+    {
+      var claims = ParseToken(token);
+      var uuid = claims.First(c => c.Type.Equals(RuoYi.Data.Constants.LOGIN_USER_KEY)).Value;
+      var userKey = GetTokenKey(uuid);
+      var user = _cache.Get<LoginUser>(userKey);
+      if (!user.Equals(null)) return true;
+    }
+    catch
+    {
+      return false;
+    }
+    return false;
   }
 }
