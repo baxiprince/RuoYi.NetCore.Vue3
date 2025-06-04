@@ -52,6 +52,8 @@ public class SysDictDataController : ControllerBase
   [HttpGet("type/{dictType}")]
   public async Task<AjaxResult> GetListByDictType(string dictType)
   {
+    var isLogin = SecurityUtils.IsLogin();
+    if (!isLogin) return AjaxResult.Error(401, "授权失败");
     List<SysDictData> data = await _sysDictTypeService.SelectDictDataByTypeAsync(dictType);
     if (data == null) data = new List<SysDictData>();
     return AjaxResult.Success(data);

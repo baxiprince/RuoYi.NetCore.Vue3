@@ -29,6 +29,8 @@ public class SysProfileController : ControllerBase
   [HttpGet("")]
   public AjaxResult GetProfile()
   {
+    var isLogin = SecurityUtils.IsLogin();
+    if (!isLogin) return AjaxResult.Error(401, "授权失败");
     var loginUser = SecurityUtils.GetLoginUser();
     var user = loginUser.User;
     var ajax = AjaxResult.Success(user);
@@ -44,6 +46,8 @@ public class SysProfileController : ControllerBase
   [Log(Title = "个人信息", BusinessType = BusinessType.UPDATE)]
   public async Task<AjaxResult> UpdateProfile([FromBody] SysUserDto user)
   {
+    var isLogin = SecurityUtils.IsLogin();
+    if (!isLogin) return AjaxResult.Error(401, "授权失败");
     var loginUser = SecurityUtils.GetLoginUser();
     var currentUser = loginUser.User;
     currentUser.NickName = user.NickName;
@@ -72,6 +76,8 @@ public class SysProfileController : ControllerBase
   [Log(Title = "重置密码", BusinessType = BusinessType.UPDATE)]
   public async Task<AjaxResult> UpdatePwd(string oldPassword, string newPassword)
   {
+    var isLogin = SecurityUtils.IsLogin();
+    if (!isLogin) return AjaxResult.Error(401, "授权失败");
     var loginUser = SecurityUtils.GetLoginUser();
     var userName = loginUser.UserName;
     var password = loginUser.Password;
@@ -96,6 +102,8 @@ public class SysProfileController : ControllerBase
   [Log(Title = "用户头像", BusinessType = BusinessType.UPDATE)]
   public async Task<object> UploadAvatar([FromForm(Name = "avatarfile")] IFormFile file)
   {
+    var isLogin = SecurityUtils.IsLogin();
+    if (!isLogin) return AjaxResult.Error(401, "授权失败");
     if (file != null)
     {
       var loginUser = SecurityUtils.GetLoginUser();

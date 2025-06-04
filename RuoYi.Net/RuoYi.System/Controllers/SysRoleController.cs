@@ -113,6 +113,8 @@ public class SysRoleController : ControllerBase
   [Log(Title = "角色管理", BusinessType = BusinessType.UPDATE)]
   public async Task<AjaxResult> SaveDataScope([FromBody] SysRoleDto role)
   {
+    var isLogin = SecurityUtils.IsLogin();
+    if (!isLogin) return AjaxResult.Error(401, "授权失败");
     _sysRoleService.CheckRoleAllowed(role);
     await _sysRoleService.CheckRoleDataScopeAsync(role.RoleId);
     var data = await _sysRoleService.AuthDataScopeAsync(role);
@@ -126,6 +128,8 @@ public class SysRoleController : ControllerBase
   [Log(Title = "角色管理", BusinessType = BusinessType.UPDATE)]
   public async Task<AjaxResult> ChangeStatus([FromBody] SysRoleDto role)
   {
+    var isLogin = SecurityUtils.IsLogin();
+    if (!isLogin) return AjaxResult.Error(401, "授权失败");
     _sysRoleService.CheckRoleAllowed(role);
     await _sysRoleService.CheckRoleDataScopeAsync(role.RoleId);
     var data = await _sysRoleService.UpdateRoleStatusAsync(role);
@@ -230,6 +234,8 @@ public class SysRoleController : ControllerBase
   [HttpGet("deptTree/{roleId:long}")]
   public async Task<AjaxResult> GetDeptTree(long roleId)
   {
+    var isLogin = SecurityUtils.IsLogin();
+    if (!isLogin) return AjaxResult.Error(401, "授权失败");
     var ajax = AjaxResult.Success();
     ajax.Add("checkedKeys", await _sysDeptService.GetDeptListByRoleIdAsync(roleId));
     ajax.Add("depts", await _sysDeptService.GetDeptTreeListAsync(new SysDeptDto()));

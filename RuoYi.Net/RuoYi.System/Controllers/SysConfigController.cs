@@ -50,6 +50,8 @@ public class SysConfigController : ControllerBase
   [HttpGet("configKey/{configKey}")]
   public AjaxResult GetConfigKey(string configKey)
   {
+    var isLogin = SecurityUtils.IsLogin();
+    if (!isLogin) return AjaxResult.Error(401, "授权失败");
     var data = _sysConfigService.SelectConfigByKey(configKey);
     return AjaxResult.Success(data);
   }

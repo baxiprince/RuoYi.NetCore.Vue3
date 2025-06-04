@@ -109,6 +109,8 @@ public class SysPostController : ControllerBase
   [HttpGet("optionselect")]
   public async Task<AjaxResult> OptionSelect()
   {
+    var isLogin = SecurityUtils.IsLogin();
+    if (!isLogin) return AjaxResult.Error(401, "授权失败");
     var data = await _sysPostService.SelectPostAllAsync();
     return AjaxResult.Success(data);
   }

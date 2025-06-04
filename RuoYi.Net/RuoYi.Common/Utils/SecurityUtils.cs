@@ -163,4 +163,13 @@ public static class SecurityUtils
   }
 
   #endregion
+
+  /// <summary>
+  /// 检测用户是否已经登录
+  /// </summary>
+  /// <returns></returns>
+  public static bool IsLogin()
+  {
+    return App.HttpContext.User.Identity.IsAuthenticated;
+  }
 }

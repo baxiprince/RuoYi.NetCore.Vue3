@@ -51,6 +51,8 @@ public class SysMenuController : ControllerBase
   [HttpGet("treeselect")]
   public async Task<AjaxResult> Treeselect([FromQuery] SysMenuDto dto)
   {
+    var isLogin = SecurityUtils.IsLogin();
+    if (!isLogin) return AjaxResult.Error(401, "授权失败");
     var menus = await _sysMenuService.SelectMenuListAsync(dto, SecurityUtils.GetUserId());
     var data = _sysMenuService.BuildMenuTreeSelect(menus);
     return AjaxResult.Success(data);
@@ -62,6 +64,8 @@ public class SysMenuController : ControllerBase
   [HttpGet("roleMenuTreeselect/{roleId}")]
   public async Task<AjaxResult> RoleMenuTreeselectAsync(long roleId)
   {
+    var isLogin = SecurityUtils.IsLogin();
+    if (!isLogin) return AjaxResult.Error(401, "授权失败");
     var menus = await _sysMenuService.SelectMenuListAsync(SecurityUtils.GetUserId());
     var ajax = AjaxResult.Success();
     ajax.Add("checkedKeys", _sysMenuService.SelectMenuListByRoleId(roleId));

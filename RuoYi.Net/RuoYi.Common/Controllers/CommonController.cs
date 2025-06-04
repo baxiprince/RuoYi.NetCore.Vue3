@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -34,6 +34,8 @@ public class CommonController : ControllerBase
   [SwaggerIgnore]
   public async Task<AjaxResult> UploadFile([FromForm(Name = "file")] IFormFile file)
   {
+    var isLogin = SecurityUtils.IsLogin();
+    if (!isLogin) return AjaxResult.Error(401, "授权失败");
     if (file != null)
     {
       var filePath = await FileUploadUtils.UploadAsync(file, RyApp.RuoYiConfig.UploadPath, MimeTypeUtils.ZIP_EXE_EXTENSION);

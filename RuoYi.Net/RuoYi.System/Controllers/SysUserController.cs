@@ -60,7 +60,7 @@ public class SysUserController : ControllerBase
     {
       var user = await _sysUserService.GetDtoAsync(userId);
       ajax.Add(AjaxResult.DATA_TAG, user);
-      ajax.Add("postIds", _sysPostService.GetPostIdsListByUserId(userId.Value));
+      ajax.Add("postIds", await _sysPostService.GetPostIdsListByUserId(userId.Value));
       ajax.Add("roleIds", user.Roles.Select(x => x.RoleId).ToList());
     }
 
