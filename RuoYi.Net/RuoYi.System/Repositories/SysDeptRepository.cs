@@ -72,11 +72,33 @@ public class SysDeptRepository : BaseRepository<SysDept, SysDeptDto>
   /// </summary>
   public async Task<List<long>> GetDeptListByRoleIdAsync(long roleId, bool isDeptCheckStrictly)
   {
-    var query = new SysDeptDto { RoleId = roleId, DeptCheckStrictly = isDeptCheckStrictly };
+    //var query = new SysDeptDto { RoleId = roleId, DeptCheckStrictly = isDeptCheckStrictly };
+    //var list = await GetDtoListAsync(query);
+    //return list.Where(d => d.DeptId.HasValue).Select(d => d.DeptId!.Value).Distinct().ToList();
 
-    var list = await GetDtoListAsync(query);
+    var query = Repo.Context.Queryable<SysDept>()
+      .LeftJoin<SysRoleDept>((d, rd) => d.DeptId == rd.DeptId)
+      .Where((d, rd) => rd.RoleId == roleId);
 
-    return list.Where(d => d.DeptId.HasValue).Select(d => d.DeptId!.Value).Distinct().ToList();
+    if (isDeptCheckStrictly)
+    {
+      // 使用原生 SQL 条件
+      query = query.Where($"""
+                           d.dept_id NOT IN (
+                               SELECT d2.parent_id
+                               FROM sys_dept d2
+                               INNER JOIN sys_role_dept rd2 ON d2.dept_id = rd2.dept_id
+                               WHERE rd2.role_id = {roleId}
+                           )
+                           """);
+    }
+
+    return await query
+      .OrderBy(d => d.ParentId)
+      .OrderBy(d => d.OrderNum)
+      .Select(d => d.DeptId)
+      .ToListAsync();
+
   }
 
   /// <summary>
