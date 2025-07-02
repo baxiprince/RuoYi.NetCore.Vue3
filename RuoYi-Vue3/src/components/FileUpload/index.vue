@@ -1,19 +1,8 @@
 <template>
   <div class="upload-file">
-    <el-upload
-      multiple
-      :action="uploadFileUrl"
-      :before-upload="handleBeforeUpload"
-      :file-list="fileList"
-      :limit="limit"
-      :on-error="handleUploadError"
-      :on-exceed="handleExceed"
-      :on-success="handleUploadSuccess"
-      :show-file-list="false"
-      :headers="headers"
-      class="upload-file-uploader"
-      ref="fileUpload"
-    >
+    <el-upload multiple :action="uploadUrl" :before-upload="handleBeforeUpload" :file-list="fileList" :limit="limit"
+      :on-error="handleUploadError" :on-exceed="handleExceed" :on-success="handleUploadSuccess" :show-file-list="false"
+      :headers="headers" class="upload-file-uploader" ref="fileUpload">
       <!-- 上传按钮 -->
       <el-button type="primary">选取文件</el-button>
     </el-upload>
@@ -27,7 +16,7 @@
     <!-- 文件列表 -->
     <transition-group class="upload-file-list el-upload-list el-upload-list--text" name="el-fade-in-linear" tag="ul">
       <li :key="file.uid" class="el-upload-list__item ele-upload-list__item-content" v-for="(file, index) in fileList">
-        <el-link :href="`${baseUrl}${file.url}`" :underline="false" target="_blank">
+        <el-link :href="getDownloadUrl(file)" :underline="false" target="_blank">
           <span class="el-icon-document"> {{ getFileName(file.name) }} </span>
         </el-link>
         <div class="ele-upload-list__item-content-action">
@@ -39,6 +28,7 @@
 </template>
 
 <script setup>
+import { ref, computed, watch, getCurrentInstance } from 'vue';
 import { getToken } from "@/utils/auth";
 
 const props = defineProps({
@@ -62,20 +52,52 @@ const props = defineProps({
   isShowTip: {
     type: Boolean,
     default: true
+  },
+  // 自定义上传地址
+  uploadUrl: {
+    type: String,
+    default: ''
+  },
+  // 自定义下载地址
+  downloadUrl: {
+    type: String,
+    default: ''
   }
 });
 
 const { proxy } = getCurrentInstance();
-const emit = defineEmits();
+// 定义自定义事件，新增 upload-success 事件传递服务器响应
+const emit = defineEmits(['update:modelValue', 'upload-success']);
 const number = ref(0);
 const uploadList = ref([]);
 const baseUrl = import.meta.env.VITE_APP_BASE_API;
-const uploadFileUrl = ref(import.meta.env.VITE_APP_BASE_API + "/common/upload"); // 上传文件服务器地址
+const uploadFileUrl = import.meta.env.VITE_APP_BASE_API + "/common/upload"; // 默认上传地址
 const headers = ref({ Authorization: "Bearer " + getToken() });
 const fileList = ref([]);
 const showTip = computed(
   () => props.isShowTip && (props.fileType || props.fileSize)
 );
+
+// 使用外部传入的上传地址或默认地址
+const uploadUrl = computed(() => {
+  return props.uploadUrl
+    ? import.meta.env.VITE_APP_BASE_API + props.uploadUrl
+    : uploadFileUrl;
+});
+
+// 获取下载地址，优先使用自定义下载地址
+const getDownloadUrl = (file) => {
+  // 如果文件有自己的 downloadUrl 属性，优先使用
+  if (file.downloadUrl) {
+    return file.downloadUrl;
+  }
+  // 如果提供了全局下载地址，使用它
+  if (props.downloadUrl) {
+    return import.meta.env.VITE_APP_BASE_API + props.downloadUrl;
+  }
+  // 否则使用默认的 baseUrl
+  return `${baseUrl}${file.url}`;
+};
 
 watch(() => props.modelValue, val => {
   if (val) {
@@ -94,7 +116,7 @@ watch(() => props.modelValue, val => {
     fileList.value = [];
     return [];
   }
-},{ deep: true, immediate: true });
+}, { deep: true, immediate: true });
 
 // 上传前校检格式和大小
 function handleBeforeUpload(file) {
@@ -136,10 +158,16 @@ function handleUploadError(err) {
   proxy.$modal.msgError("上传文件失败");
 }
 
-// 上传成功回调
+// 上传成功回调，新增发射 upload-success 事件
 function handleUploadSuccess(res, file) {
   if (res.code === 200) {
     uploadList.value.push({ name: res.fileName, url: res.fileName });
+    // 发射事件，传递服务器响应数据和当前文件
+    emit('upload-success', {
+      response: res,
+      file: file,
+      fileList: [...fileList.value, { name: res.fileName, url: res.fileName }]
+    });
     uploadedSuccessfully();
   } else {
     number.value--;
@@ -194,18 +222,21 @@ function listToString(list, separator) {
 .upload-file-uploader {
   margin-bottom: 5px;
 }
+
 .upload-file-list .el-upload-list__item {
   border: 1px solid #e4e7ed;
   line-height: 2;
   margin-bottom: 10px;
   position: relative;
 }
+
 .upload-file-list .ele-upload-list__item-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
   color: inherit;
 }
+
 .ele-upload-list__item-content-action .el-link {
   margin-right: 10px;
 }

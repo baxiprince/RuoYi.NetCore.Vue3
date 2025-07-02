@@ -12,7 +12,7 @@ namespace RuoYi.Common.Files;
 public static class FileUploadUtils
 {
   /// <summary>
-  ///   默认大小 50M
+  ///   默认大小 500M
   /// </summary>
   public static long DEFAULT_MAX_SIZE = 50 * 1024 * 1024;
 
@@ -72,26 +72,35 @@ public static class FileUploadUtils
   /// <param name="file">文件</param>
   /// <param name="subDirectory">子路径</param>
   /// <param name="allowedExtension">允许上传的文件类型</param>
+  /// <param name="isEncodeFileName">是否编码文件名</param>
+  /// <param name="isAppointPath">是否指定完整路径</param>
   /// <returns>文件相对路径</returns>
-  public static async Task<string> UploadAsync(IFormFile file, string subDirectory, string[] allowedExtension)
+  public static async Task<string> UploadAsync(IFormFile file, string subDirectory, string[] allowedExtension,
+    bool isEncodeFileName = true, bool isAppointPath = false)
   {
     var fileNameLength = file.FileName.Length;
     if (fileNameLength > DEFAULT_FILE_NAME_LENGTH) throw new ServiceException($"文件名最大长度不能超过{DEFAULT_FILE_NAME_LENGTH}");
 
     AssertAllowed(file, allowedExtension);
 
-    // 当前文件物理路径
-    var physicalPath = GetResourcePhysicalPath(subDirectory);
+    // 编码文件名
+    var fileName = isEncodeFileName ? ExtractFilename(file) : file.FileName;
 
-    var fileName = ExtractFilename(file);
-    var filePath = Path.Combine(physicalPath, fileName);
+    // 不指定完整路径时，使用相对路径，把文件上传到静态目录
+    var filePath = Path.Combine(subDirectory, fileName);
+    if (!isAppointPath)
+    {
+      // 当前文件物理路径
+      var physicalPath = GetResourcePhysicalPath(subDirectory);
+      filePath = Path.Combine(physicalPath, fileName);
+    }
 
     // 当前文件目录
     var folderPath = Directory.GetParent(filePath)?.FullName;
     if (!Directory.Exists(folderPath))
       Directory.CreateDirectory(folderPath);
 
-    using var stream = new FileStream(filePath, FileMode.Create);
+    await using var stream = new FileStream(filePath, FileMode.Create);
     await file.CopyToAsync(stream);
 
     var relativePath = Path.Combine(subDirectory, fileName);

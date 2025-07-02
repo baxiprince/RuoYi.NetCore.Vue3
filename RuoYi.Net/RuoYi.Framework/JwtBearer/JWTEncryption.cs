@@ -79,7 +79,8 @@ public class JWTEncryption
   /// <param name="payload"></param>
   /// <param name="algorithm"></param>
   /// <returns></returns>
-  public static string Encrypt(string issuerSigningKey, string payload, string algorithm = SecurityAlgorithms.HmacSha256)
+  public static string Encrypt(string issuerSigningKey, string payload,
+    string algorithm = SecurityAlgorithms.HmacSha256)
   {
     SigningCredentials credentials = null;
 
@@ -163,7 +164,8 @@ public class JWTEncryption
     // 判断各个部分是否匹配
     if (!refreshTokenObj.GetPayloadValue<string>("f").Equals(tokenParagraphs[0])) return default;
     if (!refreshTokenObj.GetPayloadValue<string>("e").Equals(tokenParagraphs[2])) return default;
-    if (!tokenParagraphs[1].Substring(refreshTokenObj.GetPayloadValue<int>("s"), refreshTokenObj.GetPayloadValue<int>("l"))
+    if (!tokenParagraphs[1]
+          .Substring(refreshTokenObj.GetPayloadValue<int>("s"), refreshTokenObj.GetPayloadValue<int>("l"))
           .Equals(refreshTokenObj.GetPayloadValue<string>("k"))) return default;
 
     // 获取过期 Token 的存储信息
@@ -260,7 +262,8 @@ public class JWTEncryption
   /// <param name="accessToken"></param>
   /// <returns></returns>
   [Obsolete("Obsolete")]
-  public static (bool, JsonWebToken? jsonWebToken, TokenValidationResult tokenValidationResult) Validate(string accessToken)
+  public static (bool, JsonWebToken? jsonWebToken, TokenValidationResult tokenValidationResult) Validate(
+    string accessToken)
   {
     var jwtSettings = GetJWTSettings();
 
@@ -352,6 +355,8 @@ public class JWTEncryption
   {
     // 判断请求报文头中是否有 "Authorization" 报文头
     var bearerToken = httpContext.Request.Headers[headerKey].ToString();
+    if (string.IsNullOrWhiteSpace(bearerToken)) bearerToken = httpContext.Request.Headers["token"].ToString();
+    if (string.IsNullOrWhiteSpace(bearerToken)) bearerToken = httpContext.Request.Query["token"].ToString();
     if (string.IsNullOrWhiteSpace(bearerToken)) return default;
 
     var prefixLenght = tokenPrefix.Length;
@@ -375,7 +380,8 @@ public class JWTEncryption
       return jwtSettings;
     }
 
-    return FrameworkApp.GetMethod("GetOptions").MakeGenericMethod(typeof(JWTSettingsOptions)).Invoke(null, new object[] { null })
+    return FrameworkApp.GetMethod("GetOptions").MakeGenericMethod(typeof(JWTSettingsOptions))
+        .Invoke(null, new object[] { null })
       as JWTSettingsOptions ?? SetDefaultJwtSettings(new JWTSettingsOptions());
   }
 
@@ -431,9 +437,11 @@ public class JWTEncryption
       payload.Add(JwtRegisteredClaimNames.Exp, DateTimeOffset.UtcNow.AddMinutes(minute).ToUnixTimeSeconds());
     }
 
-    if (!payload.ContainsKey(JwtRegisteredClaimNames.Iss)) payload.Add(JwtRegisteredClaimNames.Iss, jwtSettings?.ValidIssuer);
+    if (!payload.ContainsKey(JwtRegisteredClaimNames.Iss))
+      payload.Add(JwtRegisteredClaimNames.Iss, jwtSettings?.ValidIssuer);
 
-    if (!payload.ContainsKey(JwtRegisteredClaimNames.Aud)) payload.Add(JwtRegisteredClaimNames.Aud, jwtSettings?.ValidAudience);
+    if (!payload.ContainsKey(JwtRegisteredClaimNames.Aud))
+      payload.Add(JwtRegisteredClaimNames.Aud, jwtSettings?.ValidAudience);
 
     return (payload, jwtSettings);
   }

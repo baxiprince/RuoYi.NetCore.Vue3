@@ -5,7 +5,6 @@ using RuoYi.Data.Dtos;
 using RuoYi.Data.Models;
 using RuoYi.Framework;
 using RuoYi.Framework.Cache;
-using RuoYi.Framework.DataEncryption;
 using RuoYi.Framework.Exceptions;
 using RuoYi.Framework.JwtBearer;
 using RuoYi.Framework.Logging;
@@ -86,7 +85,6 @@ public static class SecurityUtils
   /// <returns>加密字符串</returns>
   public static string EncryptPassword(string password)
   {
-    //return MD5Encryption.Encrypt(password);
     var salt = BCrypt.Net.BCrypt.GenerateSalt(10);
     return BCrypt.Net.BCrypt.HashPassword(password, salt);
   }
@@ -99,7 +97,6 @@ public static class SecurityUtils
   /// <returns>结果</returns>
   public static bool MatchesPassword(string rawPassword, string encodedPassword)
   {
-    //return MD5Encryption.Compare(rawPassword, encodedPassword);
     return BCrypt.Net.BCrypt.Verify(rawPassword, encodedPassword);
   }
 
@@ -115,6 +112,31 @@ public static class SecurityUtils
   public static string GetTokenKey(string uuid)
   {
     return CacheConstants.LOGIN_TOKEN_KEY + uuid;
+  }
+
+  /// <summary>
+  ///   检测用户是否已经登录
+  /// </summary>
+  /// <returns></returns>
+  public static bool IsLogin()
+  {
+    //if (!App.HttpContext.User.Identity.IsAuthenticated) return false;
+    var token = GetToken(App.HttpContext.Request);
+    if (string.IsNullOrEmpty(token)) return false;
+    try
+    {
+      var claims = ParseToken(token);
+      var uuid = claims.First(c => c.Type.Equals(RuoYi.Data.Constants.LOGIN_USER_KEY)).Value;
+      var userKey = GetTokenKey(uuid);
+      var user = _cache.Get<LoginUser>(userKey);
+      if (!user.Equals(null)) return true;
+    }
+    catch
+    {
+      return false;
+    }
+
+    return false;
   }
 
   #region Token
@@ -133,6 +155,8 @@ public static class SecurityUtils
   public static string GetToken(HttpRequest request)
   {
     string token = request.Headers["Authorization"]!;
+    if (string.IsNullOrWhiteSpace(token)) token = request.Headers["token"].ToString();
+    if (string.IsNullOrWhiteSpace(token)) token = request.Query["token"].ToString();
     if (!string.IsNullOrEmpty(token) && token.StartsWith(RuoYi.Data.Constants.TOKEN_PREFIX))
       token = token.Replace(RuoYi.Data.Constants.TOKEN_PREFIX, "");
     return token;
@@ -163,28 +187,4 @@ public static class SecurityUtils
   }
 
   #endregion
-
-  /// <summary>
-  ///   检测用户是否已经登录
-  /// </summary>
-  /// <returns></returns>
-  public static bool IsLogin()
-  {
-    if (!App.HttpContext.User.Identity.IsAuthenticated) return false;
-    var token = GetToken(App.HttpContext.Request);
-    if (string.IsNullOrEmpty(token)) return false;
-    try
-    {
-      var claims = ParseToken(token);
-      var uuid = claims.First(c => c.Type.Equals(RuoYi.Data.Constants.LOGIN_USER_KEY)).Value;
-      var userKey = GetTokenKey(uuid);
-      var user = _cache.Get<LoginUser>(userKey);
-      if (!user.Equals(null)) return true;
-    }
-    catch
-    {
-      return false;
-    }
-    return false;
-  }
 }
