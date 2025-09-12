@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.RateLimiting;
+using RuoYi.Admin.Services;
 using RuoYi.Data.Slave.Dtos;
 using RuoYi.Framework.RateLimit;
 using RuoYi.System.Slave.Services;
@@ -12,16 +13,19 @@ namespace RuoYi.Admin;
 public class SampleController : ControllerBase
 {
   private readonly ILogger<SampleController> _logger;
+  private readonly SampleService _sampleService;
   private readonly SysUserService _slaveSysUserService;
 
   private readonly SystemService _systemService;
 
   public SampleController(ILogger<SampleController> logger, SystemService systemService,
-    SysUserService slaveSysUserService)
+    SysUserService slaveSysUserService,
+    SampleService sampleService)
   {
     _logger = logger;
     _systemService = systemService;
     _slaveSysUserService = slaveSysUserService;
+    _sampleService = sampleService;
   }
 
   /// <summary>
@@ -68,5 +72,15 @@ public class SampleController : ControllerBase
   {
     //return Guid.NewGuid().ToString();
     return "ipRateLimit";
+  }
+
+  /// <summary>
+  ///   使用 sql 更新 db
+  /// </summary>
+  [AllowAnonymous]
+  [HttpPost("updateUserBySql")]
+  public async Task<int> UpdateUserBySql()
+  {
+    return await _sampleService.UpdateUserAsync();
   }
 }
