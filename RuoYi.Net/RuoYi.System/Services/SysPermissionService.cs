@@ -9,11 +9,14 @@ public class SysPermissionService : ITransient
 {
   private readonly SysMenuService _sysMenuService;
   private readonly SysRoleService _sysRoleService;
+  private readonly SysUserRoleService _sysUserRoleService;
 
-  public SysPermissionService(SysRoleService sysRoleService, SysMenuService sysMenuService)
+  public SysPermissionService(SysRoleService sysRoleService, SysMenuService sysMenuService,
+    SysUserRoleService sysUserRoleService)
   {
     _sysRoleService = sysRoleService;
     _sysMenuService = sysMenuService;
+    _sysUserRoleService = sysUserRoleService;
   }
 
   /// <summary>
@@ -28,7 +31,8 @@ public class SysPermissionService : ITransient
     if (SecurityUtils.IsAdmin(user.UserId))
       roles.Add("admin");
     else
-      roles.AddRange(await _sysRoleService.GetRolePermissionByUserId(user.UserId!.Value));
+      //roles.AddRange(await _sysRoleService.GetRolePermissionByUserId(user.UserId!.Value));
+      roles.AddRange(await _sysUserRoleService.GetRoleKeyListAsync(user.UserId!.Value));
     return roles;
   }
 
