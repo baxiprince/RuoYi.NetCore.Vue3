@@ -116,8 +116,16 @@ public class TokenService : ITransient
 
     loginUser.IpAddr = ip;
     loginUser.LoginLocation = await AddressUtils.GetRealAddressByIPAsync(ip);
-    loginUser.Browser = clientInfo.Browser.ToString();
-    loginUser.OS = clientInfo.OS.Family;
+    if (clientInfo != null)
+    {
+      loginUser.Browser = clientInfo.Browser.ToString();
+      loginUser.OS = clientInfo.OS.Family;
+    }
+    else
+    {
+      loginUser.Browser = "未知";
+      loginUser.OS = "未知";
+    }
   }
 
   private string GetTokenKey(string uuid)
