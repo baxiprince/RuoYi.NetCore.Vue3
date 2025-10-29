@@ -46,4 +46,9 @@ public class SysLogininforRepository : BaseRepository<SysLogininfor, SysLogininf
         LoginTime = t.LoginTime
       });
   }
+
+  public void Truncate()
+  {
+    Repo.Context.DbMaintenance.TruncateTable<SysLogininfor>();
+  }
 }

@@ -107,10 +107,9 @@ public class SysJobController : ControllerBase
   [HttpDelete("{jobIds}")]
   [AppAuthorize("monitor:job:remove")]
   [Log(Title = "定时任务", BusinessType = BusinessType.DELETE)]
-  public async Task<AjaxResult> Remove(string jobIds)
+  public async Task<AjaxResult> Remove([ModelBinder] long[] jobIds)
   {
-    var idList = jobIds.SplitToList<long>();
-    var data = await _sysJobService.DeleteAsync(idList);
+    var data = await _sysJobService.DeleteAsync(jobIds);
     return AjaxResult.Success(data);
   }
 

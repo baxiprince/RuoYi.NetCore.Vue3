@@ -90,10 +90,9 @@ public class SysConfigController : ControllerBase
   [HttpDelete("{configIds}")]
   [AppAuthorize("system:config:remove")]
   [Log(Title = "参数管理", BusinessType = BusinessType.DELETE)]
-  public async Task<AjaxResult> Remove([FromRoute] string configIds)
+  public async Task<AjaxResult> Remove([ModelBinder] int[] configIds)
   {
-    var ids = configIds.Split(",").Select(int.Parse).ToArray();
-    await _sysConfigService.DeleteConfigByIdsAsync(ids);
+    await _sysConfigService.DeleteConfigByIdsAsync(configIds);
     return AjaxResult.Success();
   }
 

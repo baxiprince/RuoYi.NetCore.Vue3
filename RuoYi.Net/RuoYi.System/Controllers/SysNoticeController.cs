@@ -74,10 +74,9 @@ public class SysNoticeController : ControllerBase
   [HttpDelete("{ids}")]
   [AppAuthorize("system:notice:remove")]
   [Log(Title = "通知公告", BusinessType = BusinessType.DELETE)]
-  public async Task<AjaxResult> Remove([FromRoute] string ids)
+  public async Task<AjaxResult> Remove([ModelBinder] long[] ids)
   {
-    var idss = ids.Split(",").Select(long.Parse).ToArray();
-    var data = await _sysNoticeService.DeleteAsync(idss);
+    var data = await _sysNoticeService.DeleteAsync(ids);
     return AjaxResult.Success(data);
   }
 }

@@ -84,10 +84,9 @@ public class SysPostController : ControllerBase
   [HttpDelete("{ids}")]
   [AppAuthorize("system:post:remove")]
   [Log(Title = "岗位管理", BusinessType = BusinessType.DELETE)]
-  public async Task<AjaxResult> Remove([FromRoute] string ids)
+  public async Task<AjaxResult> Remove([ModelBinder] long[] ids)
   {
-    var idss = ids.Split(",").Select(long.Parse).ToArray();
-    var data = await _sysPostService.DeleteAsync(idss);
+    var data = await _sysPostService.DeleteAsync(ids);
     return AjaxResult.Success(data);
   }
 

@@ -78,11 +78,22 @@ public class SysLogininforController : ControllerBase
   [HttpDelete("{ids}")]
   [AppAuthorize("system:logininfor:remove")]
   [Log(Title = "系统访问记录", BusinessType = BusinessType.DELETE)]
-  public async Task<AjaxResult> Remove(string ids)
+  public async Task<AjaxResult> Remove([ModelBinder] long[] ids)
   {
-    var idList = ids.SplitToList<long>();
-    var data = await _sysLogininforService.DeleteAsync(idList);
+    var data = await _sysLogininforService.DeleteAsync(ids);
     return AjaxResult.Success(data);
+  }
+
+  /// <summary>
+  ///   清空 系统访问记录
+  /// </summary>
+  [HttpDelete("clean")]
+  [AppAuthorize("system:logininfor:remove")]
+  [Log(Title = "系统访问记录", BusinessType = BusinessType.CLEAN)]
+  public AjaxResult Clean()
+  {
+    _sysLogininforService.Clean();
+    return AjaxResult.Success();
   }
 
   /// <summary>

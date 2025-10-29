@@ -142,10 +142,9 @@ public class SysRoleController : ControllerBase
   [HttpDelete("{ids}")]
   [AppAuthorize("system:role:remove")]
   [Log(Title = "角色管理", BusinessType = BusinessType.DELETE)]
-  public async Task<AjaxResult> Remove([FromRoute] string ids)
+  public async Task<AjaxResult> Remove([ModelBinder] List<long> ids)
   {
-    var idss = ids.Split(",").Select(long.Parse).ToList();
-    var data = await _sysRoleService.DeleteRoleByIdsAsync(idss);
+    var data = await _sysRoleService.DeleteRoleByIdsAsync(ids);
     return AjaxResult.Success(data);
   }
 

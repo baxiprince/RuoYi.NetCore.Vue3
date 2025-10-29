@@ -5,6 +5,7 @@ using RuoYi.Admin.Authorization;
 using RuoYi.Common.Files;
 using RuoYi.Framework.Cache;
 using RuoYi.Framework.Filters;
+using RuoYi.Framework.ModelBinders;
 using RuoYi.Framework.RateLimit;
 
 namespace RuoYi.Admin;
@@ -22,8 +23,12 @@ public class Startup : AppStartup
     // 捕获全局异常
     services.AddMvc(opt => { opt.Filters.Add(typeof(GlobalExceptionFilter)); });
 
-    services.AddControllersWithViews()
-      // NewtonsoftJson 
+    services.AddControllersWithViews(options =>
+      {
+        // 添加 Long[] 参数绑定
+        options.ModelBinderProviders.Insert(0, new IntArrayModelBinderProvider());
+      })
+      // NewtonsoftJson
       .AddNewtonsoftJson(options =>
       {
         // 忽略循环引用
@@ -47,7 +52,8 @@ public class Startup : AppStartup
     {
       options.InvalidModelStateResponseFactory = context =>
       {
-        var msg = string.Join(";", context.ModelState.Select(x => x.Value.Errors?.FirstOrDefault().ErrorMessage).ToList());
+        var msg = string.Join(";",
+          context.ModelState.Select(x => x.Value.Errors?.FirstOrDefault().ErrorMessage).ToList());
         return new JsonResult(AjaxResult.Error(msg));
       };
     });

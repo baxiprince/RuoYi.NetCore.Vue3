@@ -88,4 +88,12 @@ public class SysLogininforService : BaseService<SysLogininfor, SysLogininforDto>
       _logger.LogError(ex, "insert sysLogininfor error");
     }
   }
+
+  /// <summary>
+  ///   清表
+  /// </summary>
+  public void Clean()
+  {
+    _sysLogininforRepository.Truncate();
+  }
 }

@@ -117,11 +117,10 @@ public class SysUserController : ControllerBase
   [HttpDelete("{ids}")]
   [AppAuthorize("system:user:remove")]
   [Log(Title = "用户管理", BusinessType = BusinessType.DELETE)]
-  public async Task<AjaxResult> Remove(string ids)
+  public async Task<AjaxResult> Remove([ModelBinder] long[] ids)
   {
-    var userIds = ids.SplitToList<long>();
-    if (userIds.Contains(SecurityUtils.GetUserId())) return AjaxResult.Error("当前用户不能删除");
-    var data = await _sysUserService.DeleteUserByIdsAsync(userIds);
+    if (ids.Contains(SecurityUtils.GetUserId())) return AjaxResult.Error("当前用户不能删除");
+    var data = await _sysUserService.DeleteUserByIdsAsync(ids.ToList());
     return AjaxResult.Success(data);
   }
 

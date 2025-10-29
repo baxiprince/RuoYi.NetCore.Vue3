@@ -91,7 +91,7 @@ public class SysDictDataController : ControllerBase
   [HttpDelete("{dictCodes}")]
   [AppAuthorize("system:dict:remove")]
   [Log(Title = "字典数据", BusinessType = BusinessType.DELETE)]
-  public async Task<AjaxResult> Remove(long[] dictCodes)
+  public async Task<AjaxResult> Remove([ModelBinder] long[] dictCodes)
   {
     await _sysDictDataService.DeleteDictDataByIdsAsync(dictCodes);
     return AjaxResult.Success();

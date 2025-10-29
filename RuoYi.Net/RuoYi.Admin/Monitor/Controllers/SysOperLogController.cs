@@ -39,10 +39,9 @@ public class SysOperLogController : ControllerBase
   [HttpDelete("{ids}")]
   [AppAuthorize("system:log:remove")]
   [Log(Title = "操作日志", BusinessType = BusinessType.DELETE)]
-  public async Task<AjaxResult> Remove(string ids)
+  public async Task<AjaxResult> Remove([ModelBinder] long[] ids)
   {
-    var idList = ids.SplitToList<long>();
-    var data = await _sysOperLogService.DeleteAsync(idList);
+    var data = await _sysOperLogService.DeleteAsync(ids);
     return AjaxResult.Success(data);
   }
 

@@ -1,6 +1,7 @@
 ﻿using RuoYi.Common.Enums;
 using RuoYi.Framework.DataValidation;
 using RuoYi.System;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace RuoYi.Generator.Controllers;
 
@@ -115,10 +116,9 @@ public class GenController : ControllerBase
   [HttpDelete("{tableIds}")]
   [AppAuthorize("tool:gen:remove")]
   [Log(Title = "代码生成", BusinessType = BusinessType.DELETE)]
-  public AjaxResult Remove([FromRoute] string tableIds)
+  public AjaxResult Remove([ModelBinder] long[] tableIds)
   {
-    var ids = tableIds.Split(",").Select(long.Parse).ToArray();
-    _genTableService.DeleteGenTableByIds(ids);
+    _genTableService.DeleteGenTableByIds(tableIds);
     return AjaxResult.Success();
   }
 
