@@ -79,6 +79,18 @@ public class SysUserService : BaseService<SysUser, SysUserDto>, ITransient
   /// <summary>
   ///   查询 用户
   /// </summary>
+  /// <param name="id">用户名</param>
+  /// <returns></returns>
+  public async Task<SysUserDto> GetByIdAsync(long? id)
+  {
+    var dto = new SysUserDto { UserId = id, DelFlag = DelFlag.No };
+    var user = await _sysUserRepository.GetUserDtoAsync(dto);
+    return user;
+  }
+
+  /// <summary>
+  ///   查询 用户
+  /// </summary>
   /// <param name="phoneNumber">手机号</param>
   /// <returns></returns>
   public async Task<SysUserDto> GetByPhoneAsync(string phoneNumber)

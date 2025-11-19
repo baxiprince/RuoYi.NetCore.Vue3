@@ -16,6 +16,7 @@ public class SysLoginController : ControllerBase
   private readonly SysLoginService _sysLoginService;
   private readonly SysMenuService _sysMenuService;
   private readonly SysPermissionService _sysPermissionService;
+  private readonly SysUserService _sysUserService;
   private readonly TokenService _tokenService;
 
   public SysLoginController(ILogger<SysLoginController> logger,
@@ -23,7 +24,9 @@ public class SysLoginController : ControllerBase
     SysLoginService sysLoginService,
     SysPermissionService sysPermissionService,
     SysMenuService sysMenuService,
-    SysLogininforService sysLogininforService)
+    SysLogininforService sysLogininforService,
+    SysUserService sysUserService
+  )
   {
     _logger = logger;
     _tokenService = tokenService;
@@ -31,6 +34,7 @@ public class SysLoginController : ControllerBase
     _sysPermissionService = sysPermissionService;
     _sysMenuService = sysMenuService;
     _sysLogininforService = sysLogininforService;
+    _sysUserService = sysUserService;
   }
 
   /// <summary>
@@ -74,7 +78,8 @@ public class SysLoginController : ControllerBase
   {
     var isLogin = SecurityUtils.IsLogin();
     if (!isLogin) return AjaxResult.Error(401, "授权失败");
-    var user = SecurityUtils.GetLoginUser().User;
+    var userId = SecurityUtils.GetUserId();
+    var user = await _sysUserService.GetByIdAsync(userId);
     // 角色集合
     var roles = await _sysPermissionService.GetRolePermissionAsync(user);
     // 权限集合
