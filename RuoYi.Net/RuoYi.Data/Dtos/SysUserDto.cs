@@ -36,7 +36,8 @@ public class SysUserDto : BaseDto
    * 用户邮箱
    */
   [Excel(Name = "用户邮箱")]
-  [RyEmailAddress(ErrorMessage = "邮箱格式不正确"), MaxLength(50, ErrorMessage = "邮箱长度不能超过50个字符")]
+  [EmailAddress(ErrorMessage = "邮箱格式不正确")]
+  [MaxLength(50, ErrorMessage = "邮箱长度不能超过50个字符")]
   public string? Email { get; set; }
 
   /**
