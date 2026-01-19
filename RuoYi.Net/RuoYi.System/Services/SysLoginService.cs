@@ -150,8 +150,7 @@ public class SysLoginService : ITransient
     }
 
     // IP黑名单校验
-    //var blackStr = _cache.GetString("sys.login.blackIPList");
-    string? blackStr = _sysConfigService.SelectConfigByKey("sys.login.blackIPList");
+    var blackStr = _cache.GetString("sys.login.blackIPList");
     if (IpUtils.IsMatchedIp(blackStr, App.HttpContext.GetRemoteIpAddressToIPv4()))
     {
       Task.Factory.StartNew(async () =>
